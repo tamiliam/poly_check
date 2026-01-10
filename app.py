@@ -60,8 +60,8 @@ def load_data():
 try:
     courses_df, polys_df, reqs_df, links_df = load_data()
 except Exception as e:
-    st.error(f"Error loading database: {e}")
-    st.stop()
+#    st.error(f"Error loading database: {e}")
+#    st.stop()
 
 # --- DEBUGGER (Add this right after the try/except block) ---
 # This lets you see if 'req_malaysian' is actually 1 or 0
