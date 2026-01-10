@@ -15,14 +15,14 @@ def is_active(value):
 # --- GRADE LOGIC ---
 # "G" is a Fail. "T" (Tidak Hadir) is a Fail. "Not Taken" is not a credit.
 PASS_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
-CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"]
+CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"] # C is a Credit
 
 def is_pass(g): return str(g).strip() in PASS_GRADES
 def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v8():
+def load_data_v9():
     courses = pd.read_csv("courses.csv", encoding="latin1")
     polys = pd.read_csv("polys.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
@@ -43,7 +43,7 @@ def load_data_v8():
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v8()
+    courses_df, polys_df, reqs_df, links_df = load_data_v9()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -59,7 +59,6 @@ with st.sidebar.expander("👤 Personal Details", expanded=True):
     disability = st.radio("Physical Disability?", ["No", "Yes"])
 
 # 2. Subjects
-# Option "X" means Not Taken
 grade_opts = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G", "Not Taken"]
 
 with st.sidebar.expander("📚 Compulsory Subjects", expanded=True):
@@ -75,23 +74,29 @@ with st.sidebar.expander("🧪 Science Stream"):
     chem_grade = st.selectbox("Kimia", grade_opts, index=10)
     bio_grade = st.selectbox("Biologi", grade_opts, index=10)
 
-with st.sidebar.expander("🎨 Arts / Humanities / Voc"):
-    science_gen_grade = st.selectbox("Sains (General)", grade_opts, index=5)
+with st.sidebar.expander("🎨 Arts & Humanities"):
+    science_gen_grade = st.selectbox("Sains (General)", grade_opts, index=10) # Default Not Taken
     geo_grade = st.selectbox("Geografi", grade_opts, index=10)
     acc_grade = st.selectbox("Prinsip Perakaunan", grade_opts, index=10)
     biz_grade = st.selectbox("Perniagaan", grade_opts, index=10)
     econ_grade = st.selectbox("Ekonomi", grade_opts, index=10)
     psv_grade = st.selectbox("Pendidikan Seni Visual", grade_opts, index=10)
-    
-    st.caption("Electives / Technical / Vocational")
+
+with st.sidebar.expander("🕌 Languages & Islamic Electives"):
+    # Grouping these for simplicity as they count towards credits
+    lang_add_grade = st.selectbox("B. Arab / Cina / Tamil / Punjabi", grade_opts, index=10)
+    lit_grade = st.selectbox("Kesusasteraan (Melayu/Inggeris/Cina/Tamil)", grade_opts, index=10)
+    islam_add_grade = st.selectbox("P. Al-Quran / As-Sunnah / Syariah", grade_opts, index=10)
+
+with st.sidebar.expander("🛠️ Technical & Vocational Electives"):
     rekacipta_grade = st.selectbox("Reka Cipta", grade_opts, index=10)
     cs_grade = st.selectbox("Sains Komputer", grade_opts, index=10)
     pertanian_grade = st.selectbox("Pertanian", grade_opts, index=10)
     srt_grade = st.selectbox("Sains Rumah Tangga", grade_opts, index=10)
     
-    # Catch-all for the "Many others"
-    other_tech_grade = st.checkbox("I have a Credit (C+) in another Technical Subject")
-    other_voc_grade = st.checkbox("I have a Credit (C+) in another Vocational Subject")
+    st.caption("Others")
+    other_tech_grade = st.checkbox("Credit (C or above) in other Technical Subject")
+    other_voc_grade = st.checkbox("Credit (C or above) in other Vocational Subject")
 
 # --- AUTO-CALCULATE DERIVED STATS ---
 # 1. Total Credits (Count all Cs and above)
@@ -99,6 +104,7 @@ all_subjects = [
     bm_grade, eng_grade, hist_grade, math_grade, islam_moral,
     addmath_grade, phy_grade, chem_grade, bio_grade,
     science_gen_grade, geo_grade, acc_grade, biz_grade, econ_grade, psv_grade,
+    lang_add_grade, lit_grade, islam_add_grade,
     rekacipta_grade, cs_grade, pertanian_grade, srt_grade
 ]
 
@@ -106,22 +112,23 @@ calculated_credits = 0
 for g in all_subjects:
     if is_credit(g):
         calculated_credits += 1
-# Add manual checkboxes if checked (assuming they imply credit)
+
+# Add manual checkboxes
 if other_tech_grade: calculated_credits += 1
 if other_voc_grade: calculated_credits += 1
 
 st.sidebar.info(f"📊 Calculated Total Credits: {calculated_credits}")
 
 # 2. Logic Groupings
-# Science Group (Bio/Phy/Chem/AddMath)
+# Science Group
 has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
 has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
 
-# Technical Group (Reka Cipta, CS, or Other)
+# Technical Group
 has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
 has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
 
-# Vocational Group (Pertanian, SRT, or Other)
+# Vocational Group
 has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
 has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
 
@@ -167,13 +174,12 @@ def check_row_constraints(req):
         # Science OR Fizik OR Math OR Tech
         if not (stv_c or is_credit(math_grade)): return False
 
-    # Min Credits
+    # Min Credits (Auto-Calculated)
     try:
         min_c = int(float(req.get('min_credits', 0)))
     except:
         min_c = 0
     
-    # Use our AUTO-CALCULATED total
     if calculated_credits < min_c: return False
 
     return True
