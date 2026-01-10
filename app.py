@@ -1,52 +1,51 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Polytechnic Checker", page_icon="🎓")
 
-# --- HELPER: NUCLEAR COMPARISON ---
+# --- HELPER: NUCLEAR CLEANER ---
+def clean_header(text):
+    # Removes hidden characters, spaces, BOMs
+    return str(text).strip().replace("\ufeff", "").lower()
+
 def is_active(value):
-    # This cleans the value and checks if it looks like a "Yes"
-    clean_val = str(value).strip().lower()
-    return clean_val in ["1", "1.0", "true", "yes", "y"]
-
-# --- HELPER: GRADE CHECK ---
-PASS_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
-CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"]
-
-def is_pass(grade): return str(grade).strip() in PASS_GRADES
-def is_credit(grade): return str(grade).strip() in CREDIT_GRADES
+    # Treats 1, "1", "1.0", "Yes" as True. Everything else is False.
+    s = str(value).strip().lower()
+    return s in ['1', '1.0', 'true', 'yes', 'y']
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_forensic():
-    # Load all as String to see the raw data truth
-    courses = pd.read_csv("courses.csv", encoding="latin1", dtype=str)
-    polys = pd.read_csv("polys.csv", encoding="latin1", dtype=str)
-    reqs = pd.read_csv("requirements.csv", encoding="latin1", dtype=str)
-    links = pd.read_csv("links.csv", encoding="latin1", dtype=str)
+def load_data_v5():
+    # Read without explicit dtype to let Pandas figure it out, but force encoding
+    courses = pd.read_csv("courses.csv", encoding="latin1")
+    polys = pd.read_csv("polys.csv", encoding="latin1")
+    reqs = pd.read_csv("requirements.csv", encoding="latin1")
+    links = pd.read_csv("links.csv", encoding="latin1")
 
-    # Clean Headers (Strip invisible spaces)
-    courses.columns = courses.columns.str.strip()
-    polys.columns = polys.columns.str.strip()
-    reqs.columns = reqs.columns.str.strip()
-    links.columns = links.columns.str.strip()
+    # 1. AGGRESSIVE HEADER CLEANING
+    # This fixes " req_malaysian" vs "req_malaysian" mismatch
+    courses.columns = [clean_header(c) for c in courses.columns]
+    polys.columns = [clean_header(c) for c in polys.columns]
+    reqs.columns = [clean_header(c) for c in reqs.columns]
+    links.columns = [clean_header(c) for c in links.columns]
 
-    # Clean Content (Fixing the previous bug where this wasn't saved)
-    courses = courses.map(lambda x: x.strip() if isinstance(x, str) else x)
-    polys = polys.map(lambda x: x.strip() if isinstance(x, str) else x)
-    reqs = reqs.map(lambda x: x.strip() if isinstance(x, str) else x)
-    links = links.map(lambda x: x.strip() if isinstance(x, str) else x)
+    # 2. STRING CLEANING (IDs)
+    # Ensure IDs are strings and stripped
+    reqs['course_id'] = reqs['course_id'].astype(str).str.strip()
+    courses['course_id'] = courses['course_id'].astype(str).str.strip()
+    links['course_id'] = links['course_id'].astype(str).str.strip()
 
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_forensic()
+    courses_df, polys_df, reqs_df, links_df = load_data_v5()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
 
-# --- SIDEBAR INPUTS ---
+# --- SIDEBAR ---
 st.sidebar.header("Enter Your SPM Results")
 
 nationality = st.sidebar.radio("Citizenship", ["Malaysian", "Non-Malaysian"])
@@ -68,104 +67,81 @@ has_tech_credit = st.sidebar.checkbox("Credit (C or better) in Technical Subject
 has_voc_credit = st.sidebar.checkbox("Credit (C or better) in Vocational Subjects?")
 total_credits = st.sidebar.slider("Total Number of Kepujian (C and above):", 0, 12, 3)
 
-# --- CORE LOGIC ---
+# --- GRADE LOGIC ---
+PASS_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
+CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"]
+def is_pass(g): return str(g).strip() in PASS_GRADES
+def is_credit(g): return str(g).strip() in CREDIT_GRADES
+
+# --- ELIGIBILITY CHECKER ---
 def check_eligibility(req):
-    # 1. Statutory
-    if is_active(req.get("req_malaysian")) and nationality == "Non-Malaysian": return False
-    if is_active(req.get("req_male")) and gender == "Female": return False
-    if is_active(req.get("no_colorblind")) and colorblind == "Yes": return False
-    if is_active(req.get("no_disability")) and disability == "Yes": return False
-
-    # 2. Core Subjects (Pass)
-    if is_active(req.get("pass_bm")) and not is_pass(bm_grade): return False
-    if is_active(req.get("pass_history")) and not is_pass(sejarah_grade): return False
-    if is_active(req.get("pass_eng")) and not is_pass(bi_grade): return False
-    if is_active(req.get("pass_math")) and not is_pass(math_grade): return False
-
-    # 3. Core Subjects (Credit)
-    if is_active(req.get("credit_bm")) and not is_credit(bm_grade): return False
-    if is_active(req.get("credit_math")) and not is_credit(math_grade): return False
-    if is_active(req.get("credit_eng")) and not is_credit(bi_grade): return False
-
-    # 4. Special Groups
-    if is_active(req.get("credit_bmbi")):
-        if not (is_credit(bm_grade) or is_credit(bi_grade)): return False
-
-    has_sci_pass = is_pass(science_grade) or has_pure_science
-    has_sci_credit = is_credit(science_grade) or has_pure_science
-    has_stv_pass = has_sci_pass or has_tech_credit or has_voc_credit
-    has_stv_credit = has_sci_credit or has_tech_credit or has_voc_credit
-
-    if is_active(req.get("pass_stv")) and not has_stv_pass: return False
-    if is_active(req.get("credit_stv")) and not has_stv_credit: return False
-    if is_active(req.get("credit_sf")) and not has_sci_credit: return False
+    # NOTE: All headers are now lowercase! e.g. 'req_malaysian'
     
-    if is_active(req.get("credit_sfmt")):
-        if not (has_stv_credit or is_credit(math_grade)): return False
+    # 1. Statutory Checks
+    if is_active(req.get('req_malaysian')) and nationality == "Non-Malaysian": return False
+    if is_active(req.get('req_male')) and gender == "Female": return False
+    if is_active(req.get('no_colorblind')) and colorblind == "Yes": return False
+    if is_active(req.get('no_disability')) and disability == "Yes": return False
 
-    # 5. Total Credits
+    # 2. Grades
+    if is_active(req.get('pass_bm')) and not is_pass(bm_grade): return False
+    if is_active(req.get('pass_history')) and not is_pass(sejarah_grade): return False
+    if is_active(req.get('pass_eng')) and not is_pass(bi_grade): return False
+    if is_active(req.get('pass_math')) and not is_pass(math_grade): return False
+
+    if is_active(req.get('credit_bm')) and not is_credit(bm_grade): return False
+    if is_active(req.get('credit_math')) and not is_credit(math_grade): return False
+    if is_active(req.get('credit_eng')) and not is_credit(bi_grade): return False
+    if is_active(req.get('credit_bmbi')) and not (is_credit(bm_grade) or is_credit(bi_grade)): return False
+
+    # 3. Science / Tech
+    sci_p = is_pass(science_grade) or has_pure_science
+    sci_c = is_credit(science_grade) or has_pure_science
+    stv_p = sci_p or has_tech_credit or has_voc_credit
+    stv_c = sci_c or has_tech_credit or has_voc_credit
+
+    if is_active(req.get('pass_stv')) and not stv_p: return False
+    if is_active(req.get('credit_stv')) and not stv_c: return False
+    if is_active(req.get('credit_sf')) and not sci_c: return False
+    
+    # 4. Min Credits
     try:
-        min_c = int(float(req.get("min_credits", 0)))
+        min_c = int(float(req.get('min_credits', 0)))
     except:
         min_c = 0
-        
     if total_credits < min_c: return False
 
     return True
 
-# --- RUN CHECK ---
+# --- MAIN LOOP ---
 eligible_ids = []
-debug_trace = [] # Store data for forensic report
+
+# SANITY CHECK: Ensure column exists
+if 'req_malaysian' not in reqs_df.columns:
+    st.error(f"CRITICAL ERROR: 'req_malaysian' column missing. Found: {list(reqs_df.columns)}")
+    st.stop()
 
 for _, row in reqs_df.iterrows():
     if check_eligibility(row):
-        eligible_ids.append(row["course_ID"])
-        # Save the raw 'req_malaysian' value for the report
-        debug_trace.append({
-            "Course ID": row["course_ID"],
-            "Raw req_malaysian Value": row.get("req_malaysian", "MISSING")
-        })
+        eligible_ids.append(row['course_id'])
 
-# --- RESULTS DISPLAY ---
+# --- DISPLAY ---
 if not eligible_ids:
-    st.warning("No eligible courses found based on these results.")
-else:
-    # --- FORENSIC REPORT (Only shows if Non-Malaysian) ---
+    st.warning("No eligible courses found.")
     if nationality == "Non-Malaysian":
-        st.error(f"⚠️ FORENSIC ALERT: {len(eligible_ids)} courses bypassed the Citizenship check.")
-        st.write("Below are the courses that passed, and the value they have in the 'req_malaysian' column.")
-        st.write("If the value is '0', 'nan', or blank, the system allowed them (Correctly). If it is '1', the logic is broken.")
-        
-        # Convert list to dataframe for display
-        trace_df = pd.DataFrame(debug_trace)
-        st.dataframe(trace_df, use_container_width=True)
-        st.stop() # Stop here so you can read the report
+        st.error("Rejection: Citizenship requirement.")
+else:
+    st.success(f"You are eligible for {len(eligible_ids)} courses!")
+    
+    # Results Table
+    res = courses_df[courses_df['course_id'].isin(eligible_ids)]
+    st.dataframe(res[['course', 'field', 'department']], hide_index=True, use_container_width=True)
 
-    # Normal Success View
-    st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
-    
-    result_df = courses_df[courses_df["course_ID"].isin(eligible_ids)]
-    
-    st.dataframe(
-        result_df[["course", "field", "department"]],
-        use_container_width=True,
-        hide_index=True
-    )
-    
-    st.markdown("---")
-    st.markdown("### 📍 Course Locations")
-    
-    course_names = result_df["course"].unique()
-    selected_course = st.selectbox("Select a course to view campuses:", course_names)
-    
-    if selected_course:
-        rows = result_df[result_df["course"] == selected_course]
-        if not rows.empty:
-            sel_id = rows.iloc[0]["course_ID"]
-            poly_ids = links_df[links_df["course_ID"] == sel_id]["institution_ID"]
-            final_polys = polys_df[polys_df["institution_ID"].isin(poly_ids)]
-            
-            if not final_polys.empty:
-                st.table(final_polys[["institution_name", "State", "category"]])
-            else:
-                st.info("No specific location data available.")
+    # Locator
+    st.markdown("### 📍 Locations")
+    sel = st.selectbox("Select course:", res['course'].unique())
+    if sel:
+        cid = res[res['course'] == sel].iloc[0]['course_id']
+        pids = links_df[links_df['course_id'] == cid]['institution_id']
+        final = polys_df[polys_df['institution_id'].isin(pids)]
+        st.table(final[['institution_name', 'state', 'category']])
