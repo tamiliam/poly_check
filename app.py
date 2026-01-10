@@ -9,7 +9,6 @@ def clean_header(text):
     return str(text).strip().replace("\ufeff", "").lower()
 
 def is_active(value):
-    # Treats 1, "1", "1.0", "Yes", "True" as True.
     s = str(value).strip().lower()
     return s in ['1', '1.0', 'true', 'yes', 'y']
 
@@ -22,7 +21,7 @@ def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_final():
+def load_data_v7():
     courses = pd.read_csv("courses.csv", encoding="latin1")
     polys = pd.read_csv("polys.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
@@ -34,6 +33,7 @@ def load_data_final():
     reqs.columns = [clean_header(c) for c in reqs.columns]
     links.columns = [clean_header(c) for c in links.columns]
 
+    # Clean IDs
     reqs['course_id'] = reqs['course_id'].astype(str).str.strip()
     courses['course_id'] = courses['course_id'].astype(str).str.strip()
     links['course_id'] = links['course_id'].astype(str).str.strip()
@@ -43,7 +43,7 @@ def load_data_final():
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_final()
+    courses_df, polys_df, reqs_df, links_df = load_data_v7()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -70,44 +70,39 @@ has_tech_credit = st.sidebar.checkbox("Credit (C or better) in Technical Subject
 has_voc_credit = st.sidebar.checkbox("Credit (C or better) in Vocational Subjects?")
 total_credits = st.sidebar.slider("Total Number of Kepujian (C and above):", 0, 12, 3)
 
-# --- ELIGIBILITY ENGINE (FIXED) ---
-def check_eligibility(req):
-    
-    # ---------------------------------------------------------
-    # 1. GLOBAL MANDATORY RULES (The "Gatekeepers")
-    # These apply to ALL courses. We do NOT check the CSV for these.
-    # If the student fails these, they are out. Period.
-    # ---------------------------------------------------------
-    
-    # A. Citizenship
-    if nationality == "Non-Malaysian": return False
-    
-    # B. The "Big Two" (BM & Sejarah)
-    if not is_pass(bm_grade): return False
-    if not is_pass(sejarah_grade): return False
+# --- 1. GATEKEEPER LOGIC (Global Mandates) ---
+# These are checked BEFORE looking at any course.
+def check_gatekeepers():
+    if nationality == "Non-Malaysian":
+        return False, "Malaysian Citizenship is required."
+    if not is_pass(bm_grade):
+        return False, "A Pass in Bahasa Melayu is mandatory."
+    if not is_pass(sejarah_grade):
+        return False, "A Pass in Sejarah is mandatory."
+    return True, "OK"
 
-    # ---------------------------------------------------------
-    # 2. COURSE-SPECIFIC RULES (Dependent on CSV Row)
-    # ---------------------------------------------------------
+# --- 2. ROW EVALUATOR (Partial Constraints) ---
+def check_row_constraints(req):
+    # This function checks if the student meets the constraints IN THIS SPECIFIC ROW.
     
-    # Gender (Some courses are Male Only, most are open)
+    # Gender
     if is_active(req.get('req_male')) and gender == "Female": return False
     
     # Medical
     if is_active(req.get('no_colorblind')) and colorblind == "Yes": return False
     if is_active(req.get('no_disability')) and disability == "Yes": return False
 
-    # English & Math Pass (Usually mandatory, but we check the row just in case)
+    # English & Math (Pass)
     if is_active(req.get('pass_eng')) and not is_pass(bi_grade): return False
     if is_active(req.get('pass_math')) and not is_pass(math_grade): return False
 
-    # 3. Credits (Kepujian)
+    # Credits (Kepujian)
     if is_active(req.get('credit_bm')) and not is_credit(bm_grade): return False
     if is_active(req.get('credit_math')) and not is_credit(math_grade): return False
     if is_active(req.get('credit_eng')) and not is_credit(bi_grade): return False
     if is_active(req.get('credit_bmbi')) and not (is_credit(bm_grade) or is_credit(bi_grade)): return False
 
-    # 4. Science / Tech Logic
+    # Science / Tech Logic
     sci_p = is_pass(science_grade) or has_pure_science
     sci_c = is_credit(science_grade) or has_pure_science
     stv_p = sci_p or has_tech_credit or has_voc_credit
@@ -120,7 +115,7 @@ def check_eligibility(req):
     if is_active(req.get('credit_sfmt')):
         if not (stv_c or is_credit(math_grade)): return False
 
-    # 5. Min Credits
+    # Min Credits
     try:
         min_c = int(float(req.get('min_credits', 0)))
     except:
@@ -131,30 +126,43 @@ def check_eligibility(req):
 
 # --- MAIN FLOW ---
 if st.sidebar.button("Check Eligibility"):
-    eligible_ids = []
     
-    for _, row in reqs_df.iterrows():
-        if check_eligibility(row):
-            eligible_ids.append(row['course_id'])
+    # A. Run Gatekeepers First
+    passed_gates, gate_msg = check_gatekeepers()
     
-    st.session_state['eligible_ids'] = eligible_ids
-    st.session_state['has_checked'] = True
+    if not passed_gates:
+        st.session_state['eligible_ids'] = []
+        st.session_state['fail_reason'] = gate_msg
+        st.session_state['has_checked'] = True
+    else:
+        # B. Run Course Evaluator (AND Logic across rows)
+        eligible_ids = []
+        
+        # Group by Course ID to handle split requirements
+        # If a course has 2 rows, student must pass BOTH rows.
+        grouped = reqs_df.groupby('course_id')
+        
+        for cid, group in grouped:
+            # Check every row in the group
+            # group.apply(...) returns a Series of True/False
+            # .all() ensures every row returned True
+            if group.apply(check_row_constraints, axis=1).all():
+                eligible_ids.append(cid)
+        
+        st.session_state['eligible_ids'] = eligible_ids
+        st.session_state['fail_reason'] = None
+        st.session_state['has_checked'] = True
 
 # --- DISPLAY RESULTS ---
 if st.session_state.get('has_checked', False):
     
     eligible_ids = st.session_state['eligible_ids']
+    fail_reason = st.session_state.get('fail_reason')
     
-    if not eligible_ids:
-        st.warning("No eligible courses found.")
-        # Contextual Explanations for "Global Failures"
-        if nationality == "Non-Malaysian":
-            st.error("Reason: Malaysian Citizenship is required.")
-        elif not is_pass(bm_grade):
-            st.error("Reason: A Pass in Bahasa Melayu is mandatory.")
-        elif not is_pass(sejarah_grade):
-            st.error("Reason: A Pass in Sejarah is mandatory.")
-            
+    if fail_reason:
+        st.error(f"❌ Not Eligible. Reason: {fail_reason}")
+    elif not eligible_ids:
+        st.warning("No eligible courses found based on your specific grades.")
     else:
         st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
         
