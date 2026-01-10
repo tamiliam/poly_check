@@ -22,14 +22,21 @@ def load_data():
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
     links = pd.read_csv("links.csv", encoding="latin1", dtype=str)
 
-    # --- CLEAN WHITESPACE ---
+    # --- 1. CLEAN HEADERS (Crucial Step) ---
+    # This fixes issues where "req_malaysian " (with space) causes logic to fail
+    courses.columns = courses.columns.str.strip()
+    polys.columns = polys.columns.str.strip()
+    reqs.columns = reqs.columns.str.strip()
+    links.columns = links.columns.str.strip()
+
+    # --- 2. CLEAN DATA WHITESPACE ---
     courses["course_ID"] = courses["course_ID"].str.strip()
     polys["institution_ID"] = polys["institution_ID"].str.strip()
     links["course_ID"] = links["course_ID"].str.strip()
     links["institution_ID"] = links["institution_ID"].str.strip()
     reqs["course_ID"] = reqs["course_ID"].astype(str).str.strip()
 
-    # --- NORMALISE REQUIREMENTS (CRITICAL FIX) ---
+    # --- 3. NORMALISE REQUIREMENTS ---
     bool_cols = [
         "req_malaysian", "req_male", "no_colorblind", "no_disability",
         "pass_bm", "pass_history", "pass_eng", "pass_math",
@@ -39,11 +46,14 @@ def load_data():
     ]
 
     for col in bool_cols:
+        # Use .get() to avoid crashing if a column is missing
         if col in reqs.columns:
-            reqs[col] = reqs[col].fillna(0).astype(int)
+            # Force conversion to number (0 or 1)
+            # errors='coerce' turns text like "Yes" into NaN (0)
+            reqs[col] = pd.to_numeric(reqs[col], errors='coerce').fillna(0).astype(int)
 
     if "min_credits" in reqs.columns:
-        reqs["min_credits"] = reqs["min_credits"].fillna(0).astype(int)
+        reqs["min_credits"] = pd.to_numeric(reqs["min_credits"], errors='coerce').fillna(0).astype(int)
 
     return courses, polys, reqs, links
 
