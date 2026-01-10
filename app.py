@@ -5,8 +5,8 @@ import pandas as pd
 st.set_page_config(page_title="Polytechnic Checker", page_icon="🎓")
 
 # --- HELPER: NUCLEAR COMPARISON ---
-# This function forces "1", 1, 1.0, and "1.0" to all equal True
 def is_active(value):
+    # This cleans the value and checks if it looks like a "Yes"
     clean_val = str(value).strip().lower()
     return clean_val in ["1", "1.0", "true", "yes", "y"]
 
@@ -19,28 +19,29 @@ def is_credit(grade): return str(grade).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_final():
-    # Load all as String (dtype=str) to prevent "Smart" conversion errors
+def load_data_forensic():
+    # Load all as String to see the raw data truth
     courses = pd.read_csv("courses.csv", encoding="latin1", dtype=str)
     polys = pd.read_csv("polys.csv", encoding="latin1", dtype=str)
     reqs = pd.read_csv("requirements.csv", encoding="latin1", dtype=str)
     links = pd.read_csv("links.csv", encoding="latin1", dtype=str)
 
-    # Clean Headers
+    # Clean Headers (Strip invisible spaces)
     courses.columns = courses.columns.str.strip()
     polys.columns = polys.columns.str.strip()
     reqs.columns = reqs.columns.str.strip()
     links.columns = links.columns.str.strip()
 
-    # Clean Content
-    for df in [courses, polys, reqs, links]:
-        # Apply stripping to all string columns
-        df.map(lambda x: x.strip() if isinstance(x, str) else x)
+    # Clean Content (Fixing the previous bug where this wasn't saved)
+    courses = courses.map(lambda x: x.strip() if isinstance(x, str) else x)
+    polys = polys.map(lambda x: x.strip() if isinstance(x, str) else x)
+    reqs = reqs.map(lambda x: x.strip() if isinstance(x, str) else x)
+    links = links.map(lambda x: x.strip() if isinstance(x, str) else x)
 
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_final()
+    courses_df, polys_df, reqs_df, links_df = load_data_forensic()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -48,7 +49,6 @@ except Exception as e:
 # --- SIDEBAR INPUTS ---
 st.sidebar.header("Enter Your SPM Results")
 
-# Triggers
 nationality = st.sidebar.radio("Citizenship", ["Malaysian", "Non-Malaysian"])
 gender = st.sidebar.radio("Gender", ["Male", "Female"])
 colorblind = st.sidebar.radio("Are you Colorblind?", ["No", "Yes"])
@@ -68,18 +68,9 @@ has_tech_credit = st.sidebar.checkbox("Credit (C or better) in Technical Subject
 has_voc_credit = st.sidebar.checkbox("Credit (C or better) in Vocational Subjects?")
 total_credits = st.sidebar.slider("Total Number of Kepujian (C and above):", 0, 12, 3)
 
-# --- DEBUG DIAGNOSTICS (Must see this!) ---
-if nationality == "Non-Malaysian":
-    first_course = reqs_df.iloc[0]
-    st.warning(f"🛠 DEBUG MODE: Checking logic for {first_course['course_ID']}")
-    st.write(f"Requirement Column 'req_malaysian' value is: '{first_course.get('req_malaysian', 'MISSING')}'")
-    st.write(f"Is this considered active? {is_active(first_course.get('req_malaysian'))}")
-    st.write("If the above says 'True', then the logic below WILL reject you.")
-
-# --- CORE LOGIC (Using "Nuclear" String Comparison) ---
+# --- CORE LOGIC ---
 def check_eligibility(req):
     # 1. Statutory
-    # We use .get() and is_active() to catch ANY version of "1"
     if is_active(req.get("req_malaysian")) and nationality == "Non-Malaysian": return False
     if is_active(req.get("req_male")) and gender == "Female": return False
     if is_active(req.get("no_colorblind")) and colorblind == "Yes": return False
@@ -112,7 +103,7 @@ def check_eligibility(req):
     if is_active(req.get("credit_sfmt")):
         if not (has_stv_credit or is_credit(math_grade)): return False
 
-    # 5. Total Credits (Convert string to int safely)
+    # 5. Total Credits
     try:
         min_c = int(float(req.get("min_credits", 0)))
     except:
@@ -124,16 +115,33 @@ def check_eligibility(req):
 
 # --- RUN CHECK ---
 eligible_ids = []
+debug_trace = [] # Store data for forensic report
+
 for _, row in reqs_df.iterrows():
     if check_eligibility(row):
         eligible_ids.append(row["course_ID"])
+        # Save the raw 'req_malaysian' value for the report
+        debug_trace.append({
+            "Course ID": row["course_ID"],
+            "Raw req_malaysian Value": row.get("req_malaysian", "MISSING")
+        })
 
-# --- DISPLAY ---
+# --- RESULTS DISPLAY ---
 if not eligible_ids:
     st.warning("No eligible courses found based on these results.")
-    if nationality == "Non-Malaysian":
-        st.error("❌ Rejection Reason: Citizenship (Most courses require Malaysian status).")
 else:
+    # --- FORENSIC REPORT (Only shows if Non-Malaysian) ---
+    if nationality == "Non-Malaysian":
+        st.error(f"⚠️ FORENSIC ALERT: {len(eligible_ids)} courses bypassed the Citizenship check.")
+        st.write("Below are the courses that passed, and the value they have in the 'req_malaysian' column.")
+        st.write("If the value is '0', 'nan', or blank, the system allowed them (Correctly). If it is '1', the logic is broken.")
+        
+        # Convert list to dataframe for display
+        trace_df = pd.DataFrame(debug_trace)
+        st.dataframe(trace_df, use_container_width=True)
+        st.stop() # Stop here so you can read the report
+
+    # Normal Success View
     st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
     
     result_df = courses_df[courses_df["course_ID"].isin(eligible_ids)]
