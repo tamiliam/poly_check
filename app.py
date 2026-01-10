@@ -7,11 +7,11 @@ st.set_page_config(page_title="Polytechnic Checker", page_icon="🎓")
 # --- LOAD DATA ---
 @st.cache_data
 def load_data():
-    # Load CSVs (Make sure filenames match exactly what you uploaded to GitHub)
-    courses = pd.read_csv("courses.csv")
-    polys = pd.read_csv("polys.csv")
-    reqs = pd.read_csv("requirements.csv")
-    links = pd.read_csv("links.csv")
+    # encoding='latin1' handles Excel-generated CSVs that contain special characters
+    courses = pd.read_csv("courses.csv", encoding='latin1')
+    polys = pd.read_csv("polys.csv", encoding='latin1')
+    reqs = pd.read_csv("requirements.csv", encoding='latin1')
+    links = pd.read_csv("links.csv", encoding='latin1')
     return courses, polys, reqs, links
 
 try:
