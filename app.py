@@ -13,16 +13,15 @@ def is_active(value):
     return s in ['1', '1.0', 'true', 'yes', 'y']
 
 # --- GRADE LOGIC ---
-# "G" is a Fail. "T" (Tidak Hadir) is a Fail. "Not Taken" is not a credit.
 PASS_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
-CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"] # C is a Credit
+CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"]
 
 def is_pass(g): return str(g).strip() in PASS_GRADES
 def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v9():
+def load_data_v10():
     courses = pd.read_csv("courses.csv", encoding="latin1")
     polys = pd.read_csv("polys.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
@@ -43,7 +42,7 @@ def load_data_v9():
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v9()
+    courses_df, polys_df, reqs_df, links_df = load_data_v10()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -62,20 +61,20 @@ with st.sidebar.expander("👤 Personal Details", expanded=True):
 grade_opts = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G", "Not Taken"]
 
 with st.sidebar.expander("📚 Compulsory Subjects", expanded=True):
-    bm_grade = st.selectbox("Bahasa Melayu", grade_opts, index=5) # Default C
-    eng_grade = st.selectbox("Bahasa Inggeris", grade_opts, index=6) # Default D
+    bm_grade = st.selectbox("Bahasa Melayu", grade_opts, index=5)
+    eng_grade = st.selectbox("Bahasa Inggeris", grade_opts, index=6)
     hist_grade = st.selectbox("Sejarah", grade_opts, index=6)
     math_grade = st.selectbox("Matematik", grade_opts, index=5)
     islam_moral = st.selectbox("P. Islam / P. Moral", grade_opts, index=5)
 
 with st.sidebar.expander("🧪 Science Stream"):
-    addmath_grade = st.selectbox("Matematik Tambahan", grade_opts, index=10) # Default Not Taken
+    addmath_grade = st.selectbox("Matematik Tambahan", grade_opts, index=10)
     phy_grade = st.selectbox("Fizik", grade_opts, index=10)
     chem_grade = st.selectbox("Kimia", grade_opts, index=10)
     bio_grade = st.selectbox("Biologi", grade_opts, index=10)
 
 with st.sidebar.expander("🎨 Arts & Humanities"):
-    science_gen_grade = st.selectbox("Sains (General)", grade_opts, index=10) # Default Not Taken
+    science_gen_grade = st.selectbox("Sains (General)", grade_opts, index=10)
     geo_grade = st.selectbox("Geografi", grade_opts, index=10)
     acc_grade = st.selectbox("Prinsip Perakaunan", grade_opts, index=10)
     biz_grade = st.selectbox("Perniagaan", grade_opts, index=10)
@@ -83,7 +82,6 @@ with st.sidebar.expander("🎨 Arts & Humanities"):
     psv_grade = st.selectbox("Pendidikan Seni Visual", grade_opts, index=10)
 
 with st.sidebar.expander("🕌 Languages & Islamic Electives"):
-    # Grouping these for simplicity as they count towards credits
     lang_add_grade = st.selectbox("B. Arab / Cina / Tamil / Punjabi", grade_opts, index=10)
     lit_grade = st.selectbox("Kesusasteraan (Melayu/Inggeris/Cina/Tamil)", grade_opts, index=10)
     islam_add_grade = st.selectbox("P. Al-Quran / As-Sunnah / Syariah", grade_opts, index=10)
@@ -99,7 +97,6 @@ with st.sidebar.expander("🛠️ Technical & Vocational Electives"):
     other_voc_grade = st.checkbox("Credit (C or above) in other Vocational Subject")
 
 # --- AUTO-CALCULATE DERIVED STATS ---
-# 1. Total Credits (Count all Cs and above)
 all_subjects = [
     bm_grade, eng_grade, hist_grade, math_grade, islam_moral,
     addmath_grade, phy_grade, chem_grade, bio_grade,
@@ -112,25 +109,10 @@ calculated_credits = 0
 for g in all_subjects:
     if is_credit(g):
         calculated_credits += 1
-
-# Add manual checkboxes
 if other_tech_grade: calculated_credits += 1
 if other_voc_grade: calculated_credits += 1
 
 st.sidebar.info(f"📊 Calculated Total Credits: {calculated_credits}")
-
-# 2. Logic Groupings
-# Science Group
-has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-
-# Technical Group
-has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
-has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
-
-# Vocational Group
-has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
-has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
 
 # --- 1. GATEKEEPER LOGIC ---
 def check_gatekeepers():
@@ -155,26 +137,57 @@ def check_row_constraints(req):
     if is_active(req.get('credit_bm')) and not is_credit(bm_grade): return False
     if is_active(req.get('credit_math')) and not is_credit(math_grade): return False
     if is_active(req.get('credit_eng')) and not is_credit(eng_grade): return False
+    
+    # Rare Case: Credit BM or BI
     if is_active(req.get('credit_bmbi')) and not (is_credit(bm_grade) or is_credit(eng_grade)): return False
 
-    # Science / Tech / Voc Logic
-    # --------------------------
-    # General Science Pass = Pass in General Science OR Pure Science Subject
-    sci_p = is_pass(science_gen_grade) or has_pure_science_pass
-    sci_c = is_credit(science_gen_grade) or has_pure_science_credit
+    # ----------------------------------------------
+    # COMPLEX GROUPS (Science / Tech / Voc Logic)
+    # ----------------------------------------------
     
-    stv_p = sci_p or has_tech_pass or has_voc_pass
-    stv_c = sci_c or has_tech_credit or has_voc_credit
+    # 1. Define the Pools
+    
+    # Pure Science Pool (Any of the 4 major sciences)
+    has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
+    has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
 
-    if is_active(req.get('pass_stv')) and not stv_p: return False
-    if is_active(req.get('credit_stv')) and not stv_c: return False
-    if is_active(req.get('credit_sf')) and not sci_c: return False
+    # Technical Pool
+    has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
+    has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
+
+    # Vocational Pool
+    has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+    has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+
+    # Broad Science Pool (General OR Pure)
+    sci_broad_pass = is_pass(science_gen_grade) or has_pure_science_pass
+    sci_broad_credit = is_credit(science_gen_grade) or has_pure_science_credit
+
+    # STV Pool (Science OR Tech OR Voc)
+    stv_pass = sci_broad_pass or has_tech_pass or has_voc_pass
+    stv_credit = sci_broad_credit or has_tech_credit or has_voc_credit
+
+    # 2. Check the Rules
     
+    # Rule: Pass Science / Tech / Voc
+    if is_active(req.get('pass_stv')) and not stv_pass: return False
+    
+    # Rule: Credit Science / Tech / Voc
+    if is_active(req.get('credit_stv')) and not stv_credit: return False
+
+    # Rule: Credit Science or Fizik (Specific)
+    # Strict Interpretation: General Science OR Physics. (Bio/Chem don't count here)
+    if is_active(req.get('credit_sf')):
+        has_sf = is_credit(science_gen_grade) or is_credit(phy_grade)
+        if not has_sf: return False
+    
+    # Rule: Credit Science or Fizik or Add Math
+    # Strict Interpretation: General Science OR Physics OR Add Math.
     if is_active(req.get('credit_sfmt')):
-        # Science OR Fizik OR Math OR Tech
-        if not (stv_c or is_credit(math_grade)): return False
+        has_sfmt = is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)
+        if not has_sfmt: return False
 
-    # Min Credits (Auto-Calculated)
+    # Min Credits
     try:
         min_c = int(float(req.get('min_credits', 0)))
     except:
