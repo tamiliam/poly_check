@@ -4,66 +4,51 @@ import pandas as pd
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Polytechnic Checker", page_icon="🎓")
 
-# --- GRADE POLICY ---
-PASS_GRADES = set(["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"])
-CREDIT_GRADES = set(["A+", "A", "A-", "B+", "B", "C+", "C"])
+# --- HELPER: NUCLEAR COMPARISON ---
+# This function forces "1", 1, 1.0, and "1.0" to all equal True
+def is_active(value):
+    clean_val = str(value).strip().lower()
+    return clean_val in ["1", "1.0", "true", "yes", "y"]
 
-def is_pass(grade):
-    return grade in PASS_GRADES
+# --- HELPER: GRADE CHECK ---
+PASS_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
+CREDIT_GRADES = ["A+", "A", "A-", "B+", "B", "C+", "C"]
 
-def is_credit(grade):
-    return grade in CREDIT_GRADES
+def is_pass(grade): return str(grade).strip() in PASS_GRADES
+def is_credit(grade): return str(grade).strip() in CREDIT_GRADES
 
-# --- LOAD DATA (Renamed to force fresh reload) ---
+# --- LOAD DATA ---
 @st.cache_data
-def load_data_v2():
-    # 1. Load CSVs
+def load_data_final():
+    # Load all as String (dtype=str) to prevent "Smart" conversion errors
     courses = pd.read_csv("courses.csv", encoding="latin1", dtype=str)
     polys = pd.read_csv("polys.csv", encoding="latin1", dtype=str)
-    reqs = pd.read_csv("requirements.csv", encoding="latin1")
+    reqs = pd.read_csv("requirements.csv", encoding="latin1", dtype=str)
     links = pd.read_csv("links.csv", encoding="latin1", dtype=str)
 
-    # 2. Clean Headers (Strip invisible spaces)
+    # Clean Headers
     courses.columns = courses.columns.str.strip()
     polys.columns = polys.columns.str.strip()
     reqs.columns = reqs.columns.str.strip()
     links.columns = links.columns.str.strip()
 
-    # 3. Clean IDs
-    courses["course_ID"] = courses["course_ID"].str.strip()
-    polys["institution_ID"] = polys["institution_ID"].str.strip()
-    links["course_ID"] = links["course_ID"].str.strip()
-    links["institution_ID"] = links["institution_ID"].str.strip()
-    reqs["course_ID"] = reqs["course_ID"].astype(str).str.strip()
-
-    # 4. Force Logic Columns to Integers (0/1)
-    bool_cols = [
-        "req_malaysian", "req_male", "no_colorblind", "no_disability",
-        "pass_bm", "pass_history", "pass_eng", "pass_math",
-        "credit_bm", "credit_math", "credit_eng",
-        "credit_bmbi", "pass_stv", "credit_stv",
-        "credit_sf", "credit_sfmt"
-    ]
-
-    for col in bool_cols:
-        if col in reqs.columns:
-            reqs[col] = pd.to_numeric(reqs[col], errors='coerce').fillna(0).astype(int)
-
-    if "min_credits" in reqs.columns:
-        reqs["min_credits"] = pd.to_numeric(reqs["min_credits"], errors='coerce').fillna(0).astype(int)
+    # Clean Content
+    for df in [courses, polys, reqs, links]:
+        # Apply stripping to all string columns
+        df.map(lambda x: x.strip() if isinstance(x, str) else x)
 
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v2()
+    courses_df, polys_df, reqs_df, links_df = load_data_final()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
 
-# --- SIDEBAR (INPUTS) ---
+# --- SIDEBAR INPUTS ---
 st.sidebar.header("Enter Your SPM Results")
 
-# Changing these will now trigger an IMMEDIATE Recalculation
+# Triggers
 nationality = st.sidebar.radio("Citizenship", ["Malaysian", "Non-Malaysian"])
 gender = st.sidebar.radio("Gender", ["Male", "Female"])
 colorblind = st.sidebar.radio("Are you Colorblind?", ["No", "Yes"])
@@ -83,27 +68,36 @@ has_tech_credit = st.sidebar.checkbox("Credit (C or better) in Technical Subject
 has_voc_credit = st.sidebar.checkbox("Credit (C or better) in Vocational Subjects?")
 total_credits = st.sidebar.slider("Total Number of Kepujian (C and above):", 0, 12, 3)
 
-# --- LOGIC ---
+# --- DEBUG DIAGNOSTICS (Must see this!) ---
+if nationality == "Non-Malaysian":
+    first_course = reqs_df.iloc[0]
+    st.warning(f"🛠 DEBUG MODE: Checking logic for {first_course['course_ID']}")
+    st.write(f"Requirement Column 'req_malaysian' value is: '{first_course.get('req_malaysian', 'MISSING')}'")
+    st.write(f"Is this considered active? {is_active(first_course.get('req_malaysian'))}")
+    st.write("If the above says 'True', then the logic below WILL reject you.")
+
+# --- CORE LOGIC (Using "Nuclear" String Comparison) ---
 def check_eligibility(req):
     # 1. Statutory
-    if req.get("req_malaysian", 0) == 1 and nationality == "Non-Malaysian": return False
-    if req.get("req_male", 0) == 1 and gender == "Female": return False
-    if req.get("no_colorblind", 0) == 1 and colorblind == "Yes": return False
-    if req.get("no_disability", 0) == 1 and disability == "Yes": return False
+    # We use .get() and is_active() to catch ANY version of "1"
+    if is_active(req.get("req_malaysian")) and nationality == "Non-Malaysian": return False
+    if is_active(req.get("req_male")) and gender == "Female": return False
+    if is_active(req.get("no_colorblind")) and colorblind == "Yes": return False
+    if is_active(req.get("no_disability")) and disability == "Yes": return False
 
     # 2. Core Subjects (Pass)
-    if req.get("pass_bm", 0) == 1 and not is_pass(bm_grade): return False
-    if req.get("pass_history", 0) == 1 and not is_pass(sejarah_grade): return False
-    if req.get("pass_eng", 0) == 1 and not is_pass(bi_grade): return False
-    if req.get("pass_math", 0) == 1 and not is_pass(math_grade): return False
+    if is_active(req.get("pass_bm")) and not is_pass(bm_grade): return False
+    if is_active(req.get("pass_history")) and not is_pass(sejarah_grade): return False
+    if is_active(req.get("pass_eng")) and not is_pass(bi_grade): return False
+    if is_active(req.get("pass_math")) and not is_pass(math_grade): return False
 
     # 3. Core Subjects (Credit)
-    if req.get("credit_bm", 0) == 1 and not is_credit(bm_grade): return False
-    if req.get("credit_math", 0) == 1 and not is_credit(math_grade): return False
-    if req.get("credit_eng", 0) == 1 and not is_credit(bi_grade): return False
+    if is_active(req.get("credit_bm")) and not is_credit(bm_grade): return False
+    if is_active(req.get("credit_math")) and not is_credit(math_grade): return False
+    if is_active(req.get("credit_eng")) and not is_credit(bi_grade): return False
 
     # 4. Special Groups
-    if req.get("credit_bmbi", 0) == 1:
+    if is_active(req.get("credit_bmbi")):
         if not (is_credit(bm_grade) or is_credit(bi_grade)): return False
 
     has_sci_pass = is_pass(science_grade) or has_pure_science
@@ -111,24 +105,30 @@ def check_eligibility(req):
     has_stv_pass = has_sci_pass or has_tech_credit or has_voc_credit
     has_stv_credit = has_sci_credit or has_tech_credit or has_voc_credit
 
-    if req.get("pass_stv", 0) == 1 and not has_stv_pass: return False
-    if req.get("credit_stv", 0) == 1 and not has_stv_credit: return False
-    if req.get("credit_sf", 0) == 1 and not has_sci_credit: return False
-    if req.get("credit_sfmt", 0) == 1:
+    if is_active(req.get("pass_stv")) and not has_stv_pass: return False
+    if is_active(req.get("credit_stv")) and not has_stv_credit: return False
+    if is_active(req.get("credit_sf")) and not has_sci_credit: return False
+    
+    if is_active(req.get("credit_sfmt")):
         if not (has_stv_credit or is_credit(math_grade)): return False
 
-    # 5. Total Credits
-    if total_credits < req.get("min_credits", 0): return False
+    # 5. Total Credits (Convert string to int safely)
+    try:
+        min_c = int(float(req.get("min_credits", 0)))
+    except:
+        min_c = 0
+        
+    if total_credits < min_c: return False
 
     return True
 
-# --- MAIN FLOW (No Button - Runs Automatically) ---
+# --- RUN CHECK ---
 eligible_ids = []
 for _, row in reqs_df.iterrows():
     if check_eligibility(row):
         eligible_ids.append(row["course_ID"])
 
-# --- RESULTS DISPLAY ---
+# --- DISPLAY ---
 if not eligible_ids:
     st.warning("No eligible courses found based on these results.")
     if nationality == "Non-Malaysian":
