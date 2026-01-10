@@ -65,9 +65,9 @@ except Exception as e:
 
 # --- DEBUGGER (Add this right after the try/except block) ---
 # This lets you see if 'req_malaysian' is actually 1 or 0
-# with st.expander("🕵️ Developer Data View (Click to Inspect)"):
-st.write("First 5 rows of Requirements Table:")
-st.dataframe(reqs_df.head())
+with st.expander("🕵️ Developer Data View (Click to Inspect)"):
+    st.write("First 5 rows of Requirements Table:")
+    st.dataframe(reqs_df.head())
 
 
 # --- SIDEBAR ---
