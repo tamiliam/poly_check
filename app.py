@@ -4,21 +4,47 @@ import pandas as pd
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Polytechnic Checker", page_icon="🎓")
 
+# --- GRADE POLICY (EXTERNALISED) ---
+PASS_GRADES = set(["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"])
+CREDIT_GRADES = set(["A+", "A", "A-", "B+", "B", "C+", "C"])
+
+def is_pass(grade):
+    return grade in PASS_GRADES
+
+def is_credit(grade):
+    return grade in CREDIT_GRADES
+
 # --- LOAD DATA ---
 @st.cache_data
 def load_data():
-    courses = pd.read_csv("courses.csv", encoding='latin1', dtype=str)
-    polys = pd.read_csv("polys.csv", encoding='latin1', dtype=str)
-    reqs = pd.read_csv("requirements.csv", encoding='latin1') 
-    links = pd.read_csv("links.csv", encoding='latin1', dtype=str)
-    
-    # Clean Whitespace
-    courses['course_ID'] = courses['course_ID'].str.strip()
-    reqs['course_ID'] = reqs['course_ID'].astype(str).str.strip()
-    links['course_ID'] = links['course_ID'].str.strip()
-    links['institution_ID'] = links['institution_ID'].str.strip()
-    polys['institution_ID'] = polys['institution_ID'].str.strip()
-    
+    courses = pd.read_csv("courses.csv", encoding="latin1", dtype=str)
+    polys = pd.read_csv("polys.csv", encoding="latin1", dtype=str)
+    reqs = pd.read_csv("requirements.csv", encoding="latin1")
+    links = pd.read_csv("links.csv", encoding="latin1", dtype=str)
+
+    # --- CLEAN WHITESPACE ---
+    courses["course_ID"] = courses["course_ID"].str.strip()
+    polys["institution_ID"] = polys["institution_ID"].str.strip()
+    links["course_ID"] = links["course_ID"].str.strip()
+    links["institution_ID"] = links["institution_ID"].str.strip()
+    reqs["course_ID"] = reqs["course_ID"].astype(str).str.strip()
+
+    # --- NORMALISE REQUIREMENTS (CRITICAL FIX) ---
+    bool_cols = [
+        "req_malaysian", "req_male", "no_colorblind", "no_disability",
+        "pass_bm", "pass_history", "pass_eng", "pass_math",
+        "credit_bm", "credit_math", "credit_eng",
+        "credit_bmbi", "pass_stv", "credit_stv",
+        "credit_sf", "credit_sfmt"
+    ]
+
+    for col in bool_cols:
+        if col in reqs.columns:
+            reqs[col] = reqs[col].fillna(0).astype(int)
+
+    if "min_credits" in reqs.columns:
+        reqs["min_credits"] = reqs["min_credits"].fillna(0).astype(int)
+
     return courses, polys, reqs, links
 
 try:
@@ -30,13 +56,11 @@ except Exception as e:
 # --- SIDEBAR ---
 st.sidebar.header("Enter Your SPM Results")
 
-# Demographics
 nationality = st.sidebar.radio("Citizenship", ["Malaysian", "Non-Malaysian"])
 gender = st.sidebar.radio("Gender", ["Male", "Female"])
 colorblind = st.sidebar.radio("Are you Colorblind?", ["No", "Yes"])
 disability = st.sidebar.radio("Do you have a physical disability?", ["No", "Yes"])
 
-# Grades
 grade_opts = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G"]
 st.sidebar.markdown("### Core Subjects")
 bm_grade = st.sidebar.selectbox("Bahasa Melayu", grade_opts, index=6)
@@ -45,106 +69,123 @@ bi_grade = st.sidebar.selectbox("Bahasa Inggeris", grade_opts, index=6)
 math_grade = st.sidebar.selectbox("Matematik", grade_opts, index=6)
 science_grade = st.sidebar.selectbox("Sains (General)", grade_opts, index=6)
 
-# Credits
 st.sidebar.markdown("### Additional Credits")
 has_pure_science = st.sidebar.checkbox("Credit (C or better) in Bio/Physics/Chem?")
 has_tech_credit = st.sidebar.checkbox("Credit (C or better) in Technical Subjects?")
 has_voc_credit = st.sidebar.checkbox("Credit (C or better) in Vocational Subjects?")
 total_credits = st.sidebar.slider("Total Number of Kepujian (C and above):", 0, 12, 3)
 
-# --- LOGIC ---
-def is_pass(grade): return grade in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
-def is_credit(grade): return grade in ["A+", "A", "A-", "B+", "B", "C+", "C"]
-
+# --- ELIGIBILITY LOGIC ---
 def check_eligibility(req):
     # 1. Statutory
-    if req.get('req_malaysian', 0) == 1 and nationality == "Non-Malaysian": return False, "Citizenship"
-    if req.get('req_male', 0) == 1 and gender == "Female": return False, "Male Only"
-    if req.get('no_colorblind', 0) == 1 and colorblind == "Yes": return False, "Colorblindness"
-    if req.get('no_disability', 0) == 1 and disability == "Yes": return False, "Physical Disability"
+    if req["req_malaysian"] and nationality == "Non-Malaysian":
+        return False, "Citizenship"
+    if req["req_male"] and gender == "Female":
+        return False, "Male Only"
+    if req["no_colorblind"] and colorblind == "Yes":
+        return False, "Colorblindness"
+    if req["no_disability"] and disability == "Yes":
+        return False, "Physical Disability"
 
     # 2. Core Subjects (Pass)
-    if req.get('pass_bm', 0) == 1 and not is_pass(bm_grade): return False, "Fail BM"
-    if req.get('pass_history', 0) == 1 and not is_pass(sejarah_grade): return False, "Fail Sejarah"
-    if req.get('pass_eng', 0) == 1 and not is_pass(bi_grade): return False, "Fail English"
-    if req.get('pass_math', 0) == 1 and not is_pass(math_grade): return False, "Fail Math"
-    
+    if req["pass_bm"] and not is_pass(bm_grade):
+        return False, "Fail BM"
+    if req["pass_history"] and not is_pass(sejarah_grade):
+        return False, "Fail Sejarah"
+    if req["pass_eng"] and not is_pass(bi_grade):
+        return False, "Fail English"
+    if req["pass_math"] and not is_pass(math_grade):
+        return False, "Fail Math"
+
     # 3. Core Subjects (Credit)
-    if req.get('credit_bm', 0) == 1 and not is_credit(bm_grade): return False, "No Credit BM"
-    if req.get('credit_math', 0) == 1 and not is_credit(math_grade): return False, "No Credit Math"
-    if req.get('credit_eng', 0) == 1 and not is_credit(bi_grade): return False, "No Credit English"
-    
-    # 4. Specialized Group Logic
-    if req.get('credit_bmbi', 0) == 1:
-        if not (is_credit(bm_grade) or is_credit(bi_grade)): return False, "No Credit in BM or English"
+    if req["credit_bm"] and not is_credit(bm_grade):
+        return False, "No Credit BM"
+    if req["credit_math"] and not is_credit(math_grade):
+        return False, "No Credit Math"
+    if req["credit_eng"] and not is_credit(bi_grade):
+        return False, "No Credit English"
+
+    # 4. Specialised Group Logic
+    if req["credit_bmbi"]:
+        if not (is_credit(bm_grade) or is_credit(bi_grade)):
+            return False, "No Credit in BM or English"
 
     has_sci_pass = is_pass(science_grade) or has_pure_science
     has_sci_credit = is_credit(science_grade) or has_pure_science
     has_stv_pass = has_sci_pass or has_tech_credit or has_voc_credit
     has_stv_credit = has_sci_credit or has_tech_credit or has_voc_credit
-    
-    if req.get('pass_stv', 0) == 1 and not has_stv_pass: return False, "Fail Science/Tech/Voc"
-    if req.get('credit_stv', 0) == 1 and not has_stv_credit: return False, "No Credit Science/Tech/Voc"
-    if req.get('credit_sf', 0) == 1 and not has_sci_credit: return False, "No Credit Science/Physics"
-    if req.get('credit_sfmt', 0) == 1:
-        if not (has_stv_credit or is_credit(math_grade)): return False, "No Credit Science/Math/Tech"
+
+    if req["pass_stv"] and not has_stv_pass:
+        return False, "Fail Science/Tech/Voc"
+    if req["credit_stv"] and not has_stv_credit:
+        return False, "No Credit Science/Tech/Voc"
+    if req["credit_sf"] and not has_sci_credit:
+        return False, "No Credit Science/Physics"
+    if req["credit_sfmt"]:
+        if not (has_stv_credit or is_credit(math_grade)):
+            return False, "No Credit Science/Math/Tech"
 
     # 5. Total Credits
-    if total_credits < req.get('min_credits', 0): return False, f"Min {req.get('min_credits', 0)} Credits Required"
+    if total_credits < req["min_credits"]:
+        return False, f"Min {req['min_credits']} Credits Required"
 
     return True, "OK"
 
-# --- MAIN APP FLOW ---
-
-# 1. Handle Button Click (Update State)
+# --- MAIN FLOW ---
 if st.sidebar.button("Check Eligibility"):
     eligible = []
     for _, row in reqs_df.iterrows():
-        is_ok, _ = check_eligibility(row)
-        if is_ok: eligible.append(row['course_ID'])
-    
-    # Save to memory (Session State)
-    st.session_state['eligible_ids'] = eligible
-    st.session_state['has_checked'] = True
+        ok, _ = check_eligibility(row)
+        if ok:
+            eligible.append(row["course_ID"])
 
-# 2. Display Results (Read from State)
-if st.session_state.get('has_checked', False):
-    
-    eligible_ids = st.session_state['eligible_ids']
-    
+    st.session_state["eligible_ids"] = eligible
+    st.session_state["has_checked"] = True
+
+if st.session_state.get("has_checked", False):
+
+    eligible_ids = st.session_state["eligible_ids"]
+
     if not eligible_ids:
         st.warning("No eligible courses found based on these results.")
     else:
         st.success(f"You are eligible for {len(eligible_ids)} courses!")
-        
-        # Filter Courses
-        result_df = courses_df[courses_df['course_ID'].isin(eligible_ids)]
-        
-        # Display Main Table
+
+        result_df = courses_df[courses_df["course_ID"].isin(eligible_ids)]
+
         st.dataframe(
-            result_df[['course', 'field', 'department']], 
+            result_df[["course", "field", "department"]],
             use_container_width=True,
             hide_index=True
         )
-        
+
         st.markdown("---")
         st.markdown("### 📍 Course Locations")
-        
-        # Dropdown for locations
-        # Note: We do NOT rely on button state here. We just read the DF.
-        course_names = result_df['course'].unique()
-        selected_course = st.selectbox("Select a course to view campuses:", course_names)
-        
+
+        course_names = result_df["course"].unique()
+        selected_course = st.selectbox(
+            "Select a course to view campuses:",
+            course_names
+        )
+
         if selected_course:
-            # Look up ID safely
-            sel_id = result_df[result_df['course'] == selected_course].iloc[0]['course_ID']
-            
-            # Find Polys
-            poly_ids = links_df[links_df['course_ID'] == sel_id]['institution_ID']
-            final_polys = polys_df[polys_df['institution_ID'].isin(poly_ids)]
-            
+            sel_id = (
+                result_df[result_df["course"] == selected_course]
+                .iloc[0]["course_ID"]
+            )
+
+            poly_ids = links_df[
+                links_df["course_ID"] == sel_id
+            ]["institution_ID"]
+
+            final_polys = polys_df[
+                polys_df["institution_ID"].isin(poly_ids)
+            ]
+
             if not final_polys.empty:
-                st.table(final_polys[['institution_name', 'State', 'category']])
+                st.table(
+                    final_polys[["institution_name", "State", "category"]]
+                )
             else:
                 st.info("Location data pending.")
 
