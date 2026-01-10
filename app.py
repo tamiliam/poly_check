@@ -252,3 +252,61 @@ if st.session_state.get('has_checked', False):
 
 else:
     st.info("👈 Enter your results in the sidebar and click 'Check Eligibility'")
+
+# --- DEBUG / INSPECTOR TOOL ---
+st.markdown("---")
+st.header("🕵️ Why wasn't I eligible?")
+
+# 1. Get list of courses NOT in the eligible list
+all_course_ids = set(courses_df['course_id'].unique())
+eligible_set = set(st.session_state.get('eligible_ids', []))
+rejected_ids = list(all_course_ids - eligible_set)
+
+# 2. Select a course to investigate
+if rejected_ids:
+    # Create a mapping of Name -> ID for the dropdown
+    rejected_courses = courses_df[courses_df['course_id'].isin(rejected_ids)]
+    course_options = dict(zip(rejected_courses['course'], rejected_courses['course_id']))
+    
+    inspect_name = st.selectbox("Select a rejected course to see the reason:", options=course_options.keys())
+    
+    if inspect_name:
+        inspect_id = course_options[inspect_name]
+        
+        # 3. Re-run logic JUST for this course with "Explain Mode"
+        st.write(f"Analyzing **{inspect_name}** ({inspect_id})...")
+        
+        # Check Gatekeepers first
+        passed_gates, gate_msg = check_gatekeepers()
+        if not passed_gates:
+            st.error(f"Global Rejection: {gate_msg}")
+        else:
+            # Check Rows
+            rows = reqs_df[reqs_df['course_id'] == inspect_id]
+            
+            for index, row in rows.iterrows():
+                # We manually check the constraints here and print the failure
+                # Note: This is a simplified manual check for display purposes
+                
+                st.markdown(f"**Checking Requirement Row #{index+1}:**")
+                
+                # Copying the logic from check_row_constraints but adding print statements
+                reasons = []
+                
+                # Examples of what failed
+                if is_active(row.get('req_male')) and gender == "Female": reasons.append("Requires Male")
+                if is_active(row.get('pass_math')) and not is_pass(math_grade): reasons.append("Requires Pass in Math")
+                if is_active(row.get('credit_math')) and not is_credit(math_grade): reasons.append("Requires Credit in Math")
+                
+                # Science/Tech Logic Debug
+                # (You can expand this to cover the full logic if needed)
+                # ...
+                
+                if reasons:
+                    for r in reasons:
+                        st.error(f"❌ {r}")
+                else:
+                    st.success("✅ This requirement row matches your profile.")
+                    
+else:
+    st.info("You are eligible for all courses! (Or you haven't run the check yet).")
