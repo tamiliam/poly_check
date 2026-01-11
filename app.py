@@ -21,7 +21,7 @@ def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v10():
+def load_data_v11():
     courses = pd.read_csv("courses.csv", encoding="latin1")
     polys = pd.read_csv("polys.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
@@ -42,7 +42,7 @@ def load_data_v10():
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v10()
+    courses_df, polys_df, reqs_df, links_df = load_data_v11()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -52,49 +52,49 @@ st.sidebar.header("Student Profile")
 
 # 1. Demographics
 with st.sidebar.expander("👤 Personal Details", expanded=True):
-    nationality = st.radio("Citizenship", ["Malaysian", "Non-Malaysian"])
-    gender = st.radio("Gender", ["Male", "Female"])
-    colorblind = st.radio("Colorblind?", ["No", "Yes"])
-    disability = st.radio("Physical Disability?", ["No", "Yes"])
+    nationality = st.radio("Citizenship", ["Malaysian", "Non-Malaysian"], key="nat_input")
+    gender = st.radio("Gender", ["Male", "Female"], key="gen_input")
+    colorblind = st.radio("Colorblind?", ["No", "Yes"], key="cb_input")
+    disability = st.radio("Physical Disability?", ["No", "Yes"], key="dis_input")
 
 # 2. Subjects
 grade_opts = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G", "Not Taken"]
 
 with st.sidebar.expander("📚 Compulsory Subjects", expanded=True):
-    bm_grade = st.selectbox("Bahasa Melayu", grade_opts, index=5)
-    eng_grade = st.selectbox("Bahasa Inggeris", grade_opts, index=6)
-    hist_grade = st.selectbox("Sejarah", grade_opts, index=6)
-    math_grade = st.selectbox("Matematik", grade_opts, index=5)
-    islam_moral = st.selectbox("P. Islam / P. Moral", grade_opts, index=5)
+    bm_grade = st.selectbox("Bahasa Melayu", grade_opts, index=5, key="bm_input")
+    eng_grade = st.selectbox("Bahasa Inggeris", grade_opts, index=6, key="bi_input")
+    hist_grade = st.selectbox("Sejarah", grade_opts, index=6, key="hist_input")
+    math_grade = st.selectbox("Matematik", grade_opts, index=5, key="math_input")
+    islam_moral = st.selectbox("P. Islam / P. Moral", grade_opts, index=5, key="rel_input")
 
 with st.sidebar.expander("🧪 Science Stream"):
-    addmath_grade = st.selectbox("Matematik Tambahan", grade_opts, index=10)
-    phy_grade = st.selectbox("Fizik", grade_opts, index=10)
-    chem_grade = st.selectbox("Kimia", grade_opts, index=10)
-    bio_grade = st.selectbox("Biologi", grade_opts, index=10)
+    addmath_grade = st.selectbox("Matematik Tambahan", grade_opts, index=10, key="am_input")
+    phy_grade = st.selectbox("Fizik", grade_opts, index=10, key="phy_input")
+    chem_grade = st.selectbox("Kimia", grade_opts, index=10, key="chem_input")
+    bio_grade = st.selectbox("Biologi", grade_opts, index=10, key="bio_input")
 
 with st.sidebar.expander("🎨 Arts & Humanities"):
-    science_gen_grade = st.selectbox("Sains (General)", grade_opts, index=10)
-    geo_grade = st.selectbox("Geografi", grade_opts, index=10)
-    acc_grade = st.selectbox("Prinsip Perakaunan", grade_opts, index=10)
-    biz_grade = st.selectbox("Perniagaan", grade_opts, index=10)
-    econ_grade = st.selectbox("Ekonomi", grade_opts, index=10)
-    psv_grade = st.selectbox("Pendidikan Seni Visual", grade_opts, index=10)
+    science_gen_grade = st.selectbox("Sains (General)", grade_opts, index=10, key="sci_input")
+    geo_grade = st.selectbox("Geografi", grade_opts, index=10, key="geo_input")
+    acc_grade = st.selectbox("Prinsip Perakaunan", grade_opts, index=10, key="acc_input")
+    biz_grade = st.selectbox("Perniagaan", grade_opts, index=10, key="biz_input")
+    econ_grade = st.selectbox("Ekonomi", grade_opts, index=10, key="econ_input")
+    psv_grade = st.selectbox("Pendidikan Seni Visual", grade_opts, index=10, key="psv_input")
 
 with st.sidebar.expander("🕌 Languages & Islamic Electives"):
-    lang_add_grade = st.selectbox("B. Arab / Cina / Tamil / Punjabi", grade_opts, index=10)
-    lit_grade = st.selectbox("Kesusasteraan (Melayu/Inggeris/Cina/Tamil)", grade_opts, index=10)
-    islam_add_grade = st.selectbox("P. Al-Quran / As-Sunnah / Syariah", grade_opts, index=10)
+    lang_add_grade = st.selectbox("B. Arab / Cina / Tamil / Punjabi", grade_opts, index=10, key="lang_input")
+    lit_grade = st.selectbox("Kesusasteraan (Melayu/Inggeris/Cina/Tamil)", grade_opts, index=10, key="lit_input")
+    islam_add_grade = st.selectbox("P. Al-Quran / As-Sunnah / Syariah", grade_opts, index=10, key="rel_add_input")
 
 with st.sidebar.expander("🛠️ Technical & Vocational Electives"):
-    rekacipta_grade = st.selectbox("Reka Cipta", grade_opts, index=10)
-    cs_grade = st.selectbox("Sains Komputer", grade_opts, index=10)
-    pertanian_grade = st.selectbox("Pertanian", grade_opts, index=10)
-    srt_grade = st.selectbox("Sains Rumah Tangga", grade_opts, index=10)
+    rekacipta_grade = st.selectbox("Reka Cipta", grade_opts, index=10, key="rc_input")
+    cs_grade = st.selectbox("Sains Komputer", grade_opts, index=10, key="cs_input")
+    pertanian_grade = st.selectbox("Pertanian", grade_opts, index=10, key="agro_input")
+    srt_grade = st.selectbox("Sains Rumah Tangga", grade_opts, index=10, key="srt_input")
     
     st.caption("Others")
-    other_tech_grade = st.checkbox("Credit (C or above) in other Technical Subject")
-    other_voc_grade = st.checkbox("Credit (C or above) in other Vocational Subject")
+    other_tech_grade = st.checkbox("Credit (C or above) in other Technical Subject", key="tech_check")
+    other_voc_grade = st.checkbox("Credit (C or above) in other Vocational Subject", key="voc_check")
 
 # --- AUTO-CALCULATE DERIVED STATS ---
 all_subjects = [
@@ -138,51 +138,37 @@ def check_row_constraints(req):
     if is_active(req.get('credit_math')) and not is_credit(math_grade): return False
     if is_active(req.get('credit_eng')) and not is_credit(eng_grade): return False
     
-    # Rare Case: Credit BM or BI
+    # Credit BM or BI
     if is_active(req.get('credit_bmbi')) and not (is_credit(bm_grade) or is_credit(eng_grade)): return False
 
     # ----------------------------------------------
     # COMPLEX GROUPS (Science / Tech / Voc Logic)
     # ----------------------------------------------
     
-    # 1. Define the Pools
-    
-    # Pure Science Pool (Any of the 4 major sciences)
+    # Define Pools
     has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
     has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
 
-    # Technical Pool
     has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
     has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
 
-    # Vocational Pool
     has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
     has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
 
-    # Broad Science Pool (General OR Pure)
     sci_broad_pass = is_pass(science_gen_grade) or has_pure_science_pass
     sci_broad_credit = is_credit(science_gen_grade) or has_pure_science_credit
 
-    # STV Pool (Science OR Tech OR Voc)
     stv_pass = sci_broad_pass or has_tech_pass or has_voc_pass
     stv_credit = sci_broad_credit or has_tech_credit or has_voc_credit
 
-    # 2. Check the Rules
-    
-    # Rule: Pass Science / Tech / Voc
+    # Check Rules
     if is_active(req.get('pass_stv')) and not stv_pass: return False
-    
-    # Rule: Credit Science / Tech / Voc
     if is_active(req.get('credit_stv')) and not stv_credit: return False
 
-    # Rule: Credit Science or Fizik (Specific)
-    # Strict Interpretation: General Science OR Physics. (Bio/Chem don't count here)
     if is_active(req.get('credit_sf')):
         has_sf = is_credit(science_gen_grade) or is_credit(phy_grade)
         if not has_sf: return False
     
-    # Rule: Credit Science or Fizik or Add Math
-    # Strict Interpretation: General Science OR Physics OR Add Math.
     if is_active(req.get('credit_sfmt')):
         has_sfmt = is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)
         if not has_sfmt: return False
@@ -198,7 +184,7 @@ def check_row_constraints(req):
     return True
 
 # --- MAIN FLOW ---
-if st.sidebar.button("Check Eligibility"):
+if st.sidebar.button("Check Eligibility", key="check_btn"):
     
     passed_gates, gate_msg = check_gatekeepers()
     
@@ -224,6 +210,7 @@ if st.session_state.get('has_checked', False):
     eligible_ids = st.session_state['eligible_ids']
     fail_reason = st.session_state.get('fail_reason')
     
+    # 1. MAIN RESULTS
     if fail_reason:
         st.error(f"❌ Not Eligible. Reason: {fail_reason}")
     elif not eligible_ids:
@@ -238,7 +225,8 @@ if st.session_state.get('has_checked', False):
         st.markdown("---")
         st.markdown("### 📍 Course Locations")
         
-        sel = st.selectbox("Select a course to view campuses:", res['course'].unique())
+        # KEY ADDED HERE TO PREVENT DUPLICATE ID ERROR
+        sel = st.selectbox("Select a course to view campuses:", res['course'].unique(), key="location_select")
         
         if sel:
             cid = res[res['course'] == sel].iloc[0]['course_id']
@@ -250,156 +238,95 @@ if st.session_state.get('has_checked', False):
             else:
                 st.info("No specific campus location data available.")
 
-else:
-    st.info("👈 Enter your results in the sidebar and click 'Check Eligibility'")
-
-
-# --- DISPLAY RESULTS ---
-if st.session_state.get('has_checked', False):
-    
-    eligible_ids = st.session_state['eligible_ids']
-    fail_reason = st.session_state.get('fail_reason')
-    
-    # 1. THE MAIN RESULTS
-    if fail_reason:
-        st.error(f"❌ Not Eligible. Reason: {fail_reason}")
-    elif not eligible_ids:
-        st.warning("No eligible courses found based on your specific grades.")
-        st.write(f"Total Credits Detected: {calculated_credits}")
-    else:
-        st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
-        
-        res = courses_df[courses_df['course_id'].isin(eligible_ids)]
-        st.dataframe(res[['course', 'field', 'department']], hide_index=True, use_container_width=True)
-
-        st.markdown("---")
-        st.markdown("### 📍 Course Locations")
-        
-        sel = st.selectbox("Select a course to view campuses:", res['course'].unique())
-        
-        if sel:
-            cid = res[res['course'] == sel].iloc[0]['course_id']
-            pids = links_df[links_df['course_id'] == cid]['institution_id']
-            final = polys_df[polys_df['institution_id'].isin(pids)]
-            
-            if not final.empty:
-                st.table(final[['institution_name', 'state', 'category']])
-            else:
-                st.info("No specific campus location data available.")
-
-    # 2. THE FORENSIC INSPECTOR (IMPROVED)
+    # 2. FORENSIC INSPECTOR
     st.markdown("---")
     st.header("🕵️ Why wasn't I eligible?")
     st.write("Select a course below to see exactly which requirement you missed.")
 
-    # Calculate rejected list
     all_course_ids = set(courses_df['course_id'].unique())
     eligible_set = set(eligible_ids)
     rejected_ids = list(all_course_ids - eligible_set)
     
     if rejected_ids:
-        # Create mapping Name -> ID
         rejected_courses = courses_df[courses_df['course_id'].isin(rejected_ids)]
-        # Sort alphabetically for easier finding
         rejected_courses = rejected_courses.sort_values('course')
         course_options = dict(zip(rejected_courses['course'], rejected_courses['course_id']))
         
-        inspect_name = st.selectbox("Select a rejected course:", options=course_options.keys())
+        # KEY ADDED HERE TO PREVENT DUPLICATE ID ERROR
+        inspect_name = st.selectbox("Select a rejected course:", options=course_options.keys(), key="inspect_select")
         
         if inspect_name:
             inspect_id = course_options[inspect_name]
             st.markdown(f"### 🧐 Analysis for: {inspect_name}")
             
-            # A. GATEKEEPER CHECK (The "Must Haves")
-            st.markdown("#### 1. Global Gatekeepers")
+            # A. Gatekeepers
             gate_pass, gate_msg = check_gatekeepers()
             if not gate_pass:
                 st.error(f"❌ FAILED: {gate_msg}")
-                st.stop() # Stop analysis if they fail the basics
             else:
                 st.success("✅ Global Requirements (Citizenship, BM, Sejarah) Met")
 
-            # B. ROW CHECK (The "Specifics")
-            st.markdown("#### 2. Specific Requirements")
-            
-            # Get the rows for this course
-            rows = reqs_df[reqs_df['course_id'] == inspect_id]
-            
-            if rows.empty:
-                st.error("⚠️ Error: No requirements found for this course in the database.")
-            
-            count = 1
-            for index, req in rows.iterrows():
-                st.markdown(f"**Criteria Set #{count}:**")
+                # B. Specifics
+                rows = reqs_df[reqs_df['course_id'] == inspect_id]
                 
-                # --- MANUAL FORENSIC LOGIC ---
-                # This explicitly prints WHY it failed, mirroring check_row_constraints
-                reasons = []
+                if rows.empty:
+                    st.error("⚠️ Error: No requirements found for this course.")
+                
+                count = 1
+                for index, req in rows.iterrows():
+                    st.markdown(f"**Criteria Set #{count}:**")
+                    reasons = []
 
-                # Gender/Health
-                if is_active(req.get('req_male')) and gender == "Female": reasons.append("Requires Male applicants.")
-                if is_active(req.get('no_colorblind')) and colorblind == "Yes": reasons.append("Cannot accept Colorblind applicants.")
-                if is_active(req.get('no_disability')) and disability == "Yes": reasons.append("Cannot accept applicants with physical disabilities.")
+                    if is_active(req.get('req_male')) and gender == "Female": reasons.append("Requires Male applicants.")
+                    if is_active(req.get('no_colorblind')) and colorblind == "Yes": reasons.append("Cannot accept Colorblind applicants.")
+                    if is_active(req.get('no_disability')) and disability == "Yes": reasons.append("Cannot accept applicants with physical disabilities.")
 
-                # Core Grades
-                if is_active(req.get('pass_eng')) and not is_pass(eng_grade): reasons.append("Requires Pass in English.")
-                if is_active(req.get('pass_math')) and not is_pass(math_grade): reasons.append("Requires Pass in Mathematics.")
-                if is_active(req.get('credit_bm')) and not is_credit(bm_grade): reasons.append("Requires Credit (C) in BM.")
-                if is_active(req.get('credit_math')) and not is_credit(math_grade): reasons.append("Requires Credit (C) in Mathematics.")
-                if is_active(req.get('credit_eng')) and not is_credit(eng_grade): reasons.append("Requires Credit (C) in English.")
-                
-                if is_active(req.get('credit_bmbi')):
-                     if not (is_credit(bm_grade) or is_credit(eng_grade)):
-                         reasons.append("Requires Credit (C) in EITHER BM or English.")
+                    if is_active(req.get('pass_eng')) and not is_pass(eng_grade): reasons.append("Requires Pass in English.")
+                    if is_active(req.get('pass_math')) and not is_pass(math_grade): reasons.append("Requires Pass in Mathematics.")
+                    if is_active(req.get('credit_bm')) and not is_credit(bm_grade): reasons.append("Requires Credit (C) in BM.")
+                    if is_active(req.get('credit_math')) and not is_credit(math_grade): reasons.append("Requires Credit (C) in Mathematics.")
+                    if is_active(req.get('credit_eng')) and not is_credit(eng_grade): reasons.append("Requires Credit (C) in English.")
+                    
+                    if is_active(req.get('credit_bmbi')):
+                         if not (is_credit(bm_grade) or is_credit(eng_grade)):
+                             reasons.append("Requires Credit (C) in EITHER BM or English.")
 
-                # Complex Groups (Science/Tech)
-                # Recalculate pools locally for clarity
-                has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-                has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-                
-                has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
-                has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
-                
-                has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
-                has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+                    # Re-calc pools for local debug
+                    has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
+                    has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
+                    has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
+                    has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
+                    has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+                    has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+                    sci_broad_pass = is_pass(science_gen_grade) or has_pure_science_pass
+                    sci_broad_credit = is_credit(science_gen_grade) or has_pure_science_credit
+                    stv_pass = sci_broad_pass or has_tech_pass or has_voc_pass
+                    stv_credit = sci_broad_credit or has_tech_credit or has_voc_credit
 
-                sci_broad_pass = is_pass(science_gen_grade) or has_pure_science_pass
-                sci_broad_credit = is_credit(science_gen_grade) or has_pure_science_credit
-                
-                stv_pass = sci_broad_pass or has_tech_pass or has_voc_pass
-                stv_credit = sci_broad_credit or has_tech_credit or has_voc_credit
+                    if is_active(req.get('pass_stv')) and not stv_pass: reasons.append("Requires Pass in Science/Tech/Voc.")
+                    if is_active(req.get('credit_stv')) and not stv_credit: reasons.append("Requires Credit in Science/Tech/Voc.")
+                    
+                    if is_active(req.get('credit_sf')):
+                        if not (is_credit(science_gen_grade) or is_credit(phy_grade)): 
+                            reasons.append("Requires Credit (C) in General Science OR Physics.")
 
-                if is_active(req.get('pass_stv')) and not stv_pass: 
-                    reasons.append("Requires Pass in any Science, Technical, or Vocational subject.")
-                
-                if is_active(req.get('credit_stv')) and not stv_credit: 
-                    reasons.append("Requires Credit (C) in any Science, Technical, or Vocational subject.")
-                
-                if is_active(req.get('credit_sf')):
-                    has_sf = is_credit(science_gen_grade) or is_credit(phy_grade)
-                    if not has_sf: reasons.append("Requires Credit (C) in General Science OR Physics.")
+                    if is_active(req.get('credit_sfmt')):
+                        if not (is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)):
+                            reasons.append("Requires Credit (C) in General Science OR Physics OR Add Math.")
 
-                if is_active(req.get('credit_sfmt')):
-                    has_sfmt = is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)
-                    if not has_sfmt: reasons.append("Requires Credit (C) in General Science OR Physics OR Add Math.")
+                    try:
+                        min_c = int(float(req.get('min_credits', 0)))
+                    except:
+                        min_c = 0
+                    
+                    if calculated_credits < min_c:
+                        reasons.append(f"Requires {min_c} Total Credits. You have {calculated_credits}.")
 
-                # Min Credits
-                try:
-                    min_c = int(float(req.get('min_credits', 0)))
-                except:
-                    min_c = 0
-                
-                if calculated_credits < min_c:
-                    reasons.append(f"Requires {min_c} Total Credits. You have {calculated_credits}.")
-
-                # --- PRINT VERDICT ---
-                if reasons:
-                    for r in reasons:
-                        st.error(f"❌ {r}")
-                else:
-                    st.success("✅ You meet all criteria in this set.")
-                
-                count += 1
-                
+                    if reasons:
+                        for r in reasons: st.error(f"❌ {r}")
+                    else:
+                        st.success("✅ You meet all criteria in this set.")
+                    
+                    count += 1
 else:
     st.info("👈 Enter your results in the sidebar and click 'Check Eligibility'")
