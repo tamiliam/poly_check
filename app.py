@@ -21,7 +21,7 @@ def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v11():
+def load_data_v12():
     courses = pd.read_csv("courses.csv", encoding="latin1")
     polys = pd.read_csv("polys.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
@@ -42,7 +42,7 @@ def load_data_v11():
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v11()
+    courses_df, polys_df, reqs_df, links_df = load_data_v12()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -54,7 +54,12 @@ st.sidebar.header("Student Profile")
 with st.sidebar.expander("👤 Personal Details", expanded=True):
     nationality = st.radio("Citizenship", ["Malaysian", "Non-Malaysian"], key="nat_input")
     gender = st.radio("Gender", ["Male", "Female"], key="gen_input")
+    
+    # COLORBLIND TEST LINK ADDED HERE
+    st.write("**Medical Conditions**")
     colorblind = st.radio("Colorblind?", ["No", "Yes"], key="cb_input")
+    st.caption("Not sure? [Take a quick free test here](https://enchroma.com/pages/color-blind-test) (External Link)")
+    
     disability = st.radio("Physical Disability?", ["No", "Yes"], key="dis_input")
 
 # 2. Subjects
@@ -138,40 +143,28 @@ def check_row_constraints(req):
     if is_active(req.get('credit_math')) and not is_credit(math_grade): return False
     if is_active(req.get('credit_eng')) and not is_credit(eng_grade): return False
     
-    # Credit BM or BI
     if is_active(req.get('credit_bmbi')) and not (is_credit(bm_grade) or is_credit(eng_grade)): return False
 
-    # ----------------------------------------------
-    # COMPLEX GROUPS (Science / Tech / Voc Logic)
-    # ----------------------------------------------
-    
-    # Define Pools
+    # Groups
     has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
     has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-
     has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
     has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
-
     has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
     has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
-
     sci_broad_pass = is_pass(science_gen_grade) or has_pure_science_pass
     sci_broad_credit = is_credit(science_gen_grade) or has_pure_science_credit
-
     stv_pass = sci_broad_pass or has_tech_pass or has_voc_pass
     stv_credit = sci_broad_credit or has_tech_credit or has_voc_credit
 
-    # Check Rules
     if is_active(req.get('pass_stv')) and not stv_pass: return False
     if is_active(req.get('credit_stv')) and not stv_credit: return False
 
     if is_active(req.get('credit_sf')):
-        has_sf = is_credit(science_gen_grade) or is_credit(phy_grade)
-        if not has_sf: return False
+        if not (is_credit(science_gen_grade) or is_credit(phy_grade)): return False
     
     if is_active(req.get('credit_sfmt')):
-        has_sfmt = is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)
-        if not has_sfmt: return False
+        if not (is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)): return False
 
     # Min Credits
     try:
@@ -210,7 +203,6 @@ if st.session_state.get('has_checked', False):
     eligible_ids = st.session_state['eligible_ids']
     fail_reason = st.session_state.get('fail_reason')
     
-    # 1. MAIN RESULTS
     if fail_reason:
         st.error(f"❌ Not Eligible. Reason: {fail_reason}")
     elif not eligible_ids:
@@ -219,13 +211,30 @@ if st.session_state.get('has_checked', False):
     else:
         st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
         
-        res = courses_df[courses_df['course_id'].isin(eligible_ids)]
-        st.dataframe(res[['course', 'field', 'department']], hide_index=True, use_container_width=True)
+        # 1. PREPARE RESULTS TABLE
+        res = courses_df[courses_df['course_id'].isin(eligible_ids)].copy()
+        
+        # 2. INJECT INTERVIEW STATUS
+        # Map ID to Interview Req
+        interview_map = {}
+        for cid in eligible_ids:
+            # Check if ANY row for this course requires interview
+            rows = reqs_df[reqs_df['course_id'] == cid]
+            has_interview = rows['req_interview'].apply(is_active).any()
+            interview_map[cid] = "🗣️ Yes" if has_interview else "No"
+            
+        res['Interview?'] = res['course_id'].map(interview_map)
+        
+        # 3. DISPLAY TABLE
+        st.dataframe(
+            res[['course', 'Interview?', 'field', 'department']], 
+            hide_index=True, 
+            use_container_width=True
+        )
 
         st.markdown("---")
         st.markdown("### 📍 Course Locations")
         
-        # KEY ADDED HERE TO PREVENT DUPLICATE ID ERROR
         sel = st.selectbox("Select a course to view campuses:", res['course'].unique(), key="location_select")
         
         if sel:
@@ -238,7 +247,7 @@ if st.session_state.get('has_checked', False):
             else:
                 st.info("No specific campus location data available.")
 
-    # 2. FORENSIC INSPECTOR
+    # FORENSIC INSPECTOR
     st.markdown("---")
     st.header("🕵️ Why wasn't I eligible?")
     st.write("Select a course below to see exactly which requirement you missed.")
@@ -252,21 +261,18 @@ if st.session_state.get('has_checked', False):
         rejected_courses = rejected_courses.sort_values('course')
         course_options = dict(zip(rejected_courses['course'], rejected_courses['course_id']))
         
-        # KEY ADDED HERE TO PREVENT DUPLICATE ID ERROR
         inspect_name = st.selectbox("Select a rejected course:", options=course_options.keys(), key="inspect_select")
         
         if inspect_name:
             inspect_id = course_options[inspect_name]
             st.markdown(f"### 🧐 Analysis for: {inspect_name}")
             
-            # A. Gatekeepers
             gate_pass, gate_msg = check_gatekeepers()
             if not gate_pass:
                 st.error(f"❌ FAILED: {gate_msg}")
             else:
                 st.success("✅ Global Requirements (Citizenship, BM, Sejarah) Met")
 
-                # B. Specifics
                 rows = reqs_df[reqs_df['course_id'] == inspect_id]
                 
                 if rows.empty:
