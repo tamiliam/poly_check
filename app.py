@@ -253,60 +253,153 @@ if st.session_state.get('has_checked', False):
 else:
     st.info("👈 Enter your results in the sidebar and click 'Check Eligibility'")
 
-# --- DEBUG / INSPECTOR TOOL ---
-st.markdown("---")
-st.header("🕵️ Why wasn't I eligible?")
 
-# 1. Get list of courses NOT in the eligible list
-all_course_ids = set(courses_df['course_id'].unique())
-eligible_set = set(st.session_state.get('eligible_ids', []))
-rejected_ids = list(all_course_ids - eligible_set)
+# --- DISPLAY RESULTS ---
+if st.session_state.get('has_checked', False):
+    
+    eligible_ids = st.session_state['eligible_ids']
+    fail_reason = st.session_state.get('fail_reason')
+    
+    # 1. THE MAIN RESULTS
+    if fail_reason:
+        st.error(f"❌ Not Eligible. Reason: {fail_reason}")
+    elif not eligible_ids:
+        st.warning("No eligible courses found based on your specific grades.")
+        st.write(f"Total Credits Detected: {calculated_credits}")
+    else:
+        st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
+        
+        res = courses_df[courses_df['course_id'].isin(eligible_ids)]
+        st.dataframe(res[['course', 'field', 'department']], hide_index=True, use_container_width=True)
 
-# 2. Select a course to investigate
-if rejected_ids:
-    # Create a mapping of Name -> ID for the dropdown
-    rejected_courses = courses_df[courses_df['course_id'].isin(rejected_ids)]
-    course_options = dict(zip(rejected_courses['course'], rejected_courses['course_id']))
-    
-    inspect_name = st.selectbox("Select a rejected course to see the reason:", options=course_options.keys())
-    
-    if inspect_name:
-        inspect_id = course_options[inspect_name]
+        st.markdown("---")
+        st.markdown("### 📍 Course Locations")
         
-        # 3. Re-run logic JUST for this course with "Explain Mode"
-        st.write(f"Analyzing **{inspect_name}** ({inspect_id})...")
+        sel = st.selectbox("Select a course to view campuses:", res['course'].unique())
         
-        # Check Gatekeepers first
-        passed_gates, gate_msg = check_gatekeepers()
-        if not passed_gates:
-            st.error(f"Global Rejection: {gate_msg}")
-        else:
-            # Check Rows
+        if sel:
+            cid = res[res['course'] == sel].iloc[0]['course_id']
+            pids = links_df[links_df['course_id'] == cid]['institution_id']
+            final = polys_df[polys_df['institution_id'].isin(pids)]
+            
+            if not final.empty:
+                st.table(final[['institution_name', 'state', 'category']])
+            else:
+                st.info("No specific campus location data available.")
+
+    # 2. THE FORENSIC INSPECTOR (IMPROVED)
+    st.markdown("---")
+    st.header("🕵️ Why wasn't I eligible?")
+    st.write("Select a course below to see exactly which requirement you missed.")
+
+    # Calculate rejected list
+    all_course_ids = set(courses_df['course_id'].unique())
+    eligible_set = set(eligible_ids)
+    rejected_ids = list(all_course_ids - eligible_set)
+    
+    if rejected_ids:
+        # Create mapping Name -> ID
+        rejected_courses = courses_df[courses_df['course_id'].isin(rejected_ids)]
+        # Sort alphabetically for easier finding
+        rejected_courses = rejected_courses.sort_values('course')
+        course_options = dict(zip(rejected_courses['course'], rejected_courses['course_id']))
+        
+        inspect_name = st.selectbox("Select a rejected course:", options=course_options.keys())
+        
+        if inspect_name:
+            inspect_id = course_options[inspect_name]
+            st.markdown(f"### 🧐 Analysis for: {inspect_name}")
+            
+            # A. GATEKEEPER CHECK (The "Must Haves")
+            st.markdown("#### 1. Global Gatekeepers")
+            gate_pass, gate_msg = check_gatekeepers()
+            if not gate_pass:
+                st.error(f"❌ FAILED: {gate_msg}")
+                st.stop() # Stop analysis if they fail the basics
+            else:
+                st.success("✅ Global Requirements (Citizenship, BM, Sejarah) Met")
+
+            # B. ROW CHECK (The "Specifics")
+            st.markdown("#### 2. Specific Requirements")
+            
+            # Get the rows for this course
             rows = reqs_df[reqs_df['course_id'] == inspect_id]
             
-            for index, row in rows.iterrows():
-                # We manually check the constraints here and print the failure
-                # Note: This is a simplified manual check for display purposes
+            if rows.empty:
+                st.error("⚠️ Error: No requirements found for this course in the database.")
+            
+            count = 1
+            for index, req in rows.iterrows():
+                st.markdown(f"**Criteria Set #{count}:**")
                 
-                st.markdown(f"**Checking Requirement Row #{index+1}:**")
-                
-                # Copying the logic from check_row_constraints but adding print statements
+                # --- MANUAL FORENSIC LOGIC ---
+                # This explicitly prints WHY it failed, mirroring check_row_constraints
                 reasons = []
+
+                # Gender/Health
+                if is_active(req.get('req_male')) and gender == "Female": reasons.append("Requires Male applicants.")
+                if is_active(req.get('no_colorblind')) and colorblind == "Yes": reasons.append("Cannot accept Colorblind applicants.")
+                if is_active(req.get('no_disability')) and disability == "Yes": reasons.append("Cannot accept applicants with physical disabilities.")
+
+                # Core Grades
+                if is_active(req.get('pass_eng')) and not is_pass(eng_grade): reasons.append("Requires Pass in English.")
+                if is_active(req.get('pass_math')) and not is_pass(math_grade): reasons.append("Requires Pass in Mathematics.")
+                if is_active(req.get('credit_bm')) and not is_credit(bm_grade): reasons.append("Requires Credit (C) in BM.")
+                if is_active(req.get('credit_math')) and not is_credit(math_grade): reasons.append("Requires Credit (C) in Mathematics.")
+                if is_active(req.get('credit_eng')) and not is_credit(eng_grade): reasons.append("Requires Credit (C) in English.")
                 
-                # Examples of what failed
-                if is_active(row.get('req_male')) and gender == "Female": reasons.append("Requires Male")
-                if is_active(row.get('pass_math')) and not is_pass(math_grade): reasons.append("Requires Pass in Math")
-                if is_active(row.get('credit_math')) and not is_credit(math_grade): reasons.append("Requires Credit in Math")
+                if is_active(req.get('credit_bmbi')):
+                     if not (is_credit(bm_grade) or is_credit(eng_grade)):
+                         reasons.append("Requires Credit (C) in EITHER BM or English.")
+
+                # Complex Groups (Science/Tech)
+                # Recalculate pools locally for clarity
+                has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
+                has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
                 
-                # Science/Tech Logic Debug
-                # (You can expand this to cover the full logic if needed)
-                # ...
+                has_tech_pass = any(is_pass(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
+                has_tech_credit = any(is_credit(g) for g in [rekacipta_grade, cs_grade]) or other_tech_grade
                 
+                has_voc_pass = any(is_pass(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+                has_voc_credit = any(is_credit(g) for g in [pertanian_grade, srt_grade]) or other_voc_grade
+
+                sci_broad_pass = is_pass(science_gen_grade) or has_pure_science_pass
+                sci_broad_credit = is_credit(science_gen_grade) or has_pure_science_credit
+                
+                stv_pass = sci_broad_pass or has_tech_pass or has_voc_pass
+                stv_credit = sci_broad_credit or has_tech_credit or has_voc_credit
+
+                if is_active(req.get('pass_stv')) and not stv_pass: 
+                    reasons.append("Requires Pass in any Science, Technical, or Vocational subject.")
+                
+                if is_active(req.get('credit_stv')) and not stv_credit: 
+                    reasons.append("Requires Credit (C) in any Science, Technical, or Vocational subject.")
+                
+                if is_active(req.get('credit_sf')):
+                    has_sf = is_credit(science_gen_grade) or is_credit(phy_grade)
+                    if not has_sf: reasons.append("Requires Credit (C) in General Science OR Physics.")
+
+                if is_active(req.get('credit_sfmt')):
+                    has_sfmt = is_credit(science_gen_grade) or is_credit(phy_grade) or is_credit(addmath_grade)
+                    if not has_sfmt: reasons.append("Requires Credit (C) in General Science OR Physics OR Add Math.")
+
+                # Min Credits
+                try:
+                    min_c = int(float(req.get('min_credits', 0)))
+                except:
+                    min_c = 0
+                
+                if calculated_credits < min_c:
+                    reasons.append(f"Requires {min_c} Total Credits. You have {calculated_credits}.")
+
+                # --- PRINT VERDICT ---
                 if reasons:
                     for r in reasons:
                         st.error(f"❌ {r}")
                 else:
-                    st.success("✅ This requirement row matches your profile.")
-                    
+                    st.success("✅ You meet all criteria in this set.")
+                
+                count += 1
+                
 else:
-    st.info("You are eligible for all courses! (Or you haven't run the check yet).")
+    st.info("👈 Enter your results in the sidebar and click 'Check Eligibility'")
