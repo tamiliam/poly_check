@@ -73,6 +73,515 @@ course_info = {
         "synopsis": "Kursus elit yang direka khusus untuk industri Minyak & Gas (O&G). Selain elektrik, anda belajar tentang 'Instrumentasi'—sensor dan alat kawalan yang memantau paip minyak dan loji kimia. Anda akan belajar sistem DCS dan PLC yang digunakan di loji penapisan (refinery).",
         "jobs": ["Juruteknik Instrumentasi", "Juruteknik O&G", "Penyelia Loji Petrokimia", "Penolong Jurutera Kawalan"]
     },
+
+    # --- ELECTRICAL ENGINEERING (SPECIALIZATIONS) ---
+    "POLY-DIP-011": {
+        "headline": "⚡ Elektrik (Kecekapan Tenaga): Audit & Jimat",
+        "synopsis": "Tenaga adalah wang. Dalam kursus ini, anda belajar bukan sahaja cara *guna* elektrik, tapi cara *urus* elektrik supaya tidak membazir. Anda akan diajar tentang 'Energy Audit', Tenaga Boleh Diperbaharui (Solar/Angin), dan sistem kuasa cekap tenaga. Graduan kursus ini sangat dicari oleh kilang-kilang yang mahu kurangkan bil elektrik mereka.",
+        "jobs": ["Auditor Tenaga (Energy Auditor)", "Pegawai Kelestarian (Sustainability)", "Juruteknik Tenaga Hijau", "Penolong Jurutera Elektrik"]
+    },
+    "POLY-DIP-012": {
+        "headline": "🌱 Elektrik (Tenaga Hijau): Masa Depan Bumi",
+        "synopsis": "Dunia sedang beralih dari minyak ke tenaga bersih. Anda akan menjadi pakar dalam Teknologi Hijau: Panel Solar, Turbin Angin, dan Kereta Elektrik (EV). Anda belajar memasang, menyelenggara, dan mengintegrasikan sistem ini ke dalam grid nasional. Ini adalah kerjaya masa depan yang kalis kemelesetan.",
+        "jobs": ["Pemasang Solar (Solar Installer)", "Juruteknik Turbin Angin", "Juruteknik Kenderaan Elektrik (EV)", "Perunding Tenaga Hijau"]
+    },
+
+    # --- ELECTRONIC ENGINEERING (SPECIALIZATIONS) ---
+    "POLY-DIP-013": {
+        "headline": "💡 Elektronik (Optoelektronik): Cahaya & Laser",
+        "synopsis": "Pernah dengar tentang Fiber Optik atau LED? Itu adalah Optoelektronik—menggunakan cahaya untuk hantar data dan kuasa. Anda akan belajar tentang laser, penderia cahaya (sensors), dan pembuatan cip semikonduktor. Sesuai untuk anda yang berminat dengan teknologi di sebalik internet berkelajuan tinggi dan skrin canggih.",
+        "jobs": ["Juruteknik Fiber Optik", "Pakar Laser Industri", "Penolong Jurutera Pembuatan", "Juruteknik R&D"]
+    },
+    "POLY-DIP-014": {
+        "headline": "🤖 Elektronik (Kawalan): Otak Robot",
+        "synopsis": "Bagaimana lengan robot di kilang kereta bergerak dengan tepat? Itu adalah Sistem Kawalan. Anda belajar memprogramkan 'otak' mesin menggunakan PLC dan sensor. Anda akan menjadi pakar yang memastikan barisan pengeluaran kilang (production line) berjalan secara automatik tanpa henti.",
+        "jobs": ["Juruteknik Automasi", "Programmer PLC", "Juruteknik Instrumentasi", "Penyelia Penyelenggaraan"]
+    },
+    "POLY-DIP-015": {
+        "headline": "💻 Elektronik (Komputer): Hardware & Chips",
+        "synopsis": "Jika Sains Komputer fokus pada Software, kursus ini fokus pada Hardware. Anda belajar bagaimana komputer *dibina* dari dalam—pemproses (processor), litar memori, dan sistem terbenam (embedded systems). Anda akan mahir membaiki, mereka bentuk, dan menyelenggara sistem komputer industri.",
+        "jobs": ["Juruteknik Komputer", "Pakar IoT (Internet of Things)", "Juruteknik Perisian & Hardware", "Technical Support"]
+    },
+    "POLY-DIP-016": {
+        "headline": "📡 Elektronik (Komunikasi): Dunia Tanpa Wayar",
+        "synopsis": "Dari 5G ke Satelit, andalah yang menghubungkan dunia. Kursus ini mengajar teknologi di sebalik telefon pintar, menara pemancar, dan rangkaian data. Anda akan belajar tentang frekuensi radio (RF), gentian optik, dan sistem rangkaian tanpa wayar. Kerjaya di syarikat Telco (Maxis/Celcom) menanti anda.",
+        "jobs": ["Juruteknik Rangkaian (Network)", "Jurutera 'Drive Test' (Telco)", "Penyelia Menara Pemancar", "RF Technician"]
+    },
+    "POLY-DIP-017": {
+        "headline": "🏥 Elektronik (Perubatan): Doktor Mesin",
+        "synopsis": "Gabungan Kejuruteraan dan Perubatan. Hospital penuh dengan mesin canggih (MRI, X-Ray, Mesin Dialisis). Tugas anda adalah memastikan mesin ini berfungsi 100% tepat untuk menyelamatkan nyawa. Anda belajar anatomi manusia asas DAN litar elektronik canggih.",
+        "jobs": ["Juruteknik Bioperubatan (Biomedical)", "Pakar Servis Mesin X-Ray/MRI", "Jurutera Klinikal", "Perunding Alat Perubatan"]
+    },
+
+    # --- CHEMICAL ENGINEERING ---
+    "POLY-DIP-018": {
+        "headline": "🧪 Kejuruteraan Kimia: Dari Makmal ke Kilang",
+        "synopsis": "Bagaimana minyak mentah jadi petrol? Bagaimana bahan kimia jadi plastik? Anda belajar proses 'skala besar' industri kimia. Anda akan mengendalikan loji kimia, memantau tindak balas kimia dalam reaktor gergasi, dan memastikan sisa buangan selamat untuk alam sekitar. Kerjaya 'high demand' di Pengerang dan Gebeng.",
+        "jobs": ["Juruteknik Proses (Process Tech)", "Penyelia Loji Kimia", "Juruteknik Rawatan Air", "Pegawai Kawalan Kualiti (QA)"]
+    },
+
+    # --- MECHANICAL ENGINEERING ---
+    "POLY-DIP-019": {
+        "headline": "⚙️ Kejuruteraan Mekanikal: Asas Kejuruteraan",
+        "synopsis": "Kursus kejuruteraan yang paling luas dan fleksibel. Anda belajar tentang semua benda yang bergerak—mesin, enjin, sistem hidraulik, dan bahan. Anda akan mahir menggunakan perisian CAD untuk melukis komponen dan tangan anda akan cekap membaiki mesin. Graduan kursus ini boleh bekerja di mana-mana kilang di dunia.",
+        "jobs": ["Juruteknik Mekanikal", "Penyelia Penyelenggaraan", "Operator CNC", "QA/QC Inspector"]
+    },
+    "POLY-DIP-020": {
+        "headline": "🦾 Mekanikal (Automasi): Revolusi Industri 4.0",
+        "synopsis": "Kilang masa depan tidak perlukan ramai pekerja, ia perlukan robot. Kursus ini mengajar anda membina dan menyelenggara sistem robotik industri. Anda akan belajar tentang Pneumatik (kuasa udara), Hidraulik (kuasa cecair), dan integrasi robot dengan komputer. Anda adalah arkitek kepada kilang pintar.",
+        "jobs": ["Juruteknik Robotik", "Pakar Integrasi Sistem", "Pereka Mesin Automasi", "Penyelia Teknikal"]
+    },
+
+    # --- AUTOMOTIVE ENGINEERING ---
+    "POLY-DIP-021": {
+        "headline": "🏎️ Automotif: Pakar Enjin & Servis",
+        "synopsis": "Kursus untuk 'Petrolhead' sejati. Anda bukan sekadar mekanik bawah pokok; anda adalah pakar diagnostik. Anda belajar tentang enjin pembakaran dalam, sistem elektronik kereta moden (ECU), dan pengurusan pusat servis. Sesuai jika anda bercita-cita membuka bengkel moden atau menjadi pengurus di pusat servis jenama terkemuka (Honda/Toyota).",
+        "jobs": ["Pengurus Pusat Servis", "Penasihat Servis (Service Advisor)", "Penyelia Bengkel", "Juruteknik Diagnostik"]
+    },
+
+    # --- MATERIALS ENGINEERING ---
+    "POLY-DIP-022": {
+        "headline": "🧪 Kejuruteraan Bahan: Sains di Sebalik Besi",
+        "synopsis": "Kenapa kapal terbang dibuat daripada aluminium, bukan besi? Kenapa bumper kereta plastik tapi keras? Anda belajar 'resipi' bahan—logam, polimer (plastik), seramik, dan komposit. Anda akan bekerja di makmal untuk menguji kekuatan bahan dan memastikan produk kilang tidak mudah patah atau karat.",
+        "jobs": ["Juruteknik Kawalan Kualiti (QA/QC)", "Penyelia Makmal Ujian", "Juruteknik Logam/Plastik", "Pembantu Penyelidik Bahan"]
+    },
+
+    # --- POWER PLANT ENGINEERING ---
+    "POLY-DIP-023": {
+        "headline": "🏭 Loji Kuasa: Jantung Tenaga Negara",
+        "synopsis": "Kerjaya 'Heavy Duty'. Anda belajar mengendalikan mesin gergasi yang menjana elektrik untuk satu negara—Turbin, Dandang (Boiler), dan Generator. Anda akan bekerja di stesen janakuasa (Power Plant) untuk memastikan lampu di rumah kita tidak terpadam. Kerja yang sangat kritikal dan bergaji tinggi.",
+        "jobs": ["Juruteknik Operasi Loji", "Boilerman (Juru Dandang)", "Juruteknik Turbin", "Pembantu Jurutera Kuasa"]
+    },
+
+    # --- MANUFACTURING ENGINEERING ---
+    "POLY-DIP-024": {
+        "headline": "🏭 Pembuatan (Manufacturing): Nadi Kilang",
+        "synopsis": "Bagaimana telefon pintar dibuat secara besar-besaran? Kursus ini mengajar anda proses pengeluaran kilang. Anda belajar menggunakan mesin CNC (pemotong berkomputer), robotik industri, dan kawalan kualiti. Anda adalah orang penting yang memastikan kilang beroperasi dengan efisien dan produk siap tepat pada masanya.",
+        "jobs": ["Penyelia Pengeluaran (Production)", "Programmer CNC", "Juruteknik Pembuatan", "QA Inspector"]
+    },
+
+    # --- PACKAGING ENGINEERING ---
+    "POLY-DIP-025": {
+        "headline": "📦 Pembungkusan Industri: Seni & Sains Kotak",
+        "synopsis": "Jangan pandang rendah pada kotak. Pembungkusan melindungi produk bernilai jutaan ringgit. Anda belajar mereka bentuk bungkusan yang tahan lasak, menarik, dan mesra alam. Anda akan mahir tentang bahan (kertas/plastik), mesin pembungkusan automatik, dan reka bentuk grafik untuk kotak. Industri makanan dan logistik sangat memerlukan pakar ini.",
+        "jobs": ["Pereka Pembungkusan (Packaging Designer)", "Penyelia Talian Pembungkusan", "Juruteknik Kualiti", "Eksekutif Logistik"]
+    },
+
+    # --- AIR-CONDITIONING & REFRIGERATION ---
+    "POLY-DIP-026": {
+        "headline": "❄️ Penyamanan Udara: Wira Penyejuk",
+        "synopsis": "Di Malaysia yang panas, kemahiran ini ibarat emas. Anda belajar sistem HVAC komersial—aircond pusat beli-belah, bilik sejuk beku (cold storage), dan sistem pengudaraan bangunan. Bukan sekadar pasang aircond rumah, tapi merancang dan menyelenggara sistem penyejukan industri yang kompleks.",
+        "jobs": ["Juruteknik HVAC", "Kontraktor Aircond", "Penyelia Penyelenggaraan Bangunan", "Pereka Sistem Penyejukan"]
+    },
+
+    # --- AGRICULTURAL ENGINEERING ---
+    "POLY-DIP-027": {
+        "headline": "🚜 Mekanikal (Pertanian): Teknologi Ladang",
+        "synopsis": "Gabungan kejuruteraan dan pertanian. Anda belajar membaiki dan mengendalikan jentera ladang besar (traktor, penuai), sistem pengairan automatik, dan struktur rumah hijau. Tugas anda adalah memastikan teknologi ladang berjalan lancar untuk meningkatkan hasil makanan negara.",
+        "jobs": ["Juruteknik Jentera Ladang", "Penyelia Mekanisasi Ladang", "Juruteknik Pengairan", "Kontraktor Pertanian"]
+    },
+
+    # --- PETROCHEMICAL (MECHANICAL) ---
+    "POLY-DIP-028": {
+        "headline": "🛢️ Mekanikal (Petrokimia): Pakar Minyak & Gas",
+        "synopsis": "Direka khusus untuk industri O&G (Minyak & Gas). Anda belajar menyelenggara paip, injap, dan tangki di loji petrokimia yang berisiko tinggi. Keselamatan adalah nombor satu. Graduan kursus ini biasanya bekerja di hab industri seperti Pengerang, Kerteh, atau Bintulu.",
+        "jobs": ["Juruteknik Penyelenggaraan Loji", "Penyelia Paip & Injap", "Juruteknik Mekanikal O&G", "Safety Supervisor"]
+    },
+
+    # --- PLASTICS ENGINEERING ---
+    "POLY-DIP-029": {
+        "headline": "🧸 Plastik Industri: Mencipta Bentuk",
+        "synopsis": "Hampir semua barang di sekeliling kita ada plastik. Kursus ini mengajar anda cara mereka bentuk acuan (molds) dan menggunakan mesin suntikan plastik (injection molding) untuk menghasilkan produk—dari botol air hingga komponen kereta. Malaysia ada 1,300 kilang plastik yang memerlukan kepakaran anda.",
+        "jobs": ["Pereka Acuan (Mold Designer)", "Juruteknik Mesin Suntikan", "Penyelia Pengeluaran Plastik", "QA Technician"]
+    },
+
+    # --- AUTOMOTIVE DESIGN ---
+    "POLY-DIP-030": {
+        "headline": "🎨 Reka Bentuk Automotif: Seni Kereta",
+        "synopsis": "Berbeza dengan kursus 'baik pulih', kursus ini fokus kepada PENCIPTAAN. Anda belajar menggunakan perisian CAD/CAM untuk melukis komponen kereta, mereka bentuk bentuk badan kereta (body styling), dan ergonomik. Sesuai untuk anda yang kreatif dan mahu bekerja di kilang pemasangan kereta (Proton/Perodua).",
+        "jobs": ["Pereka Produk Automotif", "Juruteknik CAD/CAM", "Penyelia Pembuatan Kereta", "Quality Control"]
+    },
+
+    # --- PRODUCT DESIGN ---
+    "POLY-DIP-031": {
+        "headline": "🎨 Reka Bentuk Produk: Seni + Fungsi",
+        "synopsis": "Lihat sekeliling anda—tetikus komputer, kerusi, botol air. Semuanya direka oleh seseorang. Kursus ini mengajar anda menggabungkan kreativiti (Seni) dengan kejuruteraan (Fungsi). Anda akan belajar melukis lakaran, membuat model 3D (CAD), dan menghasilkan prototaip produk yang sedia untuk dikilangkan. Kerjaya yang sangat kreatif!",
+        "jobs": ["Pereka Produk (Industrial Designer)", "Pereka CAD", "Juruteknik R&D", "Penyelia Pengeluaran"]
+    },
+
+    # --- MECHATRONICS ---
+    "POLY-DIP-032": {
+        "headline": "🤖 Mekatronik: Robotik & AI",
+        "synopsis": "Gabungan Mekanikal + Elektronik + Komputer. Ini adalah asas kepada Robotik. Anda belajar membina sistem pintar yang bergerak sendiri—seperti lengan robot kilang, dron, atau sistem 'Smart Home'. Anda akan mahir dalam sensor, motor, dan programming (Coding).",
+        "jobs": ["Juruteknik Robotik", "Jurutera Automasi", "Penyelia Sistem Kawalan", "Juruteknik Penyelenggaraan Mesin"]
+    },
+
+    # --- AIRCRAFT MAINTENANCE ---
+    "POLY-DIP-033": {
+        "headline": "✈️ Penyenggaraan Pesawat: Kerjaya di Awan Biru",
+        "synopsis": "Bercita-cita bekerja di lapangan terbang? Kursus elit ini melatih anda menjadi doktor kepada kapal terbang. Anda belajar membaiki enjin turbin, sistem hidraulik pesawat, dan instrumen kokpit. Lulusan kursus ini bersedia untuk mengambil lesen jurutera pesawat (License A) yang bergaji lumayan.",
+        "jobs": ["Juruteknik Pesawat (Aircraft Technician)", "Mekanik Enjin Turbin", "Penyelia Hangar", "Juruteknik Komponen Pesawat"]
+    },
+
+    # --- MARINE ENGINEERING ---
+    "POLY-DIP-034": {
+        "headline": "🚢 Kejuruteraan Perkapalan: Penakluk Lautan",
+        "synopsis": "Kerjaya untuk jiwa yang kental. Anda belajar mengendalikan enjin kapal gergasi. Kursus ini unik kerana anda akan menjalani 'Latihan Laut' (belayar) selama 6 bulan. Graduan layak dikecualikan peperiksaan tertentu untuk menjadi Jurutera Laut (Marine Engineer) bertauliah. Gaji dalam USD menanti anda di lautan antarabangsa.",
+        "jobs": ["Jurutera Laut (Marine Engineer)", "Pegawai Kapal", "Superintendent Limbungan", "Juruteknik Enjin Marin"]
+    },
+
+    # --- BUILDING SERVICES ---
+    "POLY-DIP-035": {
+        "headline": "🏢 Perkhidmatan Bangunan: Nadi Pencakar Langit",
+        "synopsis": "Bangunan tinggi tidak boleh berfungsi tanpa anda. Siapa yang pastikan lif bergerak, aircond sejuk, dan lampu menyala? Kursus ini mengajar anda mengurus 'sistem hidup' bangunan—elektrik, paip, dan keselamatan kebakaran. Kerjaya yang sangat stabil di mana-mana bandar besar.",
+        "jobs": ["Penyelia Fasiliti (Facility Manager)", "Penolong Jurutera Bangunan", "Juruteknik Penyelenggaraan", "Penyelia Tapak"]
+    },
+
+    # --- PROCESS ENGINEERING (PETROCHEM) ---
+    "POLY-DIP-036": {
+        "headline": "🧪 Proses (Petrokimia): Kawalan Loji",
+        "synopsis": "Fokus kepada 'Proses'—bagaimana menukar bahan mentah menjadi produk kimia. Anda belajar mengawal suhu, tekanan, dan aliran dalam paip loji petrokimia. Anda akan berlatih menggunakan simulasi loji sebenar. Sesuai untuk mereka yang mahu bekerja di hab industri minyak & gas.",
+        "jobs": ["Juruteknik Proses (Process Tech)", "Operator Loji", "Penyelia Kawalan Bilik (Control Room)", "Pembantu Jurutera"]
+    },
+
+    # --- ENTREPRENEURSHIP ---
+    "POLY-DIP-037": {
+        "headline": "🚀 Keusahawanan: Bina Bisnes Sendiri",
+        "synopsis": "Jangan cari kerja, cipta kerja. Kursus ini bukan sekadar teori; ia adalah 'Inkubator Bisnes'. Anda belajar mencari modal, pemasaran digital, dan undang-undang bisnes. Anda akan dibimbing untuk menubuhkan syarikat sebenar sebelum tamat belajar. Sesuai untuk anda yang berjiwa bos.",
+        "jobs": ["Usahawan (Founder)", "Perunding Perniagaan", "Pengurus Francais", "Eksekutif Pemasaran"]
+    },
+
+    # --- FINANCE ---
+    "POLY-DIP-038": {
+        "headline": "💰 Kewangan (Finance): Pakar Duit",
+        "synopsis": "Kuasai bahasa wang. Anda belajar menganalisis pasaran saham, mengurus bajet syarikat, dan merancang pelaburan. Ini adalah tiket masuk ke dunia korporat dan perbankan. Anda akan faham bagaimana duit bekerja untuk menghasilkan lebih banyak duit.",
+        "jobs": ["Eksekutif Kewangan", "Penganalisis Pelaburan", "Perancang Kewangan", "Pegawai Bank"]
+    },
+
+    # --- ISLAMIC FINANCE ---
+    "POLY-DIP-039": {
+        "headline": "☪️ Kewangan Islam: Perbankan Patuh Syariah",
+        "synopsis": "Malaysia adalah hab Kewangan Islam dunia. Kursus ini mengajar sistem perbankan tanpa riba, Takaful (insurans Islam), dan pengurusan harta (Zakat/Waqaf). Industri ini berkembang pesat dan sangat memerlukan tenaga kerja mahir yang faham hukum muamalat.",
+        "jobs": ["Pegawai Bank Islam", "Ejen Takaful", "Perancang Kewangan Islam", "Pegawai Zakat/Baitulmal"]
+    },
+
+    # --- RECREATIONAL TOURISM ---
+    "POLY-DIP-040": {
+        "headline": "rafting🚣 Pelancongan Rekreasi: Kerjaya Lasak",
+        "synopsis": "Ubah hobi 'hiking' dan 'travel' menjadi kerjaya. Anda belajar mengurus taman tema, resort eko-pelancongan, dan aktiviti luar (outdoor). Anda akan diajar tentang keselamatan rekreasi, pemanduan pelancong alam semulajadi, dan pengurusan acara. Pejabat anda adalah hutan, sungai, dan pulau.",
+        "jobs": ["Penyelia Taman Tema", "Pemandu Pelancong (Nature Guide)", "Pengurus Acara (Event)", "Ranger Taman Negara"]
+    },
+
+    # --- MARKETING ---
+    "POLY-DIP-041": {
+        "headline": "📢 Pemasaran: Kuasai Seni Jualan",
+        "synopsis": "Kenapa sesetengah jenama 'viral'? Itu adalah kuasa pemasaran. Anda belajar psikologi pembeli, strategi pengiklanan, dan pemasaran digital (TikTok/IG Ads). Bukan sekadar jurujual, anda dilatih menjadi pakar strategi jenama yang tahu cara membuat produk laku keras di pasaran.",
+        "jobs": ["Eksekutif Pemasaran Digital", "Pengurus Jenama (Brand Manager)", "Penyelidik Pasaran", "Perancang Acara"]
+    },
+
+    # --- BUSINESS STUDIES ---
+    "POLY-DIP-042": {
+        "headline": "💼 Pengajian Perniagaan: 'Swiss Army Knife' Korporat",
+        "synopsis": "Kursus paling fleksibel dalam dunia bisnes. Anda belajar sikit tentang semua—HR (Sumber Manusia), Kewangan, Operasi, dan Pentadbiran. Ini menjadikan anda pekerja serba boleh yang boleh masuk ke mana-mana industri. Asas yang kukuh jika anda mahu menjadi CEO atau Pengurus suatu hari nanti.",
+        "jobs": ["Eksekutif Pentadbiran", "Pegawai HR", "Usahawan", "Pengurus Operasi"]
+    },
+
+    # --- EVENT MANAGEMENT ---
+    "POLY-DIP-043": {
+        "headline": "🎉 Pengurusan Acara: Cipta Kenangan",
+        "synopsis": "Di sebalik konsert gempak, ekspo mega, dan perkahwinan mewah, ada 'Event Manager' yang sibuk. Anda belajar merancang bajet, mengurus logistik, dan menyelesaikan krisis masa nyata. Kerja ini pantas, tekanan tinggi, tetapi sangat menyeronokkan. Tiada hari yang membosankan!",
+        "jobs": ["Event Planner", "Penyelaras Konsert/Ekspo", "Wedding Planner", "Pengurus Pentas"]
+    },
+
+    # --- HOTEL MANAGEMENT ---
+    "POLY-DIP-044": {
+        "headline": "🏨 Pengurusan Hotel: Layanan 5 Bintang",
+        "synopsis": "Dunia hospitaliti bukan sekadar senyum. Anda belajar mengurus 'Front Office', operasi 'Housekeeping', dan perkhidmatan makanan (F&B). Keunikan kursus ini: Anda akan menjalani latihan industri (WBL) selama 10 bulan di hotel sebenar—belajar sambil bekerja dalam suasana profesional.",
+        "jobs": ["Penyelia Hotel", "Front Office Executive", "Pengurus Restoran", "Concierge"]
+    },
+
+    # --- LOGISTICS & SUPPLY CHAIN ---
+    "POLY-DIP-045": {
+        "headline": "📦 Logistik & Rantaian Bekalan: Nadi Ekonomi",
+        "synopsis": "Bagaimana barang dari China sampai ke pintu rumah anda dalam 3 hari? Itu magis Logistik. Anda belajar mengurus gudang, penghantaran kargo (darat/laut/udara), dan inventori. Dalam era E-Commerce (Shopee/Lazada), pakar logistik adalah orang yang paling dicari oleh syarikat.",
+        "jobs": ["Eksekutif Logistik", "Pengurus Gudang", "Pegawai Import/Eksport", "Perancang Rantaian Bekalan"]
+    },
+
+    # --- TOURISM MANAGEMENT ---
+    "POLY-DIP-046": {
+        "headline": "✈️ Pengurusan Pelancongan: Duta Negara",
+        "synopsis": "Bawa dunia melawat Malaysia. Anda belajar merangka pakej pelancongan, mengurus agensi travel, dan teknik pemandu pelancong. Anda akan mahir tentang destinasi, budaya, dan cara memberikan pengalaman terbaik kepada pelancong. Kerjaya ini membolehkan anda mengembara sambil bekerja.",
+        "jobs": ["Pegawai Pelancongan", "Travel Consultant", "Pemandu Pelancong", "Penyelia Agensi Pelancongan"]
+    },
+
+    # --- RETAIL MANAGEMENT ---
+    "POLY-DIP-047": {
+        "headline": "🛍️ Pengurusan Peruncitan: Bukan Sekadar Jaga Kaunter",
+        "synopsis": "Industri runcit perlukan pengurus, bukan sekadar juruwang. Anda belajar strategi susun atur kedai, pembelian stok (buying), dan khidmat pelanggan visual. Dari kedai serbaneka hingga butik mewah, andalah yang memastikan kedai untung dan pelanggan gembira.",
+        "jobs": ["Pengurus Kedai (Store Manager)", "Visual Merchandiser", "Pembeli Runcit (Buyer)", "Penyelia Jabatan"]
+    },
+
+    # --- RESORT MANAGEMENT ---
+    "POLY-DIP-048": {
+        "headline": "🏝️ Pengurusan Resort: Kerjaya di Syurga Percutian",
+        "synopsis": "Beza dengan hotel bandar, resort adalah tentang 'pengalaman santai'. Anda belajar mengurus fasiliti rekreasi, spa, dan aktiviti tetamu di lokasi peranginan (pulau/tanah tinggi). Jika anda suka suasana kerja yang tenang dan cantik, ini kursus untuk anda.",
+        "jobs": ["Penyelia Resort", "Pengurus Spa & Rekreasi", "Pegawai Perhubungan Tetamu (GRO)", "Penyelia Acara Resort"]
+    },
+
+    # --- ACCOUNTING ---
+    "POLY-DIP-049": {
+        "headline": "📊 Perakaunan (Accounting): Bahasa Bisnes",
+        "synopsis": "Setiap syarikat, dari gerai burger hingga Petronas, perlukan Akauntan. Anda belajar merekod duit masuk/keluar, mengira cukai, dan audit. Ini adalah laluan pantas untuk menjadi akauntan bertauliah (ACCA/CIMA) pada masa depan. Kerjaya yang sangat stabil dan dihormati.",
+        "jobs": ["Pembantu Akauntan", "Pegawai Cukai", "Penolong Juruaudit", "Kerani Kewangan"]
+    },
+
+    # --- TOWN & REGIONAL PLANNING ---
+    "POLY-DIP-050": {
+        "headline": "🏙️ Perancang Bandar: Arkitek Bandaraya",
+        "synopsis": "Siapa tentukan di mana sekolah, taman, dan kilang patut dibina? Itu tugas Perancang Bandar. Anda belajar melukis pelan guna tanah, undang-undang pembangunan, dan mereka bentuk bandar yang selesa didiami. Anda bekerja rapat dengan PBT (Majlis Perbandaran) untuk membentuk masa depan bandar kita.",
+        "jobs": ["Penolong Pegawai Perancang Bandar", "Pelukis Pelan Bandar", "Penolong Pegawai Landskap", "Penyelia Projek Pembangunan"]
+    },
+
+    # --- HALAL FOOD SERVICES ---
+    "POLY-DIP-051": {
+        "headline": "🍽️ Perkhidmatan Makanan Halal: Global Standard",
+        "synopsis": "Pasaran Halal dunia bernilai trilion ringgit. Kursus ini bukan sekadar masak; ia tentang Sains Halal. Anda belajar audit Halal, pengurusan dapur patuh syariah, dan nutrisi. Graduan kursus ini sangat dicari oleh hotel 5 bintang dan syarikat makanan antarabangsa yang mahu menembusi pasaran Muslim.",
+        "jobs": ["Eksekutif Halal", "Penyelia Restoran", "Pegawai Jaminan Kualiti (QA)", "Usahawan Makanan Halal"]
+    },
+
+    # --- INTERNATIONAL BUSINESS ---
+    "POLY-DIP-052": {
+        "headline": "🌐 Perniagaan Antarabangsa: Bisnes Tanpa Sempadan",
+        "synopsis": "Kenapa jual di kampung jika boleh jual satu dunia? Anda belajar selok-belok Import/Eksport, undang-undang perdagangan antarabangsa, dan logistik global. Anda akan faham bagaimana Amazon atau Alibaba beroperasi. Sesuai untuk anda yang mahu kerjaya 'jet-setting' dan berurusan dengan orang luar negara.",
+        "jobs": ["Pegawai Import/Eksport", "Penganalisis Pasaran Global", "Pengurus Logistik", "Perunding Perniagaan"]
+    },
+
+    # --- FASHION DESIGN ---
+    "POLY-DIP-053": {
+        "headline": "👗 Reka Bentuk Fesyen: Dari Lakaran ke Runway",
+        "synopsis": "Adakah anda 'Trendsetter'? Kursus ini mengajar anda mencipta pakaian dari A sampai Z—melukis ilustrasi, memotong pola (pattern making), dan menjahit. Anda akan belajar fesyen digital (CAD) dan strategi jenama. Kemuncak kursus adalah Pertunjukan Fesyen Akhir di mana koleksi anda diperagakan di pentas.",
+        "jobs": ["Pereka Fesyen (Fashion Designer)", "Fashion Buyer", "Pereka Kostum", "Usahawan Fesyen"]
+    },
+
+    # --- GRAPHIC DESIGN ---
+    "POLY-DIP-054": {
+        "headline": "🎨 Reka Bentuk Grafik: Komunikasi Visual",
+        "synopsis": "Di zaman Instagram dan TikTok, visual adalah raja. Anda belajar menggunakan Photoshop, Illustrator, dan InDesign untuk mencipta logo, poster, dan grafik media sosial. Anda dilatih berfikir secara kreatif untuk menyelesaikan masalah komunikasi jenama. Skill ini laku keras sebagai Freelancer!",
+        "jobs": ["Pereka Grafik", "Content Creator", "Illustrator", "Art Director"]
+    },
+
+    # --- INDUSTRIAL DESIGN ---
+    "POLY-DIP-055": {
+        "headline": "🛋️ Reka Bentuk Industri: Cipta Produk Masa Depan",
+        "synopsis": "Gabungan Seni + Kejuruteraan. Anda belajar mereka bentuk perabot, gajet elektronik, atau peralatan dapur supaya nampak cantik DAN berfungsi dengan baik. Anda akan menggunakan printer 3D dan perisian modelling canggih. Anda adalah pencipta yang menjadikan hidup manusia lebih mudah dan bergaya.",
+        "jobs": ["Pereka Produk (Product Designer)", "Pereka Perabot", "Pereka Pembungkusan", "Model Maker 3D"]
+    },
+
+    # --- SECRETARIAL SCIENCE ---
+    "POLY-DIP-056": {
+        "headline": "u0025D8u0025A5 Sains Kesetiausahaan: Pengurusan Pejabat Profesional",
+        "synopsis": "Setiausaha moden adalah 'Gatekeeper' kepada CEO. Anda belajar mengurus jadual bos, menulis surat rasmi korporat, dan menganjurkan mesyuarat protokol tinggi. Kursus ini melatih anda menjadi sangat teratur, cekap, dan berimej korporat. Anda adalah orang kanan yang paling dipercayai dalam ofis.",
+        "jobs": ["Setiausaha Eksekutif (PA)", "Pengurus Pejabat", "Penyelaras Acara", "Pegawai Tadbir"]
+    },
+
+    # --- ARCHITECTURE ---
+    "POLY-DIP-057": {
+        "headline": "🏛️ Seni Bina (Architecture): Arkitek Masa Depan",
+        "synopsis": "Sebelum bangunan dibina, ia bermula dalam imaginasi anda. Anda belajar melukis pelan bangunan, membina model skala, dan menggunakan perisian BIM 3D. Anda menggabungkan seni (kecantikan) dengan sains (kekuatan struktur). Ini langkah pertama untuk menjadi Arkitek berdaftar.",
+        "jobs": ["Pembantu Teknik Seni Bina", "Penyelia Tapak", "Pelukis Pelan 3D", "Penyelaras Projek"]
+    },
+
+    # --- CULINARY ARTS ---
+    "POLY-DIP-058": {
+        "headline": "👨‍🍳 Seni Kulinari: Master Chef",
+        "synopsis": "Dapur profesional bukan tempat main-main. Anda dilatih disiplin ketat ala tentera untuk menghasilkan hidangan bertaraf 5 bintang. Anda belajar masakan Barat, Asia, Pastri, dan pengurusan kos restoran. Latihan industri di hotel terkemuka akan menguji ketahanan mental dan fizikal anda.",
+        "jobs": ["Chef (Commis/Demi)", "Pengurus Katering", "Food Stylist", "Usahawan Restoran"]
+    },
+
+    # --- NAVAL ARCHITECTURE ---
+    "POLY-DIP-059": {
+        "headline": "⚓ Seni Bina Kapal: Reka Bentuk Marin",
+        "synopsis": "Ini bukan Arkitek bangunan, ini Arkitek Kapal! Anda belajar mereka bentuk bentuk badan kapal (hull) supaya ia laju dan stabil di laut. Anda belajar tentang hidrodinamik dan kestabilan apungan. Graduan kursus ini bekerja di limbungan kapal (shipyard) untuk membina kapal perang, feri, atau kapal kargo.",
+        "jobs": ["Arkitek Kapal (Naval Architect)", "Penyelia Pembinaan Kapal", "Juruukur Kapal (Marine Surveyor)", "Superintendent"]
+    },
+
+    # --- BUSINESS INFORMATION SYSTEMS ---
+    "POLY-DIP-060": {
+        "headline": "💻 Sistem Maklumat Perniagaan: IT + Bisnes",
+        "synopsis": "Jambatan antara 'Orang IT' dan 'Orang Bisnes'. Anda faham coding (SQL/Database), tapi anda juga faham Akaun dan Marketing. Tugas anda adalah membina sistem komputer yang membantu syarikat buat duit. Contohnya: Membina sistem stok untuk kedai runcit atau aplikasi jualan.",
+        "jobs": ["Penganalisis Sistem (System Analyst)", "Pembangun Pangkalan Data", "Penganalisis Perniagaan", "Usahawan E-Dagang"]
+    },
+
+    # --- AQUACULTURE ---
+    "POLY-DIP-061": {
+        "headline": "🐟 Akuakultur: Jutawan Ikan",
+        "synopsis": "Industri makanan masa depan bukan di laut, tapi di kolam. Anda belajar menternak ikan, udang, dan rumpai laut secara komersial. Dari pembenihan (breeding) hingga tuaian, anda diajar teknik moden untuk hasil maksimum. Ramai graduan kursus ini menjadi usahawan ternakan yang berjaya.",
+        "jobs": ["Pengurus Ladang Akuakultur", "Juruteknik Penetasan (Hatchery)", "Usahawan Ternakan", "Penolong Pegawai Perikanan"]
+    },
+
+    # --- WOOD-BASED TECHNOLOGY ---
+    "POLY-DIP-062": {
+        "headline": "🌲 Teknologi Kayu: Seni & Kejuruteraan",
+        "synopsis": "Malaysia adalah pengeksport perabot utama dunia. Anda belajar sifat kayu, teknologi pemprosesan, dan pembuatan perabot moden. Anda akan menggunakan mesin canggih untuk menukar balak mentah menjadi produk bernilai tinggi. Kerjaya yang stabil dalam industri perkayuan negara.",
+        "jobs": ["Pereka Perabot", "Penyelia Kilang Kayu", "Juruteknik Penggred Kayu", "Pegawai Kawalan Kualiti"]
+    },
+
+    # --- LANDSCAPE HORTICULTURE ---
+    "POLY-DIP-063": {
+        "headline": "🌳 Landskap: Senibina Alam",
+        "synopsis": "Jadikan bandar kita 'Taman dalam Bandar'. Anda belajar mereka bentuk taman, memilih pokok yang sesuai, dan teknologi penyelenggaraan landskap. Anda menggabungkan ilmu botani (pokok) dengan seni reka bentuk. Projek anda boleh jadi taman perumahan, padang golf, atau resort.",
+        "jobs": ["Pereka Landskap", "Kontraktor Landskap", "Penyelia Nurseri", "Pengurus Padang Golf"]
+    },
+
+    # --- MARINE ELECTRICAL ---
+    "POLY-DIP-064": {
+        "headline": "⚡ Elektrik Marin: Kuasa di Lautan",
+        "synopsis": "Kapal moden adalah 'bandar terapung' yang perlukan kuasa elektrik 24 jam. Anda belajar menyelenggara generator kapal, sistem radar, dan automasi marin. Graduan kursus ini layak menjadi Pegawai Elektro-Teknikal (ETO) di atas kapal dagang dengan gaji lumayan.",
+        "jobs": ["Pegawai Elektro-Teknikal (ETO)", "Juruteknik Elektrik Marin", "Juruteknik Offshore", "Penyelia Limbungan"]
+    },
+
+    # --- MARINE CONSTRUCTION ---
+    "POLY-DIP-065": {
+        "headline": "🏗️ Pembinaan Marin: Membina Gergasi Laut",
+        "synopsis": "Bagaimana besi berat boleh terapung? Anda belajar membina dan membaiki struktur kapal di limbungan (dry dock). Anda akan mahir dalam kimpalan marin, pemasangan paip kapal, dan struktur terapung. Kerjaya 'hands-on' yang mencabar di pelabuhan dan limbungan kapal.",
+        "jobs": ["Penyelia Limbungan (Shipwright)", "Perancang Projek Marin", "QA/QC Inspector", "Juruteknik Kimpalan Marin"]
+    },
+
+    # --- CHEMICAL TECHNOLOGY (FAT & OIL) ---
+    "POLY-DIP-066": {
+        "headline": "palmoil🌴 Teknologi Minyak & Lemak: Emas Sawit",
+        "synopsis": "Malaysia adalah raja minyak sawit dunia. Kursus unik ini mengajar anda kimia di sebalik minyak masak, sabun, dan kosmetik. Anda akan bekerja di makmal atau kilang oleokimia untuk memastikan produk sawit kita berkualiti tinggi dan selamat digunakan.",
+        "jobs": ["Juruteknik Makmal Kimia", "Penyelia Kilang Oleokimia", "QA/QC Makanan", "Penolong Pegawai Penyelidik"]
+    },
+
+    # --- DIGITAL ANIMATION ---
+    "POLY-DIP-067": {
+        "headline": "🎬 Animasi Digital: Hidupkan Imaginasi",
+        "synopsis": "Minat anime atau filem Pixar? Belajar buat sendiri! Anda akan diajar melukis watak, membina model 3D, dan teknik pergerakan (animation). Anda bakal menjadi sebahagian daripada industri kreatif yang menghasilkan siri TV, filem, dan iklan gempak.",
+        "jobs": ["Animator 2D/3D", "Character Designer", "Storyboard Artist", "VFX Artist"]
+    },
+
+    # --- VIDEO PRODUCTION ---
+    "POLY-DIP-068": {
+        "headline": "🎥 Produksi Video: Di Sebalik Tabir",
+        "synopsis": "Lampu, Kamera, Action! Anda belajar teknik penggambaran, penulisan skrip, dan suntingan video (editing). Anda akan hasilkan filem pendek, dokumentari, dan video muzik anda sendiri. Sesuai untuk anda yang mahu jadi Youtuber profesional atau krew filem.",
+        "jobs": ["Videographer", "Video Editor", "Penolong Pengarah", "Penerbit Kandungan (Content Creator)"]
+    },
+
+    # --- DIGITAL ART ---
+    "POLY-DIP-069": {
+        "headline": "🎨 Seni Digital: Multimedia Kreatif",
+        "synopsis": "Kursus paling luas dalam bidang kreatif. Anda belajar ilustrasi digital, kesan visual (VFX), dan reka bentuk konsep (Concept Art). Kemahiran ini laku keras dalam industri game, filem, dan pengiklanan. Anda adalah seniman moden yang melukis menggunakan tablet, bukan berus.",
+        "jobs": ["Concept Artist", "Illustrator Digital", "Motion Graphic Designer", "Multimedia Artist"]
+    },
+
+    # --- FOOD TECHNOLOGY ---
+    "POLY-DIP-070": {
+        "headline": "🍔 Teknologi Makanan: Sains Di Sebalik Makanan",
+        "synopsis": "Bagaimana makanan dalam tin tahan lama? Bagaimana buat burger daging tanpa daging? Anda belajar sains pemprosesan, pengawetan, dan pembungkusan makanan. Anda memastikan makanan yang kita beli di pasar raya adalah selamat, sedap, dan berkualiti.",
+        "jobs": ["Juruteknik Teknologi Makanan", "Pegawai Kawalan Kualiti (QA)", "Penyelia Kilang Makanan", "Eksekutif R&D Makanan"]
+    },
+
+    # --- HALAL FOOD TECHNOLOGY ---
+    "POLY-DIP-071": {
+        "headline": "🥗 Teknologi Makanan (Pengurusan Halal)",
+        "synopsis": "Industri Halal bukan sekadar 'No Pork'. Ia tentang sains kebersihan, keselamatan, dan pematuhan syariah yang ketat. Anda belajar sains pemprosesan makanan DAN undang-undang Halal JAKIM. Graduan kursus ini mendapat Sijil Eksekutif Halal—lesen mahal yang membolehkan anda menjadi Auditor Halal bertauliah.",
+        "jobs": ["Eksekutif Halal", "Auditor Halal", "Pegawai Kawalan Kualiti (QA)", "Penyelia Pengeluaran Makanan"]
+    },
+
+    # --- IT: SOFTWARE & APPS ---
+    "POLY-DIP-072": {
+        "headline": "📱 IT (Software & App Development): Pembangun Aplikasi",
+        "synopsis": "Anda ada idea untuk 'Grab' atau 'TikTok' seterusnya? Kursus ini mengajar anda membina perisian dari kosong. Anda belajar coding (Java, Python, C++), mereka bentuk antaramuka (UI/UX), dan membangunkan aplikasi Mobile (Android/iOS). Anda adalah arkitek dunia digital.",
+        "jobs": ["App Developer (Android/iOS)", "Software Engineer", "Full Stack Developer", "UI/UX Designer"]
+    },
+
+    # --- IT: NETWORKING ---
+    "POLY-DIP-073": {
+        "headline": "🌐 IT (Networking System): Jurutera Internet",
+        "synopsis": "Tanpa anda, Netflix takkan loading. Anda belajar membina dan menjaga infrastruktur internet. Anda akan 'configure' router, switch, dan server. Anda adalah wira di sebalik tabir yang memastikan Wi-Fi laju, server tak 'down', dan data mengalir lancar di seluruh dunia.",
+        "jobs": ["Network Engineer", "System Administrator", "Cloud Specialist", "IT Support Executive"]
+    },
+
+    # --- IT: INFORMATION SECURITY ---
+    "POLY-DIP-074": {
+        "headline": "🔐 IT (Information Security): Cyber Warrior",
+        "synopsis": "Dunia siber penuh dengan hacker dan scammer. Tugas anda adalah menghalang mereka. Anda belajar tentang 'Ethical Hacking', penyulitan data (Encryption), dan forensik digital. Anda adalah polis siber yang melindungi data sulit bank, kerajaan, dan syarikat besar.",
+        "jobs": ["Cybersecurity Analyst", "Penetration Tester (Ethical Hacker)", "Pegawai Keselamatan IT", "Forensik Digital"]
+    },
+
+    # --- IT: GAME PROGRAMMING ---
+    "POLY-DIP-075": {
+        "headline": "🎮 IT (Game Programming): Cipta Dunia Maya",
+        "synopsis": "Jangan hanya main game, buat game sendiri! Anda belajar enjin permainan (Unity/Unreal), logik AI untuk musuh dalam game, dan fizik permainan. Kursus ini menggabungkan matematik, seni, dan coding. Sesuai untuk gamers yang mahu menukar hobi menjadi kerjaya profesional.",
+        "jobs": ["Game Programmer", "Game Designer", "Level Designer", "VR/AR Developer"]
+    },
+
+    # --- IT: WEB DEVELOPMENT ---
+    "POLY-DIP-076": {
+        "headline": "💻 IT (Web Development): Arkitek Web",
+        "synopsis": "Laman web adalah wajah syarikat. Anda belajar membina website yang cantik, pantas, dan selamat. Anda akan menguasai HTML, CSS, JavaScript, dan pangkalan data. Dari laman E-Commerce (Shopee) hingga portal korporat, anda yang membinanya.",
+        "jobs": ["Web Developer", "Frontend Developer", "Backend Developer", "E-Commerce Specialist"]
+    },
+
+    # --- IT: DATA MANAGEMENT ---
+    "POLY-DIP-077": {
+        "headline": "📊 IT (Data Management): Saintis Data",
+        "synopsis": "Data adalah minyak baharu. Syarikat perlukan orang yang pandai membaca trend dari data lambak (Big Data). Anda belajar mengumpul, menyusun, dan memvisualisasikan data menjadi graf yang bermakna. Skill ini sangat penting untuk syarikat membuat keputusan bisnes.",
+        "jobs": ["Data Analyst", "Database Administrator", "Business Intelligence Analyst", "Data Scientist Junior"]
+    },
+
+    # --- PRINT MEDIA TECHNOLOGY ---
+    "POLY-DIP-078": {
+        "headline": "🖨️ Teknologi Media Cetak: Lebih Dari Kertas",
+        "synopsis": "Percetakan belum mati, ia berevolusi. Anda belajar teknologi percetakan digital, pembungkusan (packaging), dan penerbitan buku. Anda akan mahir mengendalikan mesin cetak industri dan perisian desktop publishing. Industri ini kritikal untuk pengiklanan dan pembungkusan produk.",
+        "jobs": ["Penyelia Percetakan", "Graphic Pre-press Artist", "Pakar Pembungkusan", "Usahawan Percetakan"]
+    },
+
+    # --- QUANTITY SURVEYING ---
+    "POLY-DIP-079": {
+        "headline": "📋 Ukur Bahan (QS): Akauntan Binaan",
+        "synopsis": "Dalam pembinaan, setiap bata ada harganya. Tugas QS adalah mengira kos projek dari awal sampai siap. Anda memastikan projek tidak lari bajet, mengurus kontrak, dan membayar kontraktor. Kerjaya ini sangat profesional dan bergaji lumayan di firma pembinaan.",
+        "jobs": ["Juruukur Bahan (Quantity Surveyor)", "Contract Executive", "Penyelia Projek", "Estimator"]
+    },
+
+    # --- BATIK FASHION DESIGN ---
+    "POLY-DIP-080": {
+        "headline": "👘 Reka Bentuk Fesyen Batik: Warisan Glamor",
+        "synopsis": "Gabungan tradisi dan fesyen moden. Anda belajar teknik mencanting batik asli DAN reka bentuk fesyen kontemporari. Anda bukan sekadar melukis kain, anda mencipta busana 'Haute Couture' berasaskan warisan negara. Sesuai untuk mereka yang berjiwa seni halus.",
+        "jobs": ["Pereka Fesyen Batik", "Usahawan Tekstil", "Pereka Kostum", "Pengajar Seni Kraf"]
+    },
+
+    # --- CRAFT DESIGN ---
+    "POLY-DIP-081": {
+        "headline": "🪑 Reka Bentuk Kraf: Perabot & Seni",
+        "synopsis": "Gabungan seni tangan tradisional dengan teknologi moden (CNC Machining). Anda belajar mereka bentuk perabot, ukiran kayu, dan produk kraf komersial. Anda bukan sekadar tukang kayu, tetapi pereka yang menghasilkan produk bernilai tinggi untuk pasaran eksport dan hiasan dalaman.",
+        "jobs": ["Pereka Perabot", "Usahawan Kraf", "Operator Mesin CNC Kayu", "Pereka Hiasan Dalaman"]
+    },
+
+    # --- LOGISTICS (ADDITIONAL) ---
+    "POLY-DIP-082": {
+        "headline": "🚚 Pengurusan Logistik: Pakar Penghantaran",
+        "synopsis": "Dalam dunia E-Dagang, barang perlu bergerak laju. Kursus ini melatih anda menguruskan pergerakan barang dari kilang ke pengguna. Anda belajar tentang gudang, pengangkutan antarabangsa, dan inventori. Kemahiran ini sangat penting untuk memastikan ekonomi negara berjalan lancar.",
+        "jobs": ["Pegawai Logistik", "Penyelia Gudang", "Eksekutif Rantaian Bekalan", "Ejen Kargo"]
+    },
+
+    # --- CERTIFICATE LEVEL (SIJIL) ---
+    "POLY-CET-001": {
+        "headline": "👷 Sijil Kejuruteraan Awam: Langkah Mula Binaan",
+        "synopsis": "Laluan pantas ke tapak binaan. Anda belajar asas penting: bancuhan konkrit, kerja paip, dan penyeliaan tapak. Sijil ini membolehkan anda terus bekerja sebagai penyelia junior, ATAU sambung belajar ke peringkat Diploma (hanya 2 tahun lagi) untuk kerjaya lebih tinggi.",
+        "jobs": ["Penyelia Tapak Junior", "Kontraktor Kecil", "Draughtsman (Pelukis Pelan)", "Usahawan Binaan"]
+    },
+    "POLY-CET-002": {
+        "headline": "⚡ Sijil Kejuruteraan Elektrik: Pakar Wiring",
+        "synopsis": "Fokus 100% pada kemahiran tangan. Anda akan mahir membuat pendawaian (wiring) rumah dan pejabat, membaiki kerosakan litar, dan penyelenggaraan asas. Lulusan kursus ini sangat laku sebagai juruteknik mahir, atau boleh terus sambung Diploma untuk menjadi pakar yang lebih besar.",
+        "jobs": ["Juruteknik Wiring (Wireman)", "Juruteknik Penyelenggaraan", "Usahawan Elektrik", "Pembantu Teknikal"]
+    },
+    "POLY-CET-003": {
+        "headline": "⚙️ Sijil Kejuruteraan Mekanikal: Mahir Mesin",
+        "synopsis": "Anda suka kerja tangan? Kursus ini mengajar anda menggunakan mesin bengkel (welding, memesin) dan melukis pelan CAD asas. Ia adalah asas kukuh untuk menjadi juruteknik kilang yang cekap. Selepas tamat, anda boleh terus bekerja atau naik taraf ke Diploma Kejuruteraan Mekanikal.",
+        "jobs": ["Juruteknik Kilang", "Operator Mesin", "Welder (Pengimpal)", "Pembantu Jurutera"]
+    }
 }
 
 # --- FALLBACK FUNCTION ---
