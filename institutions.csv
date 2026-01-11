@@ -1,40 +1,40 @@
-institution_ID,institution_name,acronym,type,category,subcategory,State,address,phone,url
-POLY-001,Politeknik Ungku Omar,PUO,IPTA,Polytechnic,Premier,Perak,"Jalan Raja Musa Mahadi, 31400 Ipoh, Perak",05-5457622,https://www.puo.edu.my
-POLY-002,Politeknik Sultan Haji Ahmad Shah,POLISAS,IPTA,Polytechnic,Konvensional,Pahang,"Semambu, 25350 Kuantan, Pahang",09-5655300,https://polisas.mypolycc.edu.my
-POLY-003,Politeknik Sultan Abdul Halim Muadzam Shah,POLIMAS,IPTA,Polytechnic,Konvensional,Kedah,"Bandar Darulaman, 06000 Jitra, Kedah",04-9146100,https://polimas.mypolycc.edu.my
-POLY-004,Politeknik Kota Bharu,PKB,IPTA,Polytechnic,Konvensional,Kelantan,"Km 24, Pangkal Kalong, Kok Lanas, 16450 Ketereh, Kelantan",09-7889126,https://pkb.mypolycc.edu.my
-POLY-005,Politeknik Kuching Sarawak,PKS,IPTA,Polytechnic,Konvensional,Sarawak,"Km 22, Jalan Matang, 93050 Kuching, Sarawak",082-845596,https://www.poliku.edu.my
-POLY-006,Politeknik Port Dickson,PPD,IPTA,Polytechnic,Konvensional,Negeri Sembilan,"Km 14, Jalan Pantai, 71050 Si Rusa, Negeri Sembilan",06-6622111,https://polipd.mypolycc.edu.my
-POLY-007,Politeknik Kota Kinabalu,PKK,IPTA,Polytechnic,Konvensional,Sabah,"No. 4, Jalan Politeknik, Kkip Barat, Kota Kinabalu Industrial Park, 88460 Kota Kinabalu, Sabah",088-401816,https://polikk.mypolycc.edu.my
-POLY-008,Politeknik Sultan Salahuddin Abdul Aziz Shah,PSA,IPTA,Polytechnic,Premier,Selangor,"Persiaran Usahawan, Seksyen U1, 40150 Shah Alam, Selangor",03-51634000,https://psa.mypolycc.edu.my
-POLY-009,Politeknik Ibrahim Sultan,PIS,IPTA,Polytechnic,Premier,Johor,"Km 10, Jalan Kong Kong, 81700 Pasir Gudang, Johor",07-2612488 ,https://pis.mypolycc.edu.my
-POLY-010,Politeknik Seberang Perai,PSP,IPTA,Polytechnic,Konvensional,Pulau Pinang,"Jalan Permatang Pauh, 13500 Permatang Pauh, Pulau Pinang",04-5383322,http://www.psp.edu.my
-POLY-011,Politeknik Melaka,PMK,IPTA,Polytechnic,Konvensional,Melaka,"No. 2, Jalan Ppm 10, Plaza Pandan Malim, 75250 Balai Panjang, Melaka",06-3376058,https://polimelaka.mypolycc.edu.my
-POLY-012,Politeknik Kuala Terengganu,PKT,IPTA,Polytechnic,Konvensional,Terengganu,"Jalan Sultan Ismail, 20200 Kuala Terengganu, Terengganu",09-6322000,https://pkt.mypolycc.edu.my
-POLY-013,Politeknik Sultan Mizan Zainal Abidin,PSMZA,IPTA,Polytechnic,Konvensional,Terengganu,"Km 8, Jalan Paka, 23000 Dungun, Terengganu",09-8400800,https://psmza.mypolycc.edu.my
-POLY-014,Politeknik Merlimau,PMM,IPTA,Polytechnic,Konvensional,Melaka,"Km 2.5, Jalan Merlimau-Jasin, 77300 Merlimau, Melaka",06-2636687,https://pmm.mypolycc.edu.my
-POLY-015,Politeknik Sultan Azlan Shah,PSAS,IPTA,Polytechnic,Konvensional,Perak,"Behrang Stesen, 35950 Behrang, Perak",05-4544431,https://www.psas.edu.my
-POLY-016,Politeknik Tuanku Sultanah Bahiyah,PTSB,IPTA,Polytechnic,Konvensional,Kedah,"Kulim Hi-Tech Park, 09000 Kulim, Kedah",04-4033333,https://ptsb.mypolycc.edu.my
-POLY-017,Politeknik Sultan Idris Shah,PSIS,IPTA,Polytechnic,Konvensional,Selangor,"Sungai Lang, 45100 Sungai Air Tawar, Selangor",03-32806200,https://psis.mypolycc.edu.my
-POLY-018,Politeknik Tuanku Syed Sirajuddin,PTSS,IPTA,Polytechnic,Konvensional,Perlis,"Pauh Putra, 02600 Arau, Perlis",04-9886200,https://ptss.mypolycc.edu.my
-POLY-019,Politeknik Muadzam Shah,PMS,IPTA,Polytechnic,Konvensional,Pahang,"Lebuhraya Tun Abdul Razak, 26700 Muadzam Shah, Pahang",09-4502007,https://pms.mypolycc.edu.my
-POLY-020,Politeknik Mukah Sarawak,PMU,IPTA,Polytechnic,Konvensional,Sarawak,"Km 7.5, Jalan Oya, 96400 Mukah, Sarawak",084-874001,https://pmu.mypolycc.edu.my
-POLY-021,Politeknik Balik Pulau,PBU,IPTA,Polytechnic,Konvensional,Pulau Pinang,"Pinang Nirai Mukim 6, 11000 Balik Pulau, Pulau Pinang",04-8689000,https://heppbu.com
-POLY-022,Politeknik Jeli,PJK,IPTA,Polytechnic,Konvensional,Kelantan,"Jalan Raya Timur - Barat, 17600 Jeli, Kelantan",09-9443625,https://www.pjk.edu.my
-POLY-023,Politeknik Nilai,PNS,IPTA,Polytechnic,Konvensional,Negeri Sembilan,"Kompleks Pendidikan Bandar Enstek, 71760 Bandar Enstek, Negeri Sembilan",06-8505853,https://pns.mypolycc.edu.my
-POLY-024,Politeknik Banting,PBS,IPTA,Polytechnic,Konvensional,Selangor,"Persiaran Ilmu, Jln Sultan Abdul Samad, 42700 Banting, Selangor",03-31201657,https://pbs.mypolycc.edu.my
-POLY-025,Politeknik Mersing,PMJ,IPTA,Polytechnic,Konvensional,Johor,"Jalan Nitar, 86800 Mersing, Johor",07-7980001,https://pmj.mypolycc.edu.my
-POLY-026,Politeknik Hulu Terengganu,PHT,IPTA,Polytechnic,Konvensional,Terengganu,"Jalan Pengkalan Gawi Tasik Kenyir, Kuala Jeneris, 21700 Kuala Berang, Hulu Terengganu, Terengganu",09-6825555,https://pht.mypolycc.edu.my
-POLY-027,Politeknik Sandakan,PSS,IPTA,Polytechnic,Konvensional,Sabah,"Education Hub, Batu 10, Jalan Sungai Batang, 90000 Sandakan, Sabah",089-228351,https://pss.mypolycc.edu.my
-POLY-028,Politeknik METrO Kuala Lumpur,PMKL,IPTA,Polytechnic,METrO,WP Kuala Lumpur,"No. 2-14, Jalan Setiawangsa 10, Taman Setiawangsa, 54200 Kuala Lumpur, WP Kuala Lumpur",03-42514631,https://pmkl.mypolycc.edu.my
-POLY-029,Politeknik METrO Kuantan,PMKU,IPTA,Polytechnic,METrO,Pahang,"No. A-5, Jalan Tun Ismail 2, Sri Dagangan 2, 25000 Kuantan, Pahang",09-5659009,http://www.pmku.edu.my
-POLY-030,Politeknik METrO Johor Bahru,PMJB,IPTA,Polytechnic,METrO,Johor,"No. 64, Jalan Suria 19, Taman Putera, 81100 Johor Bahru, Johor",07-3358851,https://pmjb.mypolycc.edu.my
-POLY-031,Politeknik METrO Betong,PMBS,IPTA,Polytechnic,METrO,Sarawak,"1-12, Fasa 2, Bandar Baru Betong, Jalan Bandar Baru, 95700 Betong, Sarawak",083-472676,https://www.pmbs.edu.my
-POLY-032,Politeknik METrO Tasek Gelugor,PMTG,IPTA,Polytechnic,METrO,Pulau Pinang,"No.25, Jalan Komersial 2, Pusat Komersial Tasek Gelugor, 13300 Tasek Gelugor, Pulau Pinang",04-5732789,https://www.pmtg.edu.my
-POLY-033,Politeknik Tun Syed Nasir Syed Ismail,PTSN,IPTA,Polytechnic,Konvensional,Johor,"Hab Pendidikan Tinggi Pagoh, Km 1, Jln Panchor, 84600 Pagoh, Muar, Johor",06-9742288 ,https://ptsn.mypolycc.edu.my
-POLY-034,Politeknik Besut,PBT,IPTA,Polytechnic,Konvensional,Terengganu,"Jalan Bukit Keluang, 22200 Besut, Terengganu",011-56563550,https://bit.ly/pelajar-baharu-polibesut
-POLY-035,Politeknik Bagan Datuk,PBD,IPTA,Polytechnic,Konvensional,Perak,"Jalan Bagan Datuk, 36100 Bagan Datuk, Perak",05-6081630,https://pbd.mypolycc.edu.my
-POLY-036,Politeknik Tawau,PTS,IPTA,Polytechnic,Konvensional,Sabah,"Km 36, Jalan Apas Balung, 91009 Tawau, Sabah",019-3261269,https://politawau.mypolycc.edu.my
+institution_id,institution_name,acronym,type,category,subcategory,State,address,phone,url
+POLY-001,Politeknik Ungku Omar,PUO,IPTA,Politeknik,Premier,Perak,"Jalan Raja Musa Mahadi, 31400 Ipoh, Perak",05-5457622,https://www.puo.edu.my
+POLY-002,Politeknik Sultan Haji Ahmad Shah,POLISAS,IPTA,Politeknik,Konvensional,Pahang,"Semambu, 25350 Kuantan, Pahang",09-5655300,https://polisas.mypolycc.edu.my
+POLY-003,Politeknik Sultan Abdul Halim Muadzam Shah,POLIMAS,IPTA,Politeknik,Konvensional,Kedah,"Bandar Darulaman, 06000 Jitra, Kedah",04-9146100,https://polimas.mypolycc.edu.my
+POLY-004,Politeknik Kota Bharu,PKB,IPTA,Politeknik,Konvensional,Kelantan,"Km 24, Pangkal Kalong, Kok Lanas, 16450 Ketereh, Kelantan",09-7889126,https://pkb.mypolycc.edu.my
+POLY-005,Politeknik Kuching Sarawak,PKS,IPTA,Politeknik,Konvensional,Sarawak,"Km 22, Jalan Matang, 93050 Kuching, Sarawak",082-845596,https://www.poliku.edu.my
+POLY-006,Politeknik Port Dickson,PPD,IPTA,Politeknik,Konvensional,Negeri Sembilan,"Km 14, Jalan Pantai, 71050 Si Rusa, Negeri Sembilan",06-6622111,https://polipd.mypolycc.edu.my
+POLY-007,Politeknik Kota Kinabalu,PKK,IPTA,Politeknik,Konvensional,Sabah,"No. 4, Jalan Politeknik, Kkip Barat, Kota Kinabalu Industrial Park, 88460 Kota Kinabalu, Sabah",088-401816,https://polikk.mypolycc.edu.my
+POLY-008,Politeknik Sultan Salahuddin Abdul Aziz Shah,PSA,IPTA,Politeknik,Premier,Selangor,"Persiaran Usahawan, Seksyen U1, 40150 Shah Alam, Selangor",03-51634000,https://psa.mypolycc.edu.my
+POLY-009,Politeknik Ibrahim Sultan,PIS,IPTA,Politeknik,Premier,Johor,"Km 10, Jalan Kong Kong, 81700 Pasir Gudang, Johor",07-2612488 ,https://pis.mypolycc.edu.my
+POLY-010,Politeknik Seberang Perai,PSP,IPTA,Politeknik,Konvensional,Pulau Pinang,"Jalan Permatang Pauh, 13500 Permatang Pauh, Pulau Pinang",04-5383322,http://www.psp.edu.my
+POLY-011,Politeknik Melaka,PMK,IPTA,Politeknik,Konvensional,Melaka,"No. 2, Jalan Ppm 10, Plaza Pandan Malim, 75250 Balai Panjang, Melaka",06-3376058,https://polimelaka.mypolycc.edu.my
+POLY-012,Politeknik Kuala Terengganu,PKT,IPTA,Politeknik,Konvensional,Terengganu,"Jalan Sultan Ismail, 20200 Kuala Terengganu, Terengganu",09-6322000,https://pkt.mypolycc.edu.my
+POLY-013,Politeknik Sultan Mizan Zainal Abidin,PSMZA,IPTA,Politeknik,Konvensional,Terengganu,"Km 8, Jalan Paka, 23000 Dungun, Terengganu",09-8400800,https://psmza.mypolycc.edu.my
+POLY-014,Politeknik Merlimau,PMM,IPTA,Politeknik,Konvensional,Melaka,"Km 2.5, Jalan Merlimau-Jasin, 77300 Merlimau, Melaka",06-2636687,https://pmm.mypolycc.edu.my
+POLY-015,Politeknik Sultan Azlan Shah,PSAS,IPTA,Politeknik,Konvensional,Perak,"Behrang Stesen, 35950 Behrang, Perak",05-4544431,https://www.psas.edu.my
+POLY-016,Politeknik Tuanku Sultanah Bahiyah,PTSB,IPTA,Politeknik,Konvensional,Kedah,"Kulim Hi-Tech Park, 09000 Kulim, Kedah",04-4033333,https://ptsb.mypolycc.edu.my
+POLY-017,Politeknik Sultan Idris Shah,PSIS,IPTA,Politeknik,Konvensional,Selangor,"Sungai Lang, 45100 Sungai Air Tawar, Selangor",03-32806200,https://psis.mypolycc.edu.my
+POLY-018,Politeknik Tuanku Syed Sirajuddin,PTSS,IPTA,Politeknik,Konvensional,Perlis,"Pauh Putra, 02600 Arau, Perlis",04-9886200,https://ptss.mypolycc.edu.my
+POLY-019,Politeknik Muadzam Shah,PMS,IPTA,Politeknik,Konvensional,Pahang,"Lebuhraya Tun Abdul Razak, 26700 Muadzam Shah, Pahang",09-4502007,https://pms.mypolycc.edu.my
+POLY-020,Politeknik Mukah Sarawak,PMU,IPTA,Politeknik,Konvensional,Sarawak,"Km 7.5, Jalan Oya, 96400 Mukah, Sarawak",084-874001,https://pmu.mypolycc.edu.my
+POLY-021,Politeknik Balik Pulau,PBU,IPTA,Politeknik,Konvensional,Pulau Pinang,"Pinang Nirai Mukim 6, 11000 Balik Pulau, Pulau Pinang",04-8689000,https://heppbu.com
+POLY-022,Politeknik Jeli,PJK,IPTA,Politeknik,Konvensional,Kelantan,"Jalan Raya Timur - Barat, 17600 Jeli, Kelantan",09-9443625,https://www.pjk.edu.my
+POLY-023,Politeknik Nilai,PNS,IPTA,Politeknik,Konvensional,Negeri Sembilan,"Kompleks Pendidikan Bandar Enstek, 71760 Bandar Enstek, Negeri Sembilan",06-8505853,https://pns.mypolycc.edu.my
+POLY-024,Politeknik Banting,PBS,IPTA,Politeknik,Konvensional,Selangor,"Persiaran Ilmu, Jln Sultan Abdul Samad, 42700 Banting, Selangor",03-31201657,https://pbs.mypolycc.edu.my
+POLY-025,Politeknik Mersing,PMJ,IPTA,Politeknik,Konvensional,Johor,"Jalan Nitar, 86800 Mersing, Johor",07-7980001,https://pmj.mypolycc.edu.my
+POLY-026,Politeknik Hulu Terengganu,PHT,IPTA,Politeknik,Konvensional,Terengganu,"Jalan Pengkalan Gawi Tasik Kenyir, Kuala Jeneris, 21700 Kuala Berang, Hulu Terengganu, Terengganu",09-6825555,https://pht.mypolycc.edu.my
+POLY-027,Politeknik Sandakan,PSS,IPTA,Politeknik,Konvensional,Sabah,"Education Hub, Batu 10, Jalan Sungai Batang, 90000 Sandakan, Sabah",089-228351,https://pss.mypolycc.edu.my
+POLY-028,Politeknik METrO Kuala Lumpur,PMKL,IPTA,Politeknik,METrO,WP Kuala Lumpur,"No. 2-14, Jalan Setiawangsa 10, Taman Setiawangsa, 54200 Kuala Lumpur, WP Kuala Lumpur",03-42514631,https://pmkl.mypolycc.edu.my
+POLY-029,Politeknik METrO Kuantan,PMKU,IPTA,Politeknik,METrO,Pahang,"No. A-5, Jalan Tun Ismail 2, Sri Dagangan 2, 25000 Kuantan, Pahang",09-5659009,http://www.pmku.edu.my
+POLY-030,Politeknik METrO Johor Bahru,PMJB,IPTA,Politeknik,METrO,Johor,"No. 64, Jalan Suria 19, Taman Putera, 81100 Johor Bahru, Johor",07-3358851,https://pmjb.mypolycc.edu.my
+POLY-031,Politeknik METrO Betong,PMBS,IPTA,Politeknik,METrO,Sarawak,"1-12, Fasa 2, Bandar Baru Betong, Jalan Bandar Baru, 95700 Betong, Sarawak",083-472676,https://www.pmbs.edu.my
+POLY-032,Politeknik METrO Tasek Gelugor,PMTG,IPTA,Politeknik,METrO,Pulau Pinang,"No.25, Jalan Komersial 2, Pusat Komersial Tasek Gelugor, 13300 Tasek Gelugor, Pulau Pinang",04-5732789,https://www.pmtg.edu.my
+POLY-033,Politeknik Tun Syed Nasir Syed Ismail,PTSN,IPTA,Politeknik,Konvensional,Johor,"Hab Pendidikan Tinggi Pagoh, Km 1, Jln Panchor, 84600 Pagoh, Muar, Johor",06-9742288 ,https://ptsn.mypolycc.edu.my
+POLY-034,Politeknik Besut,PBT,IPTA,Politeknik,Konvensional,Terengganu,"Jalan Bukit Keluang, 22200 Besut, Terengganu",011-56563550,https://bit.ly/pelajar-baharu-polibesut
+POLY-035,Politeknik Bagan Datuk,PBD,IPTA,Politeknik,Konvensional,Perak,"Jalan Bagan Datuk, 36100 Bagan Datuk, Perak",05-6081630,https://pbd.mypolycc.edu.my
+POLY-036,Politeknik Tawau,PTS,IPTA,Politeknik,Konvensional,Sabah,"Km 36, Jalan Apas Balung, 91009 Tawau, Sabah",019-3261269,https://politawau.mypolycc.edu.my
 KKOM-001,Kolej Komuniti Teluk Intan,KKTI,IPTA,Kolej Komuniti,Kolej Komuniti,Perak,"10-20 Persiaran Intanova, Taman Intanova, 36000 Teluk Intan, Perak",05-622 2134 / 106 / 019-386 5875, https://sites.google.com/kktin.edu.my/unit-ambilan-kkti/pelajar-baharu
 KKOM-002,Kolej Komuniti Chenderoh,KKC,IPTA,Kolej Komuniti,Kolej Komuniti,Perak,"Lot 43, Jalan Perindustrian Miel 2, Kawasan Perindustrian Iks, 33700 Kuala Kangsar, Perak",05-7733773 / 013-8046103, https://t.me/+d4h54EGVSOZjMmZl
 KKOM-003,Kolej Komuniti Gerik,KKGE,IPTA,Kolej Komuniti,Kolej Komuniti,Perak,"Bukit Nasah, 33300 Gerik, Perak",017-6747479, https://kkgerik.mypolycc.edu.my/

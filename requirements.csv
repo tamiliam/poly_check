@@ -1,4 +1,4 @@
-course_ID,min_credits,req_malaysian,pass_bm,pass_history,pass_eng,pass_math,credit_math,credit_bm,credit_eng,pass_stv,credit_stv,credit_sf,credit_sfmt,credit_bmbi,req_male,req_female,req_interview,no_colorblind,no_disability,medical_restrictions,remarks
+course_id,min_credits,req_malaysian,pass_bm,pass_history,pass_eng,pass_math,credit_math,credit_bm,credit_eng,pass_stv,credit_stv,credit_sf,credit_sfmt,credit_bmbi,req_male,req_female,req_interview,no_colorblind,no_disability,medical_restrictions,remarks
 POLY-DIP-001,3,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"Tidak mempunyai ketidakupayaan penglihatan (buta, buta warna), pendengaran, pertuturan, fizikal, pembelajaran atau lain-lain yang menyukarkan kerja-kerja amali",
 POLY-DIP-002,3,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"Tidak mempunyai ketidakupayaan penglihatan (buta, buta warna), pendengaran, pertuturan, fizikal, pembelajaran atau lain-lain yang menyukarkan kerja-kerja amali",
 POLY-DIP-003,3,1,1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,"Tidak mempunyai ketidakupayaan penglihatan (buta), pendengaran, pertuturan, fizikal, pembelajaran atau lain-lain yang menyukarkan kerja-kerja amali",Sains/Teknikal/Vokasional
