@@ -1,4 +1,4 @@
-course_ID,course,wbl,level,department,field,semesters
+course_id,course,wbl,level,department,field,semesters
 POLY-DIP-001,Diploma Agroteknologi,0,Diploma,Agroteknologi Dan Bio-Industri,Agroteknologi,6
 POLY-DIP-002,Diploma Bioteknologi,0,Diploma,Agroteknologi Dan Bio-Industri,Bioteknologi,6
 POLY-DIP-003,Diploma Geomatik,0,Diploma,Kejuruteraan Awam,Geomatik,6
@@ -84,3 +84,57 @@ POLY-DIP-082,Diploma Pengurusan Logistik dan Rantaian Bekalan,1,Diploma,Perdagan
 POLY-CET-001,Sijil Kejuruteraan Awam,0,Sijil,Kejuruteraan Awam,Kejuruteraan Awam,6
 POLY-CET-002,Sijil Kejuruteraan Elektrik,0,Sijil,Kejuruteraan Elektrik,Kejuruteraan Elektrik,6
 POLY-CET-003,Sijil Kejuruteraan Mekanikal,0,Sijil,Kejuruteraan Mekanikal,Kejuruteraan Mekanikal,6
+KKOM-DIP-001,Diploma Dandanan Rambut,1,Diploma,Pelancongan Dan Hospitaliti,Dandanan Rambut,6
+KKOM-DIP-002,Diploma in 3D Animation Technology,1,Diploma,Reka Bentuk Dan Komunikasi Visual,3D Animation Technology,5
+KKOM-DIP-003,Diploma in Architectural Technology,1,Diploma,Kejuruteraan Awam,Architectural Technology,6
+KKOM-DIP-004,Diploma in Culinary Arts,1,Diploma,Pelancongan Dan Hospitaliti,Culinary Arts,5
+KKOM-DIP-005,Diploma in Electronics Instrumentation Technology,1,Diploma,Kejuruteraan Elektrik,Electronics Instrumentation Technology,6
+KKOM-DIP-006,Diploma in Games Art Technology,1,Diploma,Reka Bentuk Dan Komunikasi Visual,Games Art Technology,6
+KKOM-DIP-007,Diploma in Hotel Management,1,Diploma,Pelancongan Dan Hospitaliti,Hotel Management,5
+KKOM-DIP-008,Diploma in Mechanical Design Technology,1,Diploma,Kejuruteraan Mekanikal,Mechanical Design Technology,5
+KKOM-DIP-009,Diploma in Mobile Technology,1,Diploma,Kejuruteraan Elektrik,Mobile Technology,5
+KKOM-DIP-010,Diploma In Patisserie,1,Diploma,Pelancongan Dan Hospitaliti,Patisserie,5
+KKOM-DIP-011,Diploma in Rail Signalling And Communication Technology,1,Diploma,Kejuruteraan Elektrik,Rail Signalling And Communication Technology,6
+KKOM-DIP-012,Diploma in Sound & Lighting Technology,1,Diploma,Kejuruteraan Elektrik,Sound & Lighting Technology,5
+KKOM-DIP-013,Diploma in Telecommunication Technology,1,Diploma,Kejuruteraan Elektrik,Telecommunication Technology,5
+KKOM-DIP-014,Diploma Teknologi Kenderaan Perdagangan,1,Diploma,Kejuruteraan Mekanikal,Teknologi Kenderaan Perdagangan,5
+KKOM-DIP-015,Diploma Teknologi Solar Fotovoltan,1,Diploma,Kejuruteraan Elektrik,Teknologi Solar Fotovoltan,6
+KKOM-DIP-016,Diploma Terapi Kecantikan,1,Diploma,Pelancongan Dan Hospitaliti,Terapi Kecantikan,6
+KKOM-CET-001,Certificate in Culinary Arts,0,Sijil,Pelancongan Dan Hospitaliti,Certificate In Culinary Arts,4
+KKOM-CET-002,Certificate in Food & Beverage Service,0,Sijil,Pelancongan Dan Hospitaliti,Certificate In Food & Beverage Service,4
+KKOM-CET-003,Certificate In Recreational Tourism,0,Sijil,Pelancongan Dan Hospitaliti,Certificate In Recreational Tourism,4
+KKOM-CET-004,Sijil Agroteknologi,0,Sijil,Teknologi Pertanian,Agroteknologi,4
+KKOM-CET-005,Sijil Animasi 2D,0,Sijil,Rekabentuk Dan Kreatif,Animasi 2D,4
+KKOM-CET-006,Sijil Animasi 3D,0,Sijil,Rekabentuk Dan Kreatif,Animasi 3D,4
+KKOM-CET-007,Sijil Dandanan Rambut,0,Sijil,Perkhidmatan,Dandanan Rambut,4
+KKOM-CET-008,Sijil Fesyen dan Pakaian,0,Sijil,Rekabentuk Dan Kreatif,Fesyen Dan Pakaian,4
+KKOM-CET-009,Sijil Kulinari,0,Sijil,Perkhidmatan,Kulinari,4
+KKOM-CET-010,Sijil Landskap,0,Sijil,Teknologi Awam Dan Alam Bina,Landskap,4
+KKOM-CET-011,Sijil Multimedia Kreatif Pengiklanan,0,Sijil,Rekabentuk Dan Kreatif,Multimedia Kreatif Pengiklanan,4
+KKOM-CET-012,Sijil Operasi Perhotelan,0,Sijil,Perkhidmatan,Operasi Perhotelan,4
+KKOM-CET-013,Sijil Pastri,0,Sijil,Perkhidmatan,Pastri,4
+KKOM-CET-014,Sijil Pengembaraan Pelancongan,0,Sijil,Perkhidmatan,Pengembaraan Pelancongan,4
+KKOM-CET-015,Sijil Pengendalian Acara,0,Sijil,Pelancongan Dan Hospitaliti,Pengendalian Acara,4
+KKOM-CET-016,Sijil Pengoperasian Perniagaan,0,Sijil,Pengurusan Dan Perdagangan,Pengoperasian Perniagaan,4
+KKOM-CET-017,Sijil Penyelenggaraan Bangunan,0,Sijil,Teknologi Awam Dan Alam Bina,Penyelenggaraan Bangunan,4
+KKOM-CET-018,Sijil Penyeliaan Tapak Bina,0,Sijil,Teknologi Awam Dan Alam Bina,Penyeliaan Tapak Bina,4
+KKOM-CET-019,Sijil Perkhidmatan Logistik,0,Sijil,Pengurusan Dan Perdagangan,Perkhidmatan Logistik,4
+KKOM-CET-020,Sijil Rekabentuk Dalaman,0,Sijil,Teknologi Awam Dan Alam Bina,Rekabentuk Dalaman,4
+KKOM-CET-021,Sijil Rekabentuk dan Pembuatan Perabot,0,Sijil,Teknologi Awam Dan Alam Bina,Rekabentuk Dan Pembuatan Perabot,4
+KKOM-CET-022,Sijil Seni Visual Kreatif,0,Sijil,Rekabentuk Dan Kreatif,Seni Visual Kreatif,4
+KKOM-CET-023,Sijil Teknologi Akuakultur,0,Sijil,Teknologi Pertanian,Teknologi Akuakultur,4
+KKOM-CET-024,Sijil Teknologi Automotif,0,Sijil,Teknologi Mekanikal,Teknologi Automotif,4
+KKOM-CET-025,Sijil Teknologi Elektrik,0,Sijil,Teknologi Elektrik,Teknologi Elektrik,4
+KKOM-CET-026,Sijil Teknologi Elektrik Pemasangan dan Perkhidmatan,0,Sijil,Teknologi Elektrik,Teknologi Elektrik Pemasangan Dan Perkhidmatan,4
+KKOM-CET-027,Sijil Teknologi Maklumat,0,Sijil,Perkomputeran,Teknologi Maklumat,4
+KKOM-CET-028,Sijil Teknologi Pembinaan Bangunan,0,Sijil,Teknologi Awam Dan Alam Bina,Teknologi Pembinaan Bangunan,4
+KKOM-CET-029,Sijil Teknologi Pembuatan,0,Sijil,Teknologi Mekanikal,Teknologi Pembuatan,4
+KKOM-CET-030,Sijil Teknologi Pemprosesan Makanan,0,Sijil,Teknologi Pertanian,Teknologi Pemprosesan Makanan,4
+KKOM-CET-031,Sijil Teknologi Penyejukan dan Penyamanan Udara,0,Sijil,Teknologi Mekanikal,Teknologi Penyejukan Dan Penyamanan Udara,4
+KKOM-CET-032,Sijil Teknologi Penyelenggaraan Kenderaan Pacuan Empat Roda,0,Sijil,Teknologi Mekanikal,Teknologi Penyelenggaraan Kenderaan Pacuan Empat Roda,4
+KKOM-CET-033,Sijil Teknologi Penyenggaraan Industri,0,Sijil,Teknologi Mekanikal,Teknologi Penyenggaraan Industri,4
+KKOM-CET-034,Sijil Teknologi Penyenggaraan Motosikal Berkuasa Tinggi,0,Sijil,Teknologi Mekanikal,Teknologi Penyenggaraan Motosikal Berkuasa Tinggi,4
+KKOM-CET-035,Sijil Teknologi Peranti Mudah Alih,0,Sijil,Teknologi Elektrik,Teknologi Peranti Mudah Alih,4
+KKOM-CET-036,Sijil Teknologi Senibina,0,Sijil,Teknologi Awam Dan Alam Bina,Teknologi Senibina,4
+KKOM-CET-037,Sijil Teknologi Telekomunikasi,0,Sijil,Teknologi Elektrik,Teknologi Telekomunikasi,4
+KKOM-CET-038,Sijil Terapi Kecantikan dan Spa,0,Sijil,Perkhidmatan,Terapi Kecantikan Dan Spa,4
