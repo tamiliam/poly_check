@@ -21,7 +21,7 @@ def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v12():
+def load_data_v13():
     courses = pd.read_csv("courses.csv", encoding="latin1")
     polys = pd.read_csv("polys.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
@@ -42,7 +42,7 @@ def load_data_v12():
     return courses, polys, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v12()
+    courses_df, polys_df, reqs_df, links_df = load_data_v13()
 except Exception as e:
     st.error(f"Error loading database: {e}")
     st.stop()
@@ -55,7 +55,6 @@ with st.sidebar.expander("👤 Personal Details", expanded=True):
     nationality = st.radio("Citizenship", ["Malaysian", "Non-Malaysian"], key="nat_input")
     gender = st.radio("Gender", ["Male", "Female"], key="gen_input")
     
-    # COLORBLIND TEST LINK ADDED HERE
     st.write("**Medical Conditions**")
     colorblind = st.radio("Colorblind?", ["No", "Yes"], key="cb_input")
     st.caption("Not sure? [Take a quick free test here](https://enchroma.com/pages/color-blind-test) (External Link)")
@@ -203,6 +202,7 @@ if st.session_state.get('has_checked', False):
     eligible_ids = st.session_state['eligible_ids']
     fail_reason = st.session_state.get('fail_reason')
     
+    # 1. MAIN RESULTS
     if fail_reason:
         st.error(f"❌ Not Eligible. Reason: {fail_reason}")
     elif not eligible_ids:
@@ -211,23 +211,10 @@ if st.session_state.get('has_checked', False):
     else:
         st.success(f"✅ You are eligible for {len(eligible_ids)} courses!")
         
-        # 1. PREPARE RESULTS TABLE
-        res = courses_df[courses_df['course_id'].isin(eligible_ids)].copy()
-        
-        # 2. INJECT INTERVIEW STATUS
-        # Map ID to Interview Req
-        interview_map = {}
-        for cid in eligible_ids:
-            # Check if ANY row for this course requires interview
-            rows = reqs_df[reqs_df['course_id'] == cid]
-            has_interview = rows['req_interview'].apply(is_active).any()
-            interview_map[cid] = "🗣️ Yes" if has_interview else "No"
-            
-        res['Interview?'] = res['course_id'].map(interview_map)
-        
-        # 3. DISPLAY TABLE
+        # Display Results Table (Clean, no Interview column)
+        res = courses_df[courses_df['course_id'].isin(eligible_ids)]
         st.dataframe(
-            res[['course', 'Interview?', 'field', 'department']], 
+            res[['course', 'field', 'department']], 
             hide_index=True, 
             use_container_width=True
         )
@@ -239,6 +226,15 @@ if st.session_state.get('has_checked', False):
         
         if sel:
             cid = res[res['course'] == sel].iloc[0]['course_id']
+            
+            # --- INTERVIEW CHECKER (Hidden Feature) ---
+            # We check if THIS specific course has an interview requirement
+            rows_for_course = reqs_df[reqs_df['course_id'] == cid]
+            # If ANY row for this course has req_interview=1, we show the alert
+            if rows_for_course['req_interview'].apply(is_active).any():
+                st.info("🗣️ **Interview Required:** You must pass an interview or submit a portfolio to be accepted into this programme.")
+            
+            # --- LOCATION TABLE ---
             pids = links_df[links_df['course_id'] == cid]['institution_id']
             final = polys_df[polys_df['institution_id'].isin(pids)]
             
@@ -247,7 +243,7 @@ if st.session_state.get('has_checked', False):
             else:
                 st.info("No specific campus location data available.")
 
-    # FORENSIC INSPECTOR
+    # 2. FORENSIC INSPECTOR
     st.markdown("---")
     st.header("🕵️ Why wasn't I eligible?")
     st.write("Select a course below to see exactly which requirement you missed.")
