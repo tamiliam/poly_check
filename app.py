@@ -29,11 +29,11 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .poly-box {
-        background-color: #e3f2fd;
+        background-color: #71797f;
         border-left: 5px solid #0d47a1;
     }
     .kk-box {
-        background-color: #e8f5e9;
+        background-color: #78938a;
         border-left: 5px solid #2e7d32;
     }
 </style>
