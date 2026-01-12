@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-# Ensure description.py is in the same folder and has no syntax errors
+# Ensure description.py is in the same folder
 from description import get_course_details
 
 # --- PAGE SETUP ---
@@ -29,7 +29,7 @@ def is_credit(g): return str(g).strip() in ["A+", "A", "A-", "B+", "B", "C+", "C
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v17():
+def load_data_v18():
     # Ensure these 4 files exist in your folder
     courses = pd.read_csv("courses.csv", encoding="latin1")
     institutions = pd.read_csv("institutions.csv", encoding="latin1")
@@ -40,7 +40,7 @@ def load_data_v17():
     for df in [courses, institutions, reqs, links]:
         df.columns = [clean_header(c) for c in df.columns]
 
-    # Clean IDs to ensure matching works
+    # Clean IDs
     for df in [courses, reqs, links]:
         df['course_id'] = df['course_id'].astype(str).str.strip()
     
@@ -50,7 +50,7 @@ def load_data_v17():
     return courses, institutions, reqs, links
 
 try:
-    courses_df, inst_df, reqs_df, links_df = load_data_v17()
+    courses_df, inst_df, reqs_df, links_df = load_data_v18()
 except Exception as e:
     st.error(f"Ralat memuatkan pangkalan data: {e}")
     st.stop()
@@ -178,7 +178,6 @@ if st.sidebar.button("Semak Kelayakan", type="primary"):
         st.session_state['checked'] = True
     else:
         e_ids = []
-        # Filter: Check every requirement row for every course
         grouped = reqs_df.groupby('course_id')
         for cid, group in grouped:
             if group.apply(check_row_constraints, axis=1).all():
@@ -199,7 +198,6 @@ if st.session_state.get('checked'):
         st.warning(f"Tiada program layak berdasarkan keputusan ini. Kredit: {calculated_credits}")
     else:
         # Split Data into Poly vs Kolej Komuniti
-        # Logic: Poly IDs start with 'POLY', KK IDs usually start with 'KK' or have 'CET'
         poly_ids = [i for i in e_ids if "POLY" in i]
         kk_ids = [i for i in e_ids if "POLY" not in i] 
 
@@ -214,18 +212,48 @@ if st.session_state.get('checked'):
         # --- TABS UI ---
         tab1, tab2 = st.tabs(["🏛️ Politeknik", "🛠️ Kolej Komuniti"])
 
+        # HELPER FOR TABLE DISPLAY
+        def display_courses_table(ids, is_poly):
+            if not ids:
+                st.info("Tiada program yang layak.")
+                return None
+            
+            res = courses_df[courses_df['course_id'].isin(ids)]
+            
+            # Prepare Columns dynamically based on availability
+            cols_to_show = ['course', 'department']
+            rename_map = {'course': 'Nama Program', 'department': 'Jabatan/Bidang'}
+            
+            # Check for Duration column
+            if 'duration' in res.columns:
+                cols_to_show.append('duration')
+                rename_map['duration'] = 'Tempoh'
+            
+            # Check for Link column
+            if 'course_url' in res.columns:
+                cols_to_show.append('course_url')
+                rename_map['course_url'] = 'Info'
+
+            final_df = res[cols_to_show].rename(columns=rename_map)
+            
+            st.dataframe(
+                final_df,
+                hide_index=True,
+                use_container_width=True,
+                column_config={
+                    "Info": st.column_config.LinkColumn(
+                        "Info Lanjut",
+                        display_text="Lihat Info 🔗"
+                    )
+                }
+            )
+            return res
+
         # === TAB 1: POLITEKNIK ===
         with tab1:
-            if not poly_ids:
-                st.info("Tiada program Politeknik yang layak.")
-            else:
-                poly_res = courses_df[courses_df['course_id'].isin(poly_ids)]
-                st.dataframe(
-                    poly_res[['course', 'department']].rename(columns={'course':'Nama Program', 'department':'Jabatan'}), 
-                    hide_index=True, 
-                    use_container_width=True
-                )
-                
+            poly_res = display_courses_table(poly_ids, is_poly=True)
+            
+            if poly_res is not None:
                 # Selection Scoped to Poly
                 st.markdown("---")
                 st.subheader("🔍 Lihat Detail Program Politeknik")
@@ -238,11 +266,8 @@ if st.session_state.get('checked'):
                     with st.container():
                         st.info(f"### {details['headline']}")
                         st.write(details['synopsis'])
-                        
-                        # Conditional Pathway
                         if 'pathway' in details: 
                             st.write(f"**🎓 Laluan Sambung Belajar:** {details['pathway']}")
-                        
                         st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                         
                         # Interview Check
@@ -265,16 +290,9 @@ if st.session_state.get('checked'):
 
         # === TAB 2: KOLEJ KOMUNITI ===
         with tab2:
-            if not kk_ids:
-                st.info("Tiada program Kolej Komuniti yang layak.")
-            else:
-                kk_res = courses_df[courses_df['course_id'].isin(kk_ids)]
-                st.dataframe(
-                    kk_res[['course', 'department']].rename(columns={'course':'Nama Program', 'department':'Bidang'}), 
-                    hide_index=True, 
-                    use_container_width=True
-                )
-                
+            kk_res = display_courses_table(kk_ids, is_poly=False)
+            
+            if kk_res is not None:
                 # Selection Scoped to KK
                 st.markdown("---")
                 st.subheader("🔍 Lihat Detail Program Kolej Komuniti")
@@ -287,10 +305,8 @@ if st.session_state.get('checked'):
                     with st.container():
                         st.success(f"### {details['headline']}")
                         st.write(details['synopsis'])
-                        
                         if 'pathway' in details: 
                             st.write(f"**🎓 Laluan Sambung Belajar:** {details['pathway']}")
-                        
                         st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                     
                     # Locations
@@ -326,7 +342,6 @@ if st.session_state.get('checked'):
                     st.write(f"**Kriteria Set #{idx+1}:**")
                     reasons = []
                     
-                    # Quick Check Logic for Feedback
                     try: min_c = int(float(req.get('min_credits', 0)))
                     except: min_c = 0
                     
