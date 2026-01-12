@@ -582,6 +582,447 @@ course_info = {
         "synopsis": "Anda suka kerja tangan? Kursus ini mengajar anda menggunakan mesin bengkel (welding, memesin) dan melukis pelan CAD asas. Ia adalah asas kukuh untuk menjadi juruteknik kilang yang cekap. Selepas tamat, anda boleh terus bekerja atau naik taraf ke Diploma Kejuruteraan Mekanikal.",
         "jobs": ["Juruteknik Kilang", "Operator Mesin", "Welder (Pengimpal)", "Pembantu Jurutera"]
     }
+
+    # ==========================================
+    # KOLEJ KOMUNITI - DIPLOMA COURSES
+    # ==========================================
+
+    # --- HAIR DESIGN ---
+    "KKOM-DIP-001": {
+        "headline": "✂️ Dandanan Rambut: Stylist Profesional",
+        "synopsis": "Bukan sekadar potong rambut. Anda belajar kimia pewarna rambut, rawatan kulit kepala, dan pengurusan salun. Kemahiran ini 'kalis kemelesetan'—orang sentiasa perlu gunting rambut. Sesuai untuk anda yang kreatif, suka berfesyen, dan bercita-cita buka kedai sendiri.",
+        "jobs": ["Hairstylist Profesional", "Usahawan Salun", "Perunding Imej", "Jurulatih Dandanan"],
+        "pathway": "Ijazah Sarjana Muda Seni Kreatif / Pengurusan Perniagaan"
+    },
+
+    # --- 3D ANIMATION ---
+    "KKOM-DIP-002": {
+        "headline": "🎬 Animasi 3D: Hidupkan Karakter",
+        "synopsis": "Minat filem Pixar atau game 3D? Belajar cara buat karakter bergerak, ekspresi muka, dan kesan visual (VFX). Kursus ini fokus kepada skil teknikal menggunakan software canggih. Anda akan hasilkan portfolio 'showreel' anda sendiri untuk tunjuk pada majikan.",
+        "jobs": ["3D Animator", "3D Modeller", "Game Artist", "Texture Artist"],
+        "pathway": "Ijazah Sarjana Muda Animasi / Multimedia Kreatif"
+    },
+
+    # --- ARCHITECTURAL TECHNOLOGY ---
+    "KKOM-DIP-003": {
+        "headline": "🏢 Teknologi Seni Bina: Pelukis Pelan Digital",
+        "synopsis": "Anda bukan Arkitek, tapi andalah orang kanan Arkitek. Anda belajar menggunakan perisian BIM (Building Information Modelling) untuk melukis bangunan dalam 3D. Industri pembinaan sekarang Wajib guna BIM, jadi graduan kursus ini sangat laku keras.",
+        "jobs": ["BIM Modeller", "Pembantu Teknikal Seni Bina", "Pelukis Pelan (Draughtsman)", "Penyelaras BIM"],
+        "pathway": "Ijazah Sarjana Muda Sains Seni Bina / Ukur Bahan"
+    },
+
+    # --- CULINARY ARTS ---
+    "KKOM-DIP-004": {
+        "headline": "🍳 Seni Kulinari: Chef Muda",
+        "synopsis": "Belajar masak sambil bekerja! Program ini unik kerana ada 'Work Based Learning'—anda akan bekerja di hotel sebenar selama 8 bulan. Anda belajar masakan Barat, Asia, dan pengurusan dapur. Ini jalan pantas untuk jadi Chef tanpa perlu bayar yuran kolej swasta yang mahal.",
+        "jobs": ["Commis Chef", "Katerer", "Penyelia F&B", "Usahawan Makanan"],
+        "pathway": "Ijazah Sarjana Muda Seni Kulinari / Pengurusan Hotel"
+    },
+
+    # --- ELECTRONICS (INSTRUMENTATION) ---
+    "KKOM-DIP-005": {
+        "headline": "🎛️ Elektronik (Instrumentasi): Pakar Sensor Kilang",
+        "synopsis": "Kilang moden penuh dengan sensor dan robot. Siapa yang pastikan sensor tu tepat? Anda! Kursus ini mengajar anda membaiki, menentukur (calibrate), dan menyelenggara alat elektronik di kilang. Kerja ini sangat spesifik dan bergaji tinggi dalam sektor pembuatan.",
+        "jobs": ["Juruteknik Instrumentasi", "Juruteknik Penyelenggaraan", "Penyelia Kilang", "Usahawan Teknikal"],
+        "pathway": "Ijazah Sarjana Muda Kejuruteraan Elektrik / Elektronik"
+    },
+
+    # --- GAMES ART ---
+    "KKOM-DIP-006": {
+        "headline": "🎮 Games Art: Reka Dunia Video Game",
+        "synopsis": "Khas untuk 'Gamers'. Anda belajar mereka bentuk senjata, raksasa, kenderaan, dan latar belakang (environment) untuk video game. Anda akan guna 'Game Engine' sebenar. Jangan sekadar main game, jadilah orang yang menciptanya.",
+        "jobs": ["Game Artist", "Concept Artist", "Level Designer", "3D Modeller"],
+        "pathway": "Ijazah Sarjana Muda Pembangunan Permainan / Multimedia"
+    },
+
+    # --- HOTEL MANAGEMENT ---
+    "KKOM-DIP-007": {
+        "headline": "🏨 Pengurusan Hotel: Kerjaya Hospitaliti",
+        "synopsis": "Masuk terus ke industri perhotelan. Anda belajar mengurus tetamu di Front Office, menjaga kebersihan Housekeeping, dan menyelia restoran. Program ini ada latihan industri panjang (WBL), jadi anda tamat belajar dengan pengalaman kerja sebenar.",
+        "jobs": ["Penyelia Hotel", "Front Office Assistant", "Housekeeping Supervisor", "Penyelia Restoran"],
+        "pathway": "Ijazah Sarjana Muda Pengurusan Hotel / Pelancongan"
+    },
+
+    # --- MECHANICAL DESIGN ---
+    "KKOM-DIP-008": {
+        "headline": "📐 Reka Bentuk Mekanikal: Lukis Paip & Mesin",
+        "synopsis": "Fokus kepada lukisan teknikal untuk industri Minyak & Gas serta Kilang. Anda belajar software CAD untuk melukis sistem paip (Piping) dan komponen mesin. Skill ini sangat penting untuk syarikat kejuruteraan yang membina loji atau mesin.",
+        "jobs": ["Piping Designer", "Mechanical Draughtsman", "Pembantu Jurutera", "Penyelia Tapak"],
+        "pathway": "Ijazah Sarjana Muda Kejuruteraan Mekanikal / Pembuatan"
+    },
+
+    # --- MOBILE TECHNOLOGY ---
+    "KKOM-DIP-009": {
+        "headline": "📱 Teknologi Mudah Alih: Doktor Telefon & Apps",
+        "synopsis": "Telefon rosak? Skrin pecah? Anda akan jadi pakar membaiki (repair) telefon pintar dan tablet. Selain hardware, anda juga belajar asas buat Apps dan UI/UX design. Sangat sesuai kalau anda nak buka kedai repair phone sendiri satu hari nanti.",
+        "jobs": ["Juruteknik Telefon Bimbit", "Usahawan Gajet", "Junior App Developer", "Technical Support"],
+        "pathway": "Ijazah Sarjana Muda Elektronik / Telekomunikasi"
+    },
+
+    # --- PATISSERIE ---
+    "KKOM-DIP-010": {
+        "headline": "🍰 Pastri: Seni Kek & Roti",
+        "synopsis": "Khas untuk yang teliti dan berseni. Anda fokus sepenuhnya kepada pembuatan roti, kek, coklat, dan hiasan gula (sugar art). Anda akan berlatih di dapur industri dan hotel. Skill ini laku keras untuk kerja hotel atau jual kek dari rumah (Home Baker).",
+        "jobs": ["Pastry Chef", "Baker", "Chocolatier", "Usahawan Bakeri"],
+        "pathway": "Ijazah Sarjana Muda Seni Kulinari / Pengurusan Perkhidmatan Makanan"
+    },
+
+    # --- RAIL SIGNALLING ---
+    "KKOM-DIP-011": {
+        "headline": "🚄 Teknologi Rel: Kerjaya di Landasan",
+        "synopsis": "Industri kereta api negara (MRT, LRT, ECRL) sedang berkembang pesat. Siapa yang pastikan tren tidak berlanggar? Anda! Kursus ini mengajar sistem isyarat (signalling) dan komunikasi keretapi. Sangat spesifik dan sangat diperlukan oleh syarikat seperti RapidKL dan KTMB.",
+        "jobs": ["Juruteknik Rel", "Penyelia Isyarat Tren", "Juruteknik Komunikasi Tren"],
+        "pathway": "Ijazah Sarjana Muda Kejuruteraan Elektrik / Pengangkutan"
+    },
+
+    # --- SOUND & LIGHTING ---
+    "KKOM-DIP-012": {
+        "headline": "lighting💡 Bunyi & Cahaya: Krew Konsert Profesional",
+        "synopsis": "Impian bekerja di balik tabir konsert atau rancangan TV? Kursus ini mengajar anda 'setup' sistem bunyi (PA system) dan lampu pentas yang canggih. Anda akan belajar tentang akustik, pendawaian pentas, dan kesan khas. Suasana kerja yang seronok dan tidak membosankan.",
+        "jobs": ["Juruteknik Bunyi (Sound Man)", "Juruteknik Lampu", "Krew Pentas", "AV Technician"],
+        "pathway": "Ijazah Sarjana Muda Penyiaran / Kejuruteraan Audio"
+    },
+
+    # --- TELECOMMUNICATION ---
+    "KKOM-DIP-013": {
+        "headline": "📡 Telekomunikasi: Wira 5G & Internet",
+        "synopsis": "Dunia tak boleh hidup tanpa internet. Anda belajar cara memasang kabel Fiber Optik, menyelenggara menara telekomunikasi, dan sistem rangkaian tanpa wayar. Kerjaya ini menjanjikan masa depan cerah kerana teknologi 5G sedang meletup sekarang.",
+        "jobs": ["Juruteknik Fiber Optik", "Juruteknik Telekomunikasi", "Penyelia Tapak Telco"],
+        "pathway": "Ijazah Sarjana Muda Kejuruteraan Elektronik / Komunikasi"
+    },
+
+    # --- COMMERCIAL VEHICLE ---
+    "KKOM-DIP-014": {
+        "headline": "🚛 Kenderaan Perdagangan: Doktor Lori & Bas",
+        "synopsis": "Jangan jadi mekanik kereta biasa. Jadilah pakar kenderaan berat! Enjin diesel, sistem brek angin, dan hidraulik lori memerlukan kepakaran khas. Gaji mekanik kenderaan berat selalunya lebih lumayan kerana industri logistik sangat bergantung kepada anda.",
+        "jobs": ["Mekanik Diesel", "Juruteknik Bas/Lori", "Penyelia Bengkel Kenderaan Berat"],
+        "pathway": "Ijazah Sarjana Muda Kejuruteraan Mekanikal / Automotif"
+    },
+
+    # --- SOLAR PHOTOVOLTAIC ---
+    "KKOM-DIP-015": {
+        "headline": "☀️ Teknologi Solar: Tenaga Hijau",
+        "synopsis": "Jadilah sebahagian daripada revolusi tenaga hijau. Anda belajar cara memasang panel solar di bumbung rumah dan bangunan, serta membuat pendawaian sistem solar (PV). Malaysia panas sepanjang tahun, jadi industri ini memang lubuk duit bagi mereka yang mahir.",
+        "jobs": ["Pemasang Solar (PV Installer)", "Juruteknik Solar", "Usahawan Tenaga Hijau"],
+        "pathway": "Ijazah Sarjana Muda Kejuruteraan Elektrik / Tenaga Boleh Baharu"
+    },
+
+    # --- BEAUTY THERAPY ---
+    "KKOM-DIP-016": {
+        "headline": "💅 Terapi Kecantikan: Pakar Spa & Estetik",
+        "synopsis": "Kecantikan adalah bisnes besar. Anda belajar teknik rawatan muka (facial), spa tangan/kaki, dan seni solekan (makeup). Kursus ini juga mengajar anda cara menguruskan kedai spa. Sangat sesuai jika anda bercita-cita membuka spa atau menjadi jurusolek profesional.",
+        "jobs": ["Juruterapi Spa", "Make-up Artist (MUA)", "Perunding Kecantikan", "Pengurus Spa"],
+        "pathway": "Ijazah Sarjana Muda Pengurusan Pelancongan / Kesejahteraan (Wellness)"
+    },
+
+    # ==========================================
+    # KOLEJ KOMUNITI - CERTIFICATE (SIJIL)
+    # ==========================================
+
+    # --- CULINARY (CERT) ---
+    "KKOM-CET-001": {
+        "headline": "👨‍🍳 Sijil Kulinari: Langkah Mula Chef",
+        "synopsis": "Kursus pantas untuk masuk ke dapur profesional. Belajar asas memotong, memasak lauk Barat & Asia, dan disiplin dapur. Tamat belajar boleh terus kerja hotel, atau sambung Diploma untuk gaji lebih besar.",
+        "jobs": ["Pembantu Dapur (Commis)", "Tukang Masak"],
+        "pathway": "Diploma Seni Kulinari / Pengurusan Hotel (Politeknik/KK)"
+    },
+
+    # --- F&B SERVICE (CERT) ---
+    "KKOM-CET-002": {
+        "headline": "☕ Sijil Servis Makanan & Minuman: Profesional F&B",
+        "synopsis": "Menjadi pelayan (waiter) profesional bukan sekadar hantar makanan. Anda belajar seni hidangan 'Fine Dining', bancuhan air (Barista), dan layanan tetamu VIP. Hotel 5 bintang sentiasa mencari staf yang terlatih sebegini.",
+        "jobs": ["Pramusaji (Waiter)", "Barista", "Krew Bankuet"],
+        "pathway": "Diploma Pengurusan Hotel / Pelancongan (Politeknik/KK)"
+    },
+
+    # --- RECREATIONAL TOURISM (CERT) ---
+    "KKOM-CET-003": {
+        "headline": "rafting🚣 Sijil Pelancongan Rekreasi: Kerjaya Outdoor",
+        "synopsis": "Suka aktiviti lasak? Kursus ini ajar anda jadi jurupandu (guide) untuk aktiviti seperti hiking, water rafting, dan kem rekreasi. Belajar teknik keselamatan (First Aid) dan cara melayan pelancong. Kerja sambil main!",
+        "jobs": ["Pembantu Jurupandu Arah", "Krew Taman Tema", "Renjer Hutan"],
+        "pathway": "Diploma Pelancongan Rekreasi / Pengurusan Acara (Politeknik/KK)"
+    },
+
+    # --- AGROTECHNOLOGY (CERT) ---
+    "KKOM-CET-004": {
+        "headline": "🌱 Sijil Agroteknologi: Asas Pertanian",
+        "synopsis": "Belajar cara tanam pokok, buat baja, dan urus tapak semaian (nursery). Kursus ini 100% praktikal di ladang. Sesuai untuk anda yang suka berbudi pada tanah atau nak tolong usahakan tanah keluarga.",
+        "jobs": ["Pembantu Ladang", "Penyelia Nurseri", "Usahawan Tani Kecil"],
+        "pathway": "Diploma Agroteknologi / Hortikultur Landskap (Politeknik)"
+    },
+    
+    # --- 2D ANIMATION (CERT) ---
+    "KKOM-CET-005": {
+        "headline": "🎬 Sijil Animasi 2D: Kartun & Grafik",
+        "synopsis": "Minat melukis anime atau kartun? Kursus ini ajar anda asas animasi 2D—dari lukisan tangan hingga digital. Anda akan belajar buat watak (Character Design) dan Papan Cerita (Storyboard). Langkah pertama untuk kerja di studio animasi Malaysia yang sedang naik.",
+        "jobs": ["2D Animator", "Storyboard Artist", "Illustrator"],
+        "pathway": "Diploma Rekabentuk Grafik / Animasi (WBL)"
+    },
+
+    # --- 3D ANIMATION (CERT) ---
+    "KKOM-CET-006": {
+        "headline": "🧊 Sijil Animasi 3D: Dunia Maya",
+        "synopsis": "Belajar buat model 3D menggunakan komputer. Anda akan cipta watak, kenderaan, dan bangunan dalam bentuk 3D. Kursus ini fokus kepada teknikal—modelling, texturing, dan rendering. Sesuai untuk gamers yang nak tahu macam mana game dibuat.",
+        "jobs": ["3D Modeller", "Texture Artist", "Junior Animator"],
+        "pathway": "Diploma Animasi 3D / Games Art (WBL)"
+    },
+
+    # --- HAIR DESIGN (CERT) ---
+    "KKOM-CET-007": {
+        "headline": "✂️ Sijil Dandanan Rambut: Gunting & Gaya",
+        "synopsis": "Kemahiran gunting rambut adalah kemahiran seumur hidup. Anda belajar teknik gunting lelaki & wanita, mewarna, dan kerinting rambut. Kursus ini juga ajar cara buka kedai gunting rambut sendiri. Modal kecil, untung besar!",
+        "jobs": ["Hairstylist", "Barber", "Usahawan Salun"],
+        "pathway": "Diploma Dandanan Rambut (WBL) / Terapi Kecantikan"
+    },
+
+    # --- FASHION & APPAREL (CERT) ---
+    "KKOM-CET-008": {
+        "headline": "👗 Sijil Fesyen & Pakaian: Jahit Baju Sendiri",
+        "synopsis": "Dari lakaran ke baju siap. Anda belajar memotong kain, menjahit baju kurung/kemeja, dan menghias pakaian. Tak perlu beli baju lagi, anda boleh buat sendiri atau ambil tempahan orang. Ramai graduan kursus ini berjaya buka butik atau bisnes jahitan dari rumah.",
+        "jobs": ["Tukang Jahit (Tailor)", "Usahawan Fesyen", "Pembantu Pereka"],
+        "pathway": "Diploma Reka Bentuk Fesyen"
+    },
+
+    # --- CULINARY (CERT) - Same title but different ID from previous batch? ---
+    # Check if duplicate. Assuming specific ID:
+    "KKOM-CET-009": {
+        "headline": "🍳 Sijil Kulinari: Asas Masakan Hotel",
+        "synopsis": "Masuk dapur dengan yakin. Anda belajar potong, masak, dan hias makanan ala hotel. Kursus ini merangkumi masakan panas (Hot Kitchen) dan keselamatan makanan. Sangat praktikal untuk anda yang nak kerja restoran atau hotel cepat.",
+        "jobs": ["Pembantu Dapur (Commis)", "Tukang Masak"],
+        "pathway": "Diploma Seni Kulinari / Pengurusan Hotel"
+    },
+
+    # --- LANDSCAPE (CERT) ---
+    "KKOM-CET-010": {
+        "headline": "🌳 Sijil Landskap: Taman & Bunga",
+        "synopsis": "Suka pokok dan alam? Anda belajar cara tanam pokok hiasan, reka bentuk taman mini, dan penjagaan rumput turf. Kerja ini menenangkan dan sentiasa ada permintaan untuk rumah-rumah baru dan projek perbandaran.",
+        "jobs": ["Penyelia Nurseri", "Kontraktor Landskap", "Tukang Kebun Profesional"],
+        "pathway": "Diploma Teknologi Hortikultur Landskap / Agroteknologi"
+    },
+
+    # --- CREATIVE ADVERTISING (CERT) ---
+    "KKOM-CET-011": {
+        "headline": "📢 Sijil Pengiklanan Multimedia: Design & Iklan",
+        "synopsis": "Belajar buat poster iklan, bunting, dan grafik media sosial yang menarik. Anda akan guna software grafik (Photoshop/Illustrator) dan belajar asas fotografi. Skill ini sangat penting untuk semua jenis bisnes yang nak buat marketing.",
+        "jobs": ["Pereka Grafik Junior", "Jurufoto Produk", "Pereka Iklan"],
+        "pathway": "Diploma Rekabentuk Grafik / Media Cetak"
+    },
+
+    # --- HOTEL OPERATIONS (CERT) ---
+    "KKOM-CET-012": {
+        "headline": "🛎️ Sijil Operasi Perhotelan: Servis Tetamu",
+        "synopsis": "Kursus 'All-in-One' untuk kerja hotel. Anda belajar sikit tentang Front Office (Reception), Housekeeping (Kemas Bilik), dan F&B (Hidang Makanan). Ini menjadikan anda pekerja serba boleh yang disukai oleh pengurus hotel.",
+        "jobs": ["Front Office Assistant", "Housekeeping Crew", "Pramusaji"],
+        "pathway": "Diploma Pengurusan Hotel / Pelancongan"
+    },
+
+    # --- PASTRY (CERT) ---
+    "KKOM-CET-013": {
+        "headline": "🍰 Sijil Pastri: Roti & Kek",
+        "synopsis": "Fokus kepada 'Baking'. Belajar buat roti, kek hari jadi, dan biskut raya. Anda akan diajar teknik menghias kek (icing) yang cantik. Ramai graduan kursus ini buat duit dengan menjual kek dari rumah secara online.",
+        "jobs": ["Baker", "Pembantu Pastri", "Usahawan Kek (Home Baker)"],
+        "pathway": "Diploma Pastri / Seni Kulinari"
+    },
+
+    # --- TRAVEL & TOURISM (CERT) ---
+    "KKOM-CET-014": {
+        "headline": "✈️ Sijil Pengembaraan Pelancongan: Kerja Travel",
+        "synopsis": "Nak kerja sambil jalan-jalan? Kursus ini ajar anda jadi Pemandu Pelancong (Tour Guide) dan cara urus tiket/tempahan. Anda belajar bercakap dengan yakin depan orang ramai. Sesuai untuk personaliti yang ceria dan suka jumpa orang.",
+        "jobs": ["Pemandu Pelancong (Tour Guide)", "Kerani Agensi Pelancongan", "Krew Lapangan Terbang"],
+        "pathway": "Diploma Pengurusan Pelancongan"
+    },
+
+    # --- EVENT MANAGEMENT (CERT) ---
+    "KKOM-CET-015": {
+        "headline": "🎉 Sijil Pengendalian Acara: Krew Majlis",
+        "synopsis": "Suka suasana meriah? Belajar cara menguruskan majlis perkahwinan, acara sukan, dan katering. Anda akan diajar protokol, susun atur dewan, dan layanan tetamu. Kerjaya yang seronok dan membolehkan anda jumpa ramai orang baru setiap hari.",
+        "jobs": ["Krew Acara (Event Crew)", "Penyelaras Majlis", "Usahawan Katering"],
+        "pathway": "Diploma Pengurusan Acara / Pelancongan"
+    },
+
+    # --- BUSINESS OPERATIONS (CERT) ---
+    "KKOM-CET-016": {
+        "headline": "💼 Sijil Pengoperasian Perniagaan: Asas Bisnes",
+        "synopsis": "Nak tahu cara jalankan bisnes? Kursus ini ajar anda asas perakaunan, pemasaran, dan pengurusan stok. Sesuai untuk anda yang nak jadi kerani akaun yang cekap ATAU nak buka bisnes sendiri dengan ilmu yang betul.",
+        "jobs": ["Kerani Akaun", "Pembantu Jualan", "Usahawan Kecil"],
+        "pathway": "Diploma Pengajian Perniagaan / Pemasaran"
+    },
+
+    # --- BUILDING MAINTENANCE (CERT) ---
+    "KKOM-CET-017": {
+        "headline": "🛠️ Sijil Penyelenggaraan Bangunan: Handyman Profesional",
+        "synopsis": "Bangunan rosak? Anda yang baiki! Belajar asas paip, elektrik, aircond, dan kimpalan. Anda akan jadi 'Handyman' serba boleh yang sangat diperlukan oleh pejabat, hotel, dan sekolah. Kerja stabil dan gaji lumayan.",
+        "jobs": ["Juruteknik Penyelenggaraan", "Tukang Paip/Elektrik", "Kontraktor Kecil"],
+        "pathway": "Diploma Kejuruteraan Perkhidmatan Bangunan / Awam"
+    },
+
+    # --- CONSTRUCTION SUPERVISION (CERT) ---
+    "KKOM-CET-018": {
+        "headline": "👷 Sijil Penyeliaan Tapak Bina: Kapten Tapak",
+        "synopsis": "Jadilah ketua di tapak binaan. Anda belajar membaca pelan bangunan, menyelia pekerja, dan memastikan keselamatan tapak. Sesuai untuk anda yang suka kerja luar (outdoor) dan berjiwa kepimpinan.",
+        "jobs": ["Penyelia Tapak (Site Supervisor)", "Safety Supervisor", "Kontraktor Binaan"],
+        "pathway": "Diploma Kejuruteraan Awam / Seni Bina"
+    },
+
+    # --- LOGISTICS (CERT) ---
+    "KKOM-CET-019": {
+        "headline": "📦 Sijil Perkhidmatan Logistik: Urus Kargo",
+        "synopsis": "Belajar cara barang bergerak di seluruh dunia. Anda akan diajar mengurus gudang, stok, dan penghantaran lori. Dalam zaman Shopee/Lazada ni, pakar logistik memang laku keras!",
+        "jobs": ["Penyelia Gudang", "Kerani Logistik", "Ejen Penghantaran"],
+        "pathway": "Diploma Pengurusan Logistik / Perniagaan"
+    },
+
+    # --- INTERIOR DESIGN (CERT) ---
+    "KKOM-CET-020": {
+        "headline": "🛋️ Sijil Rekabentuk Dalaman: Hias Rumah",
+        "synopsis": "Minat menghias bilik? Belajar cara susun perabot, pilih warna, dan lukis pelan hiasan dalaman (ID). Anda akan guna komputer untuk buat design 3D. Boleh kerja dengan firma ID atau jadi perunding hiasan bebas.",
+        "jobs": ["Pembantu Pereka Dalaman", "Pelukis Pelan ID", "Usahawan Hiasan"],
+        "pathway": "Diploma Seni Bina / Rekabentuk Dalaman"
+    },
+
+    # --- FURNITURE MAKING (CERT) ---
+    "KKOM-CET-021": {
+        "headline": "🪑 Sijil Pembuatan Perabot: Tukang Kayu Moden",
+        "synopsis": "Gabungan seni pertukangan dan mesin moden. Belajar buat kerusi, meja, dan kabinet dapur yang berkualiti tinggi. Anda juga belajar ukiran kayu. Skill ini sangat mahal harganya dan membolehkan anda buka bengkel perabot sendiri.",
+        "jobs": ["Pembuat Perabot", "Tukang Kayu", "Operator Mesin Perabot"],
+        "pathway": "Diploma Teknologi Berasaskan Kayu / Reka Bentuk Kraf"
+    },
+
+    # --- CREATIVE VISUAL ART (CERT) ---
+    "KKOM-CET-022": {
+        "headline": "🎨 Sijil Seni Visual Kreatif: Produk Kraf",
+        "synopsis": "Buat duit dengan seni. Belajar buat cenderamata, batik, dan seramik yang boleh dijual. Kursus ini fokus kepada keusahawanan seni—bukan sekadar buat cantik, tapi buat yang orang nak beli.",
+        "jobs": ["Usahawan Kraf", "Pereka Batik", "Pembuat Cenderamata"],
+        "pathway": "Diploma Reka Bentuk Kraf / Fesyen"
+    },
+
+    # --- AQUACULTURE (CERT) ---
+    "KKOM-CET-023": {
+        "headline": "🐟 Sijil Teknologi Akuakultur: Ternak Ikan",
+        "synopsis": "Belajar menternak ikan air tawar dan udang. Anda akan diajar teknik pembenihan, penjagaan kolam, dan rawatan penyakit ikan. Industri makanan sentiasa hidup, jadi peluang untuk jadi usahawan ternakan sangat cerah.",
+        "jobs": ["Penternak Ikan", "Pembantu Penetasan", "Usahawan Akuakultur"],
+        "pathway": "Diploma Teknologi Akuakultur (Politeknik)"
+    },
+
+    # --- AUTOMOTIVE (CERT) ---
+    "KKOM-CET-024": {
+        "headline": "🚗 Sijil Teknologi Automotif: Mekanik Mahir",
+        "synopsis": "Kursus wajib untuk 'kaki kereta'. Belajar servis enjin, sistem brek, dan aircond kereta. Anda akan jadi mekanik bertauliah yang boleh kerja di pusat servis Honda/Toyota atau buka bengkel sendiri.",
+        "jobs": ["Mekanik Kereta", "Juruteknik Servis", "Usahawan Bengkel"],
+        "pathway": "Diploma Kejuruteraan Mekanikal (Automotif)"
+    },
+
+    # --- ELECTRICAL TECHNOLOGY (CERT) ---
+    "KKOM-CET-025": {
+        "headline": "⚡ Sijil Teknologi Elektrik: Asas Pendawaian",
+        "synopsis": "Belajar buat wiring rumah dan kilang. Anda akan diajar pasang suis, soket, dan papan agihan (DB). Ini adalah langkah pertama untuk mendapatkan lesen kompetensi PW2/PW4 dari Suruhanjaya Tenaga. Kemahiran wajib ada untuk jadi kontraktor elektrik.",
+        "jobs": ["Juruelektrik (Wireman)", "Juruteknik Penyelenggaraan", "Usahawan Elektrik"],
+        "pathway": "Diploma Kejuruteraan Elektrik / Elektronik"
+    },
+
+    # --- ELECTRICAL INSTALLATION (CERT) - Specific Specialization ---
+    "KKOM-CET-026": {
+        "headline": "🔌 Sijil Pemasangan Elektrik: Pendawaian Industri",
+        "synopsis": "Fokus kepada pendawaian Tiga Fasa (3-Phase) yang digunakan di kilang dan bangunan besar. Anda belajar kawalan motor elektrik dan sistem kuasa industri. Gaji pendawai industri selalunya lebih tinggi daripada pendawai rumah biasa.",
+        "jobs": ["Pendawai Elektrik (PW2/PW4)", "Juruteknik Industri", "Penyelia Elektrik"],
+        "pathway": "Diploma Kejuruteraan Elektrik (Kuasa/Industri)"
+    },
+
+    # --- INFORMATION TECHNOLOGY (CERT) ---
+    "KKOM-CET-027": {
+        "headline": "💻 Sijil Teknologi Maklumat: Juruteknik IT",
+        "synopsis": "Jadilah orang yang semua orang cari bila komputer rosak. Anda belajar format PC, pasang network (LAN), dan asas database. Anda juga diajar asas coding dan keselamatan siber. Kerja stabil di mana-mana ofis atau sekolah.",
+        "jobs": ["Juruteknik Komputer", "Helpdesk Support", "Pentadbir Rangkaian Junior"],
+        "pathway": "Diploma Teknologi Maklumat / Rangkaian"
+    },
+
+    # --- BUILDING CONSTRUCTION (CERT) ---
+    "KKOM-CET-028": {
+        "headline": "🏗️ Sijil Teknologi Pembinaan: Bina Rumah",
+        "synopsis": "Belajar cara bina bangunan dari A sampai Z. Anda akan buat kerja konkrit, ikat bata, dan pasang bumbung. Kursus ini sangat praktikal. Tamat belajar, anda boleh kerja dengan kontraktor besar atau ambil upah ubah suai rumah.",
+        "jobs": ["Tukang Rumah", "Penyelia Tapak Junior", "Sub-Kontraktor"],
+        "pathway": "Diploma Kejuruteraan Awam / Seni Bina"
+    },
+
+    # --- MANUFACTURING TECHNOLOGY (CERT) ---
+    "KKOM-CET-029": {
+        "headline": "🏭 Sijil Teknologi Pembuatan: Operator Mesin",
+        "synopsis": "Kilang perlukan orang yang pandai guna mesin. Anda belajar kendalikan mesin Lathe, Milling, dan CNC. Anda juga belajar baca pelan kejuruteraan. Graduan kursus ini sangat laku di kawasan perindustrian seperti Shah Alam, Penang, dan Johor.",
+        "jobs": ["Operator Mesin CNC", "Juruteknik Pembuatan", "Machinist"],
+        "pathway": "Diploma Kejuruteraan Mekanikal (Pembuatan)"
+    },
+
+    # --- FOOD PROCESSING (CERT) ---
+    "KKOM-CET-030": {
+        "headline": "🥫 Sijil Pemprosesan Makanan: Kilang Makanan",
+        "synopsis": "Belajar cara buat makanan tahan lama (canning, packaging) dan produk sejuk beku. Anda juga belajar tentang kawalan kualiti (QC) dan persijilan Halal. Sesuai untuk anda yang nak kerja di kilang makanan atau buat produk jenama sendiri (IKS).",
+        "jobs": ["Operator Pengeluaran Makanan", "Pembantu QC", "Usahawan IKS"],
+        "pathway": "Diploma Teknologi Makanan / Halal"
+    },
+
+    # --- AIR-CONDITIONING (CERT) ---
+    "KKOM-CET-031": {
+        "headline": "❄️ Sijil Penyejukan & Penyamanan Udara: Pakar Aircond",
+        "synopsis": "Di Malaysia yang panas, tukang aircond tak pernah putus kerja. Anda belajar pasang, servis, dan repair aircond rumah serta sistem chiller bangunan. Modal untuk mula bisnes sendiri sangat rendah, tapi pulangannya lumayan.",
+        "jobs": ["Juruteknik Aircond", "Kontraktor HVAC", "Usahawan Servis"],
+        "pathway": "Diploma Kejuruteraan Mekanikal (Penyamanan Udara)"
+    },
+
+    # --- 4WD MAINTENANCE (CERT) ---
+    "KKOM-CET-032": {
+        "headline": "🚙 Sijil Penyelenggaraan 4WD: Mekanik Offroad",
+        "synopsis": "Bukan kereta biasa, ini kereta pacuan 4 roda (4x4). Anda belajar sistem transmisi 4WD, suspensi lasak, dan enjin diesel turbo. Peminat offroad sanggup bayar mahal untuk mekanik yang faham kereta mereka. Jadilah pakar dalam niche ini.",
+        "jobs": ["Mekanik 4x4", "Pakar Suspensi", "Juruteknik Diesel"],
+        "pathway": "Diploma Kejuruteraan Mekanikal (Automotif)"
+    },
+
+    # --- INDUSTRIAL MAINTENANCE (CERT) ---
+    "KKOM-CET-033": {
+        "headline": "⚙️ Sijil Penyenggaraan Industri: Doktor Kilang",
+        "synopsis": "Mesin kilang tak boleh rosak lama-lama. Anda belajar sistem hidraulik, pneumatik (angin), dan kimpalan asas untuk membaiki mesin. Anda adalah 'doktor' yang memastikan kilang terus beroperasi 24 jam.",
+        "jobs": ["Juruteknik Penyelenggaraan", "Juruteknik Hidraulik", "Fitter"],
+        "pathway": "Diploma Kejuruteraan Mekanikal / Mekatronik"
+    },
+
+    # --- SUPERBIKE MAINTENANCE (CERT) ---
+    "KKOM-CET-034": {
+        "headline": "🏍️ Sijil Motosikal Berkuasa Tinggi: Mekanik Superbike",
+        "synopsis": "Minat motor besar? Belajar servis enjin superbike, setting suspensi, dan sistem suntikan bahan api (fuel injection). Mekanik kapcai biasa tak reti buat ni. Ini adalah kemahiran premium untuk kedai motor eksklusif.",
+        "jobs": ["Mekanik Superbike", "Tuner Motor", "Usahawan Bengkel Motor"],
+        "pathway": "Diploma Kejuruteraan Mekanikal"
+    },
+
+    # --- MOBILE DEVICE TECHNOLOGY (CERT) ---
+    "KKOM-CET-035": {
+        "headline": "📱 Sijil Teknologi Peranti Mudah Alih: Doktor Telefon",
+        "synopsis": "Telefon rosak, skrin pecah, bateri kong? Itu masalah semua orang. Kursus ini ajar anda membaiki (repair) telefon pintar dan tablet. Anda juga belajar asas buat Apps Android. Ini adalah kemahiran 'kalis zaman'—selagi orang guna telefon, anda ada kerja!",
+        "jobs": ["Juruteknik Telefon (Phone Repair)", "Usahawan Gajet", "Technical Support"],
+        "pathway": "Diploma Mobile Technology / Kejuruteraan Elektronik"
+    },
+
+    # --- ARCHITECTURE TECHNOLOGY (CERT) ---
+    "KKOM-CET-036": {
+        "headline": "🏛️ Sijil Teknologi Senibina: Pelukis Pelan",
+        "synopsis": "Minat tengok bangunan cantik? Belajar cara melukis pelan rumah dan bangunan menggunakan komputer (CAD & BIM). Anda juga akan belajar buat model bangunan 3D. Skill ini sangat diperlukan oleh arkitek dan pemaju perumahan.",
+        "jobs": ["Pelukis Pelan (Draughtsman)", "BIM Modeller", "Penyelia Tapak"],
+        "pathway": "Diploma Seni Bina / Kejuruteraan Awam"
+    },
+
+    # --- TELECOMMUNICATION (CERT) ---
+    "KKOM-CET-037": {
+        "headline": "📡 Sijil Teknologi Telekomunikasi: Wira Internet",
+        "synopsis": "Pastikan Malaysia kekal 'online'. Anda belajar cara pasang kabel Fiber Optik, menyelenggara rangkaian internet, dan sistem telekomunikasi. Tanpa juruteknik ini, tiada WiFi dan tiada 5G. Kerja teknikal yang mencabar tapi gajinya berbaloi.",
+        "jobs": ["Juruteknik Fiber Optik", "Penyelia Rangkaian", "Juruteknik Telco"],
+        "pathway": "Diploma Teknologi Telekomunikasi / Kejuruteraan Elektronik"
+    },
+
+    # --- BEAUTY & SPA THERAPY (CERT) ---
+    "KKOM-CET-038": {
+        "headline": "💅 Sijil Terapi Kecantikan & Spa: Bisnes Cantik",
+        "synopsis": "Ubah minat bersolek jadi kerjaya profesional. Belajar teknik rawatan muka (facial), urutan spa, dan solekan pengantin (MUA). Industri kecantikan adalah industri bernilai jutaan ringgit. Ramai graduan kursus ini berjaya buka spa sendiri atau jadi MUA terkenal.",
+        "jobs": ["Juruterapi Spa", "Make-up Artist (MUA)", "Usahawan Kecantikan"],
+        "pathway": "Diploma Terapi Kecantikan / Pengurusan Perniagaan"
+    }
 }
 
 # --- FALLBACK FUNCTION ---
