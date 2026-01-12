@@ -581,7 +581,7 @@ course_info = {
         "headline": "⚙️ Sijil Kejuruteraan Mekanikal: Mahir Mesin",
         "synopsis": "Anda suka kerja tangan? Kursus ini mengajar anda menggunakan mesin bengkel (welding, memesin) dan melukis pelan CAD asas. Ia adalah asas kukuh untuk menjadi juruteknik kilang yang cekap. Selepas tamat, anda boleh terus bekerja atau naik taraf ke Diploma Kejuruteraan Mekanikal.",
         "jobs": ["Juruteknik Kilang", "Operator Mesin", "Welder (Pengimpal)", "Pembantu Jurutera"]
-    }
+    },
 
     # ==========================================
     # KOLEJ KOMUNITI - DIPLOMA COURSES
