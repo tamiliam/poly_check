@@ -3,7 +3,7 @@ import pandas as pd
 from description import get_course_details
 
 # --- PAGE SETUP ---
-st.set_page_config(page_title="Semakan Politeknik", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Semakan TVET (Politeknik & Komuniti)", page_icon="🇲🇾", layout="wide")
 
 # --- HELPER: ROBUST STRING CLEANING ---
 def clean_header(text):
@@ -22,15 +22,15 @@ def is_credit(g): return str(g).strip() in CREDIT_GRADES
 
 # --- LOAD DATA ---
 @st.cache_data
-def load_data_v14():
+def load_data_v16():
     courses = pd.read_csv("courses.csv", encoding="latin1")
-    polys = pd.read_csv("polys.csv", encoding="latin1")
+    institutions = pd.read_csv("institutions.csv", encoding="latin1")
     reqs = pd.read_csv("requirements.csv", encoding="latin1")
     links = pd.read_csv("links.csv", encoding="latin1")
 
     # Clean Headers & Content
     courses.columns = [clean_header(c) for c in courses.columns]
-    polys.columns = [clean_header(c) for c in polys.columns]
+    institutions.columns = [clean_header(c) for c in institutions.columns]
     reqs.columns = [clean_header(c) for c in reqs.columns]
     links.columns = [clean_header(c) for c in links.columns]
 
@@ -38,18 +38,19 @@ def load_data_v14():
     courses['course_id'] = courses['course_id'].astype(str).str.strip()
     links['course_id'] = links['course_id'].astype(str).str.strip()
     links['institution_id'] = links['institution_id'].astype(str).str.strip()
-    polys['institution_id'] = polys['institution_id'].astype(str).str.strip()
+    institutions['institution_id'] = institutions['institution_id'].astype(str).str.strip()
 
-    return courses, polys, reqs, links
+    return courses, institutions, reqs, links
 
 try:
-    courses_df, polys_df, reqs_df, links_df = load_data_v14()
+    courses_df, inst_df, reqs_df, links_df = load_data_v16()
 except Exception as e:
     st.error(f"Ralat pangkalan data: {e}")
     st.stop()
 
 # --- SIDEBAR INPUTS (BM TRANSLATED) ---
-st.sidebar.header("Profil Pelajar")
+st.sidebar.header("Semakan TVET Malaysia")
+st.sidebar.caption("Politeknik & Kolej Komuniti")
 
 # 1. Demographics
 with st.sidebar.expander("👤 Maklumat Peribadi", expanded=True):
@@ -211,7 +212,6 @@ if st.session_state.get('has_checked', False):
         st.markdown("### 📜 Senarai Program Yang Layak")
         res = courses_df[courses_df['course_id'].isin(eligible_ids)]
         
-        # Renaming for display
         display_df = res[['course', 'department']].copy()
         display_df.columns = ["Nama Program", "Jabatan"]
         
@@ -223,7 +223,7 @@ if st.session_state.get('has_checked', False):
 
         st.markdown("---")
         
-        # 2. DETAILS & LOCATIONS (Master-Detail View)
+        # 2. DETAILS & LOCATIONS
         st.markdown("### 🔍 Maklumat Lanjut & Lokasi")
         
         col1, col2 = st.columns([1, 2])
@@ -240,6 +240,12 @@ if st.session_state.get('has_checked', False):
             with st.container():
                 st.info(f"### {details['headline']}")
                 st.write(details['synopsis'])
+                
+                # --- CONDITIONAL DISPLAY FOR PATHWAY (New!) ---
+                # Only show if 'pathway' key exists (Kolej Komuniti)
+                if 'pathway' in details:
+                    st.write(f"**🎓 Laluan Sambung Belajar:** {details['pathway']}")
+                
                 st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                 
                 # Interview Alert
@@ -248,14 +254,13 @@ if st.session_state.get('has_checked', False):
                     st.warning("🗣️ **Temuduga Diperlukan:** Anda perlu lulus temuduga atau menghantar portfolio.")
 
             # B. LOCATION TABLE
-            st.markdown("#### 📍 Ditawarkan di Politeknik berikut:")
+            st.markdown("#### 📍 Ditawarkan di:")
             pids = links_df[links_df['course_id'] == cid]['institution_id']
-            final = polys_df[polys_df['institution_id'].isin(pids)]
+            final = inst_df[inst_df['institution_id'].isin(pids)]
             
             if not final.empty:
-                # Prepare Table with Links
                 loc_display = final[['institution_name', 'state', 'url']].copy()
-                loc_display.columns = ["Nama Politeknik", "Negeri", "Laman Web"]
+                loc_display.columns = ["Nama Institusi", "Negeri", "Laman Web"]
                 
                 st.dataframe(
                     loc_display,
@@ -285,7 +290,6 @@ if st.session_state.get('has_checked', False):
         rejected_courses = rejected_courses.sort_values('course')
         course_options = dict(zip(rejected_courses['course'], rejected_courses['course_id']))
         
-        # Label is hidden/collapsed to avoid repetition
         inspect_name = st.selectbox(
             "Pilih Program Gagal", 
             options=course_options.keys(), 
