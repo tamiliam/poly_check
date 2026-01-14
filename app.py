@@ -210,7 +210,7 @@ if st.session_state.get('checked'):
         m1, m2, m3 = st.columns(3)
         m1.metric("Politeknik (Diploma)", f"{len(poly_ids)} Program")
         m2.metric("Kolej Komuniti (Sijil/Dip)", f"{len(kk_ids)} Program")
-        m3.metric("Jumlah Kredit", f"{calculated_credits}")
+        m3.metric("Jumlah Kredit", f"{current_student.credits}")
 
         # --- TABS UI ---
         tab1, tab2 = st.tabs(["🏛️ POLITEKNIK", "🛠️ KOLEJ KOMUNITI"])
