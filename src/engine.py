@@ -31,113 +31,114 @@ class StudentProfile:
 
 def check_eligibility(student, req):
     """
-    Checks if a student meets the requirements for a specific course.
-    Returns: (bool, reason_if_failed)
+    Checks if a student meets the requirements.
+    Returns: (bool_status, list_of_audit_logs)
+    
+    audit_log structure:
+    [
+        {"label": "Check Name", "passed": True/False, "reason": "Error Msg"}
+    ]
     """
+    audit = []
     
-    # 1. 3M / SPM Saja Check (TVET Special)
+    # --- HELPER TO LOG CHECKS ---
+    def check(label, condition, fail_msg=None):
+        if condition:
+            audit.append({"label": label, "passed": True, "reason": None})
+            return True
+        else:
+            audit.append({"label": label, "passed": False, "reason": fail_msg})
+            return False
+
+    # --- 1. GATEKEEPERS (Fail Fast) ---
+    # We stop immediately if these fail because other checks become irrelevant.
+    
+    if req.get('req_malaysian') == 1:
+        if not check("Warganegara", student.nationality == 'Warganegara', "Hanya untuk Warganegara"):
+            return False, audit
+
+    if req.get('req_male') == 1:
+        if not check("Jantina (Lelaki)", student.gender == 'Lelaki', "Lelaki Sahaja"): return False, audit
+    if req.get('req_female') == 1:
+        if not check("Jantina (Wanita)", student.gender == 'Perempuan', "Wanita Sahaja"): return False, audit
+
+    if req.get('no_colorblind') == 1:
+        if not check("Bebas Buta Warna", student.colorblind == 'Tidak', "Tidak boleh rabun warna"): return False, audit
+    
+    if req.get('no_disability') == 1:
+        if not check("Sihat Tubuh Badan", student.disability == 'Tidak', "Syarat fizikal tidak dipenuhi"): return False, audit
+
+    # --- 2. TVET SPECIAL (3M) ---
     is_3m = str(req.get('3m_only', '0')).strip() == '1'
-
-    # --- A. GATEKEEPERS (The absolute "Must Haves") ---
-    
-    # Nationality
-    if req.get('req_malaysian') == 1 and student.nationality != 'Warganegara':
-        return False, "Warganegara Sahaja"
-
-    # Gender
-    if req.get('req_male') == 1 and student.gender != 'Lelaki':
-        return False, "Lelaki Sahaja"
-    if req.get('req_female') == 1 and student.gender != 'Perempuan':
-        return False, "Wanita Sahaja"
-
-    # Health
-    if req.get('no_colorblind') == 1 and student.colorblind == 'Ya':
-        return False, "Tidak Rabun Warna"
-    
-    if req.get('no_disability') == 1 and student.disability == 'Ya':
-        return False, "Sihat Tubuh Badan"
-
-    # IF 3M Only, we SKIP the academic checks below
     if is_3m:
-        return True, "Layak (Syarat 3M)"
+        check("Program Khas 3M", True)
+        return True, audit
 
-    # --- B. ACADEMIC CHECKS ---
+    # --- 3. ACADEMIC CHECKS (Accumulate Failures) ---
+    # We use a flag 'passed_academics' so we can run ALL checks and show multiple failures.
+    passed_academics = True
 
     g = student.grades # Short alias
 
-    # --- PRIORITY 1: SPECIFIC SUBJECTS (Check these FIRST) ---
-    
+    # -- Specific Subjects --
     # Bahasa Melayu
-    if req.get('pass_bm') == 1 and not is_pass(g.get('bm')): return False, "Gagal BM"
-    if req.get('credit_bm') == 1 and not is_credit(g.get('bm')): return False, "Tiada Kredit BM"
+    if req.get('pass_bm') == 1:
+        if not check("Lulus BM", is_pass(g.get('bm')), "Gagal Bahasa Melayu"): passed_academics = False
+    if req.get('credit_bm') == 1:
+        if not check("Kredit BM", is_credit(g.get('bm')), "Tiada Kredit Bahasa Melayu"): passed_academics = False
 
     # Sejarah
-    if req.get('pass_history') == 1 and not is_pass(g.get('hist')): return False, "Gagal Sejarah"
+    if req.get('pass_history') == 1:
+        if not check("Lulus Sejarah", is_pass(g.get('hist')), "Gagal Sejarah"): passed_academics = False
 
     # English
-    if req.get('pass_eng') == 1 and not is_pass(g.get('eng')): return False, "Gagal BI"
-    if req.get('credit_english') == 1 and not is_credit(g.get('eng')): return False, "Tiada Kredit BI"
+    if req.get('pass_eng') == 1:
+        if not check("Lulus BI", is_pass(g.get('eng')), "Gagal Bahasa Inggeris"): passed_academics = False
+    if req.get('credit_english') == 1:
+        if not check("Kredit BI", is_credit(g.get('eng')), "Tiada Kredit Bahasa Inggeris"): passed_academics = False
 
     # Math
-    if req.get('pass_math') == 1 and not is_pass(g.get('math')): return False, "Gagal Matematik"
-    if req.get('credit_math') == 1 and not is_credit(g.get('math')): return False, "Tiada Kredit Matematik"
-    
-    # --- PRIORITY 2: GROUP LOGIC ---
+    if req.get('pass_math') == 1:
+        if not check("Lulus Matematik", is_pass(g.get('math')), "Gagal Matematik"): passed_academics = False
+    if req.get('credit_math') == 1:
+        if not check("Kredit Matematik", is_credit(g.get('math')), "Tiada Kredit Matematik"): passed_academics = False
 
-    # Define Subject Groups
+    # -- Group Logic (Science/Tech) --
     pure_sci = [g.get('phy'), g.get('chem'), g.get('bio')]
     all_sci = pure_sci + [g.get('sci')]
     tech_subjs = [g.get('rc'), g.get('cs'), g.get('agro'), g.get('srt')]
-    if student.other_tech: tech_subjs.append('C') 
+    if student.other_tech: tech_subjs.append('C') # Proxy grade for 'Other'
 
-    # Helpers
     def has_pass(grade_list): return any(is_pass(x) for x in grade_list)
     def has_credit(grade_list): return any(is_credit(x) for x in grade_list)
 
-    # Logic: pass_math_sci (Math OR Pure Sciences)
     if req.get('pass_math_sci') == 1:
-        math_ok = is_pass(g.get('math'))
-        sci_ok = has_pass(pure_sci)
-        if not (math_ok or sci_ok):
-            return False, "Wajib Lulus Matematik ATAU Sains Tulen"
+        cond = is_pass(g.get('math')) or has_pass(pure_sci)
+        if not check("Lulus Matemaik ATAU Sains Tulen", cond, "Perlu Lulus Math/Sains Tulen"): passed_academics = False
 
-    # Logic: pass_science_tech (GenScience OR PureSci OR Technical)
     if req.get('pass_science_tech') == 1:
-        sci_ok = has_pass(all_sci)
-        tech_ok = has_pass(tech_subjs)
-        if not (sci_ok or tech_ok):
-            return False, "Wajib Lulus Sains ATAU Teknikal"
+        cond = has_pass(all_sci) or has_pass(tech_subjs)
+        if not check("Lulus Sains ATAU Teknikal", cond, "Perlu Lulus Sains/Teknikal"): passed_academics = False
 
-    # Logic: credit_math_sci (Credit Math OR Pure Sciences)
     if req.get('credit_math_sci') == 1:
-        math_ok = is_credit(g.get('math'))
-        sci_ok = has_credit(pure_sci)
-        if not (math_ok or sci_ok):
-             return False, "Wajib Kredit Matematik ATAU Sains Tulen"
+        cond = is_credit(g.get('math')) or has_credit(pure_sci)
+        if not check("Kredit Matematik ATAU Sains Tulen", cond, "Perlu Kredit Math/Sains Tulen"): passed_academics = False
 
-    # Logic: credit_math_sci_tech (Credit Math OR Pure/Gen Sci OR Technical)
     if req.get('credit_math_sci_tech') == 1:
-        math_ok = is_credit(g.get('math'))
-        sci_ok = has_credit(all_sci)
-        tech_ok = has_credit(tech_subjs)
-        if not (math_ok or sci_ok or tech_ok):
-             return False, "Wajib Kredit Matematik ATAU Sains ATAU Teknikal"
+        cond = is_credit(g.get('math')) or has_credit(all_sci) or has_credit(tech_subjs)
+        if not check("Kredit Math/Sains/Teknikal", cond, "Perlu Kredit Math/Sains/Teknikal"): passed_academics = False
 
-    # Logic: Polytechnic Legacy Group (pass_stv)
     if req.get('pass_stv') == 1:
-        if not (has_pass(all_sci) or has_pass(tech_subjs) or student.other_voc):
-            return False, "Tiada Lulus Sains/Teknikal/Vokasional"
+        cond = has_pass(all_sci) or has_pass(tech_subjs) or student.other_voc
+        if not check("Aliran Sains/Vokasional", cond, "Perlu Lulus Sains/Vokasional"): passed_academics = False
 
-    # --- PRIORITY 3: GENERAL COUNTERS (Check these LAST) ---
-    
-    # Minimum Credits (Total)
+    # -- General Counters --
     min_c = int(req.get('min_credits', 0))
-    if student.credits < min_c:
-        return False, f"Kurang Kredit (Perlu {min_c})"
-        
-    # Minimum Passes (Total)
-    min_p = int(req.get('min_pass', 0))
-    if student.passes < min_p:
-        return False, f"Kurang Lulus (Perlu {min_p} subjek)"
+    if min_c > 0:
+        if not check(f"Minimum {min_c} Kredit", student.credits >= min_c, f"Hanya {student.credits} Kredit (Perlu {min_c})"): passed_academics = False
 
-    return True, "Layak"
+    min_p = int(req.get('min_pass', 0))
+    if min_p > 0:
+        if not check(f"Minimum {min_p} Lulus", student.passes >= min_p, f"Hanya {student.passes} Lulus"): passed_academics = False
+
+    return passed_academics, audit
