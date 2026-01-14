@@ -1022,7 +1022,587 @@ course_info = {
         "synopsis": "Ubah minat bersolek jadi kerjaya profesional. Belajar teknik rawatan muka (facial), urutan spa, dan solekan pengantin (MUA). Industri kecantikan adalah industri bernilai jutaan ringgit. Ramai graduan kursus ini berjaya buka spa sendiri atau jadi MUA terkenal.",
         "jobs": ["Juruterapi Spa", "Make-up Artist (MUA)", "Usahawan Kecantikan"],
         "pathway": "Diploma Terapi Kecantikan / Pengurusan Perniagaan"
-    }
+    },
+
+    # ==========================================
+    # IKBN - COURSES
+    # ==========================================
+
+    # --- ELEKTRIK (CHARGEMAN) ---
+    "IKBN-DIP-001": {
+        "headline": "⚡ Kuasa Elektrik: Nadi Industri",
+        "synopsis": "Bayangkan satu kilang bergelap tanpa anda. Kursus ini melatih anda menjadi 'Chargeman' (Penjaga Jentera)—orang paling penting yang memastikan elektrik berjalan lancar. Lesen A1 yang anda dapat di sini adalah 'pasport emas' untuk gaji lumayan dalam sektor tenaga.",
+        "jobs": ["Penjaga Jentera (Chargeman)", "Juruteknik Voltan Tinggi", "Kontraktor Elektrik"]
+    },
+
+    # --- HVAC (AIRCOND) ---
+    "IKBN-DIP-002": {
+        "headline": "❄️ Pakar Penyejukan: Kerjaya Sentiasa 'Cool'",
+        "synopsis": "Di Malaysia yang panas, pakar aircond tidak akan pernah hilang kerja. Anda bukan sekadar servis aircond rumah; anda belajar merekabentuk sistem penyejukan gergasi untuk pasar raya dan kilang. Kerjaya teknikal yang sangat stabil dan sentiasa diperlukan.",
+        "jobs": ["Pakar HVAC", "Perekabentuk Sistem Penyejukan", "Kontraktor Aircond", "Juruteknik Bangunan"]
+    },
+
+    # --- FESYEN ---
+    "IKBN-DIP-003": {
+        "headline": "👗 Rekaan Fesyen: Dari Lakaran ke 'Runway'",
+        "synopsis": "Tukarkan idea kreatif anda menjadi jenama sebenar. Anda belajar segalanya: melakar fesyen, membuat pola, hingga menjahit busana 'Haute Couture'. Jangan sekadar menjahit baju orang, belajar cipta 'trend' dan buka butik jenama anda sendiri.",
+        "jobs": ["Pereka Fesyen (Fashion Designer)", "Usahawan Butik", "Pembuat Pola", "Perunding Imej"]
+    },
+
+    # --- REKABENTUK INDUSTRI ---
+    "IKBN-DIP-006": {
+        "headline": "🎨 Rekabentuk Produk: Cipta Gajet Masa Depan",
+        "synopsis": "Lihat barang di sekeliling anda—tetikus, botol, kerusi—semuanya bermula dari lakaran pereka. Anda belajar menggunakan perisian canggih (CAD) dan '3D Printer' untuk mencipta produk baharu. Sesuai untuk anda yang berjiwa seni tapi minat teknologi.",
+        "jobs": ["Perekabentuk Produk (Industrial Designer)", "Pelukis Pelan 3D", "Penyelia Model Prototyping"]
+    },
+
+    # --- MAKANAN (KILANG) ---
+    "IKBN-DIP-007": {
+        "headline": "🏭 Teknologi Makanan: Chef Industri",
+        "synopsis": "Masak di dapur itu biasa, tapi bagaimana menguruskan pengeluaran 1,000 tin saderi sejam? Ini adalah sains pengeluaran makanan skala besar. Anda belajar tentang keselamatan makanan (Halal/HACCP), pembungkusan, dan kualiti. Anda adalah 'gatekeeper' makanan negara.",
+        "jobs": ["Penyelia Pengeluaran Makanan", "Pegawai Kawalan Kualiti (QC)", "Usahawan Produk IKS", "Eksekutif Halal"]
+    },
+
+    # --- JENTERA BERAT ---
+    "IKBN-CET-001": {
+        "headline": "🚜 Jentera Berat: Kendalikan 'Gergasi Besi'",
+        "synopsis": "Kerjaya untuk yang berjiwa kental. Anda akan pakar membaiki dan menyelenggara raksasa pembinaan seperti Jentolak (Bulldozer) dan Jengkaut (Excavator). Kemahiran hidraulik dan diesel yang anda belajar di sini sangat bernilai di tapak perlombongan dan pembinaan.",
+        "jobs": ["Mekanik Jentera Berat", "Juruteknik Hidraulik", "Penyelia Tapak Bina", "Usahawan Servis Jentera"]
+    },
+
+    # --- KENDERAAN PERDAGANGAN ---
+    "IKBN-CET-002": {
+        "headline": "🚛 Logistik & Pengangkutan: Nadi Ekonomi",
+        "synopsis": "Lori dan bas adalah darah yang menggerakkan ekonomi negara. Anda belajar servis enjin diesel gergasi, sistem brek angin, dan transmisi lori. Bidang ini menjanjikan kerja tetap di syarikat logistik besar atau syarikat pengangkutan awam.",
+        "jobs": ["Mekanik Lori & Bas", "Juruteknik Fleet", "Penyelia Bengkel Logistik"]
+    },
+
+    # --- AUTOMOTIF (KERETA) ---
+    "IKBN-CET-003": {
+        "headline": "🛠️ Automotif: Doktor Kereta",
+        "synopsis": "Langkah pertama untuk buka bengkel sendiri. Anda akan bedah siasat enjin, gearbox, dan sistem kereta sehingga anda boleh selesaikan apa saja masalah kenderaan. Kursus 'hands-on' sepenuhnya untuk menjadikan anda pomen yang disegani.",
+        "jobs": ["Mekanik Kereta", "Penasihat Servis", "Pengusaha Bengkel", "Foreman"]
+    },
+
+    # --- EV (ELEKTRIK) ---
+    "IKBN-CET-004": {
+        "headline": "⚡🚗 Kereta Elektrik (EV): Mekanik Masa Depan",
+        "synopsis": "Dunia sedang beralih ke arah elektrik (EV). Jadilah orang pertama yang mahir membaiki kereta hibrid dan elektrik sepenuhnya. Anda belajar tentang bateri voltan tinggi dan sistem motor elektrik. Kemahiran 'high-tech' yang sangat laku di masa depan.",
+        "jobs": ["Pakar Teknikal EV & Hibrid", "Diagnostik Kenderaan", "Juruteknik Automotif Moden"]
+    },
+
+    # --- CAT KERETA ---
+    "IKBN-CET-005": {
+        "headline": "✨ 'Body & Paint': Seni Cantikkan Kereta",
+        "synopsis": "Kereta calar? Warna kusam? Andalah penyelamatnya. Belajar seni mengecat kereta taraf 'showroom', bancuhan warna (color matching), dan ketuk body. Kerjaya yang menggabungkan kemahiran tangan halus dan seni warna.",
+        "jobs": ["Penyembur Cat (Sprayer)", "Pakar 'Body & Paint'", "Color Matcher", "Detailer Kereta"]
+    },
+
+    # --- SENIBINA & BANGUNAN ---
+    "IKBN-CET-006": {
+        "headline": "🏛️ Lukisan Senibina: Arkitek Muda",
+        "synopsis": "Setiap bangunan ikonik bermula di atas kertas. Anda akan belajar menghasilkan lukisan teknikal yang terperinci untuk bangunan kediaman dan komersial. Menguasai perisian CAD, anda adalah orang kanan kepada Arkitek dan Jurutera. Kerjaya pejabat yang profesional dan bergaji stabil.",
+        "jobs": ["Pelukis Pelan (Draughtsman)", "Pembantu Teknikal Senibina", "Penyelia Tapak Bina"]
+    },
+
+    "IKBN-CET-007": {
+        "headline": "🏢 Penyelenggaraan Bangunan: Doktor Bangunan",
+        "synopsis": "Bangunan tinggi (skyscraper) memerlukan penjagaan rapi 24 jam. Anda belajar segalanya: dari sistem elektrik, paip air, aircond pusat, hingga sistem pencegah kebakaran. Anda adalah wira yang memastikan pejabat, hotel, dan mall beroperasi tanpa masalah.",
+        "jobs": ["Penyelia Fasiliti (Facility Manager)", "Juruteknik Bangunan", "Kontraktor Penyelenggaraan"]
+    },
+
+    # --- ELEKTRIK & AIRCOND (SIJIL) ---
+    "IKBN-CET-008": {
+        "headline": "⚡ Pendawai Elektrik (PW4): Kuasa Tiga Fasa",
+        "synopsis": "Naik taraf kemahiran anda dari rumah biasa ke kilang besar. Lesen PW4 membolehkan anda membuat pendawaian 'Tiga Fasa' (Three Phase) yang digunakan di industri berat. Ini adalah lesen wajib untuk menjadi kontraktor elektrik yang berjaya.",
+        "jobs": ["Pendawai Elektrik (Wireman PW4)", "Juruteknik Kilang", "Kontraktor Elektrik Berdaftar"]
+    },
+
+    "IKBN-CET-009": {
+        "headline": "❄️ Servis Aircond Domestik: Sejuk & Nyaman",
+        "synopsis": "Kerjaya 'pantas dapat duit'. Anda belajar pasang, servis, dan baiki unit aircond rumah dan pejabat kecil. Dengan cuaca panas Malaysia, kemahiran ini ibarat mesin cetak wang tunai. Sesuai untuk anda yang mahu berniaga sendiri sejurus tamat belajar.",
+        "jobs": ["Juruteknik Aircond", "Usahawan Servis Penyejukan", "Pemasang HVAC"]
+    },
+
+    # --- ELEKTRONIK INDUSTRI ---
+    "IKBN-CET-010": {
+        "headline": "🤖 Elektronik Industri: Otak Kilang",
+        "synopsis": "Kawal robot dan mesin automatik! Di kilang moden, semuanya bergerak guna sensor dan cip. Anda belajar membaiki 'otak' mesin ini (PLC, Pneumatik, Hidraulik). Tanpa anda, kilang akan berhenti beroperasi. Sangat kritikal untuk Revolusi Industri 4.0.",
+        "jobs": ["Juruteknik Automasi", "Penyelia Elektronik Kilang", "Pakar PLC & Robotik"]
+    },
+
+    # --- FESYEN (JAHITAN) ---
+    "IKBN-CET-011": {
+        "headline": "👗 Jahitan Wanita: Seni Busana Eksklusif",
+        "synopsis": "Fokus kepada kemahiran tangan yang halus. Anda belajar teknik memotong dan menjahit pakaian wanita yang rumit dan elegan. Dari baju kurung moden hingga gaun pengantin, kemahiran ini membolehkan anda membuka butik tempahan khas yang sangat lumayan.",
+        "jobs": ["Tukang Jahit (Tailor)", "Pembuat Pola Wanita", "Pengusaha Kedai Jahit"]
+    },
+
+    # --- HOSPITALITI (HOTEL & MAKANAN) ---
+    "IKBN-CET-012": {
+        "headline": "🏨 Pengurusan Hotel: Wajah Hadapan Hotel",
+        "synopsis": "Anda adalah orang pertama yang menyambut VIP dan pelancong. Belajar seni layanan 5 bintang, sistem tempahan (booking), dan komunikasi profesional. Kerjaya glamor di lobi hotel mewah, resort, atau syarikat penerbangan.",
+        "jobs": ["Penyambut Tetamu (Front Office)", "Resepsionis Hotel", "Pegawai Khidmat Pelanggan"]
+    },
+
+    "IKBN-CET-013": {
+        "headline": "🍽️ Penyajian (F&B): Layanan Diraja",
+        "synopsis": "Seni melayan tetamu di meja makan (Fine Dining) dan bankuet besar. Anda belajar etika meja, susun atur 'Cutlery', dan cara menghidang makanan dengan gaya profesional. Laluan pantas untuk menjadi Kapten Restoran atau Pengurus F&B di hotel ternama.",
+        "jobs": ["Kapten Restoran", "Pramusaji (Waiter/Waitress)", "Penyelia Bankuet", "Steward Kapal Persiaran"]
+    },
+
+    "IKBN-CET-014": {
+        "headline": "👨‍🍳 Seni Kulinari: Chef Profesional",
+        "synopsis": "Impian menjadi Chef bermula di sini. Kuasai masakan 5 benua: Melayu, Cina, India, dan Barat (Western). Dari hidangan pembuka selera hingga pencuci mulut, anda akan dilatih menguruskan dapur profesional. Bersedialah untuk dunia masakan yang pantas dan kreatif.",
+        "jobs": ["Chef (Commis/Demi)", "Tukang Masak Katering", "Usahawan Makanan (Food Truck/Kafe)"]
+    },
+
+    "IKBN-CET-015": {
+        "headline": "🍰 Pastri & Roti: Seni Manisan",
+        "synopsis": "Dunia manis yang penuh seni. Belajar membakar kek perkahwinan bertingkat, roti artisan, dan biskut rangup. Bukan sekadar resipi, anda belajar teknik dekorasi dan keusahawanan untuk membuka kedai roti (Bakery) atau kafe hipster anda sendiri.",
+        "jobs": ["Chef Pastri", "Pembuat Roti (Baker)", "Usahawan Kafe & Bakeri", "Dekorator Kek"]
+    },
+
+    # --- BAKERY & PASTRY ---
+    "IKBN-CET-016": {
+        "headline": "🥐 Bakeri & Konfeksionari: Dari Dapur ke Bisnes",
+        "synopsis": "Siapa sangka buat roti boleh jadi kerjaya lumayan? Anda akan belajar sains di sebalik roti lembut, pizza Itali, dan muffin gebu. Menggunakan mesin industri moden, anda dilatih bukan sekadar menjadi pembuat roti, tetapi usahawan bakeri yang mampu menghasilkan produk berkualiti tinggi dan bersih.",
+        "jobs": ["Pembuat Roti (Baker)", "Penyelia Pengeluaran Bakeri", "Usahawan Pizza & Pastri", "Chef Konfeksionari"]
+    },
+
+    # --- KOSMETOLOGI (RAMBUT) ---
+    "IKBN-CET-017": {
+        "headline": "✂️ Gaya Rambut: Seni Penggayaan Profesional",
+        "synopsis": "Rambut adalah mahkota. Anda belajar seni menggunting, mewarna, dan mengerinting rambut dengan teknik terkini. Lebih dari itu, anda diajar menguruskan salon sebenar dan imej personal. Kerjaya kreatif yang membolehkan anda bekerja di salon eksklusif atau menjadi 'Hairstylist' selebriti.",
+        "jobs": ["Pendandan Rambut (Hairstylist)", "Colorist Profesional", "Pengurus Salon", "Perunding Gaya Rambut"]
+    },
+
+    # --- KOSMETOLOGI (KECANTIKAN) ---
+    "IKBN-CET-018": {
+        "headline": "💅 Terapi Kecantikan: Pakar Spa & Estetik",
+        "synopsis": "Industri kecantikan bernilai bilion ringgit. Anda akan pakar dalam rawatan wajah (facial), manikur/pedikur, dan terapi badan. Bukan sekadar cantik, anda belajar mengendalikan mesin rawatan canggih dan pengurusan spa. Langkah pertama untuk membuka pusat kecantikan sendiri.",
+        "jobs": ["Juruterapi Kecantikan (Beautician)", "Perunding Kecantikan", "Pengurus Spa", "Nail Artist"]
+    },
+
+    # --- MULTIMEDIA ---
+    "IKBN-CET-019": {
+        "headline": "🎥 Multimedia Kreatif: Pencipta Kandungan Digital",
+        "synopsis": "Sesuai untuk 'Content Creator' masa depan! Anda belajar segalanya: suntingan video, animasi grafik, dan fotografi menggunakan kamera DSLR & dron. Dari Adobe Premiere ke After Effects, anda akan menghasilkan karya digital yang memukau untuk iklan, media sosial, dan TV.",
+        "jobs": ["Penyunting Video (Video Editor)", "Pereka Grafik Multimedia", "Jurugambar/Videografer", "Content Creator"]
+    },
+
+    # --- MARIN (BOT & KAPAL) ---
+    "IKBN-CET-020": {
+        "headline": "⚓ Teknologi Marin: Jurutera Lautan",
+        "synopsis": "Kerjaya yang jarang orang tahu tapi gaji lumayan. Anda belajar membaiki dan menyelenggara enjin bot, kapal, dan jentera marin. Jika anda suka laut dan enjin besar, ini bidang anda. Peluang kerja luas di pelabuhan, limbungan kapal, atau syarikat perkapalan.",
+        "jobs": ["Mekanik Marin", "Juruteknik Enjin Bot", "Penyelia Limbungan (Dockyard)", "Kontraktor Marin"]
+    },
+
+    # --- KIMPALAN & BOILER ---
+    "IKBN-CET-021": {
+        "headline": "🔥 Boilermaker: Pakar Logam Minyak & Gas",
+        "synopsis": "Kerjaya 'Heavy Metal' sebenar. Anda belajar membina dan membaiki tangki tekanan tinggi (Pressure Vessel) untuk loji minyak & gas. Kemahiran memotong dan membentuk logam tebal ini sangat kritikal dan dibayar mahal dalam industri O&G.",
+        "jobs": ["Boilermaker", "Juruteknik Fabrikasi Logam", "Fitter Minyak & Gas"]
+    },
+
+    "IKBN-CET-022": {
+        "headline": "⚡ Kimpalan Arka (SMAW): Seni Sambungan Besi",
+        "synopsis": "Asas kepada semua binaan besi. Anda belajar teknik kimpalan SMAW (Shielded Metal Arc Welding) untuk menyambung paip dan plat besi. Kemahiran ini diperlukan di mana-mana—dari tapak pembinaan bangunan hinggalah ke pelantar minyak.",
+        "jobs": ["Jurukimpal (Welder) 3G/4G", "Fitter Struktur", "Kontraktor Besi"]
+    },
+
+    "IKBN-CET-023": {
+        "headline": "💥 Teknologi Kimpalan Maju: Pakar 4 Proses",
+        "synopsis": "Jadilah 'Master Welder' yang serba boleh. Anda menguasai 4 jenis kimpalan utama: SMAW, GMAW (MIG), GTAW (TIG), dan SAW. Anda bukan sahaja mengimpal, tapi belajar memeriksa kualiti (QC) kimpalan. Sesuai untuk kilang automotif dan aeroangkasa.",
+        "jobs": ["Jurukimpal TIG/MIG", "Inspektor Kimpalan (QC)", "Penyelia Fabrikasi", "Jurulatih Kimpalan"]
+    },
+
+    # --- MEKATRONIK ---
+    "IKBN-CET-024": {
+        "headline": "🤖 Mekatronik: Gabungan Mekanikal & Elektronik",
+        "synopsis": "Jangan pilih satu, kuasai kedua-duanya! Mekatronik adalah gabungan 'Mekanik' + 'Elektronik'. Anda belajar membina sistem automatik, lengan robot, dan sistem hidraulik. Ini adalah kemahiran paling penting untuk bekerja di kilang moden yang menggunakan robot.",
+        "jobs": ["Juruteknik Mekatronik", "Pakar Automasi", "Penyelenggara Robotik", "Juruteknik Elektromekanikal"]
+    },
+
+    # --- MINYAK & GAS (PAIP) ---
+    "IKBN-CET-025": {
+        "headline": "🛢️ Fabrikasi Paip (O&G): Laluan ke Offshore",
+        "synopsis": "Kerjaya 'Pipe Fitter' sangat dihormati di pelantar minyak. Anda belajar membaca lukisan isometrik yang rumit dan memotong/menyambung paip dengan tepat. Salah satu laluan terpantas untuk bekerja dalam sektor Minyak & Gas.",
+        "jobs": ["Pipe Fitter", "Fabricator Paip", "Juruteknik O&G", "Penyelia Piping"]
+    },
+
+    # --- PENYELENGGARAAN INDUSTRI ---
+    "IKBN-CET-026": {
+        "headline": "⚙️ Penyelenggaraan Industri: Wira Kilang",
+        "synopsis": "Kilang tidak boleh berhenti. Andalah yang memastikannya terus berjalan. Belajar membaiki segala jenis kerosakan mesin: mekanikal, elektrik, pneumatik, dan hidraulik. Anda adalah 'doktor pakar' untuk mesin industri yang kompleks.",
+        "jobs": ["Juruteknik Penyelenggaraan (Maintenance)", "Jurutera Loji", "Penyelia Teknikal Kilang"]
+    },
+
+    # --- PESAWAT (BAHAN) ---
+    "IKBN-CET-027": {
+        "headline": "✈️ Komposit Pesawat: Bahan Masa Depan",
+        "synopsis": "Pesawat moden bukan lagi diperbuat daripada besi berat, tapi 'Komposit' yang ringan dan kuat. Anda belajar mencipta dan membaiki struktur canggih ini menggunakan gentian karbon (Carbon Fiber). Kemahiran 'niche' ini sangat mahal harganya dalam industri aeroangkasa.",
+        "jobs": ["Juruteknik Komposit Pesawat", "Pakar Laminasi (Laminator)", "Inspektor Struktur Pesawat"]
+    },
+
+    "IKBN-CET-028": {
+        "headline": "✈️ Struktur Pesawat (Metal): Doktor Kapal Terbang",
+        "synopsis": "Jika sayap pesawat retak, andalah yang membaikinya. Fokus kepada membaiki kerangka besi (Sheet Metal) pesawat. Anda belajar teknik menampal (patching), rivet, dan kimpalan khas penerbangan. Kerja yang memerlukan ketelitian tinggi dan disiplin besi.",
+        "jobs": ["Juruteknik Struktur Pesawat (Sheet Metal)", "Inspektor Kerangka Pesawat", "Mekanik Pesawat"]
+    },
+
+    # --- REKABENTUK INDUSTRI (SIJIL) ---
+    "IKBN-CET-029": {
+        "headline": "🎨 Rekabentuk Industri: Cipta Produk Baharu",
+        "synopsis": "Dari idea kepada realiti. Anda belajar merekabentuk perabot, pengangkutan, dan peralatan sukan menggunakan perisian CAD. Bukan setakat lukis, anda belajar hasilkan model sebenar (Mock-up). Laluan pantas untuk menjadi pereka yang praktikal.",
+        "jobs": ["Pereka Produk Industri", "Pembuat Model (Model Maker)", "Pakar CAD/CAM"]
+    },
+
+    # --- CIVIL (SCAFFOLDING) ---
+    "IKBN-CET-032": {
+        "headline": "🏗️ Scaffolding: Wira Tempat Tinggi",
+        "synopsis": "Kerjaya ekstrem di tapak binaan dan pelantar minyak. Anda belajar memasang perancah (scaffolding) yang selamat untuk bangunan tinggi. Sijil ini adalah 'lesen wajib' untuk bekerja di tapak projek mega dan industri Minyak & Gas (Offshore).",
+        "jobs": ["Juruperancah (Scaffolder)", "Penyelia Keselamatan Tapak", "Inspektor Scaffolding"]
+    },
+
+    # --- ELEKTRIK (DOMESTIK) ---
+    "IKBN-CET-034": {
+        "headline": "🏠 Pendawai Elektrik (PW2): Raja Wiring Rumah",
+        "synopsis": "Langkah pertama dalam dunia elektrik. Fokus kepada pendawaian rumah satu fasa. Anda belajar pasang soket, lampu, dan papan agihan (DB). Sijil PW2 membolehkan anda bekerja sebagai Wireman berdaftar atau mengambil upah 'wiring' rumah sendiri.",
+        "jobs": ["Pendawai Elektrik (Wireman PW2)", "Juruteknik Penyelenggaraan", "Kontraktor Wiring Kecil"]
+    },
+
+    # ==========================================
+    # ILJTM - COURSES
+    # ==========================================
+
+    # --- QUALITY ASSURANCE (QA) ---
+    "IJTM-DIP-010": {
+        "headline": "✅ Jaminan Kualiti (QA): Polis Kualiti",
+        "synopsis": "Sebelum produk dijual, ia mesti lulus di tangan anda. Anda belajar menggunakan alat pengukur mikron (CMM) untuk memastikan setiap skru dan komponen adalah sempurna. Kilang automotif dan aeroangkasa sangat memerlukan pakar QA untuk menjaga standard keselamatan.",
+        "jobs": ["Pegawai Kawalan Kualiti (QA/QC)", "Inspektor Kualiti", "Juruteknik Kalibrasi"]
+    },
+
+    # --- MEKATRONIK (DIPLOMA) ---
+    "IJTM-DIP-017": {
+        "headline": "🤖 Diploma Mekatronik: Arkitek Robot",
+        "synopsis": "Gabungkan kejuruteraan mekanikal, elektrik, dan komputer. Anda akan membina sistem automasi pintar dan lengan robot industri. Kursus ini menyediakan anda untuk menjadi jurutera masa depan yang mampu mengendalikan kilang pintar (Smart Factory).",
+        "jobs": ["Penolong Jurutera Mekatronik", "Pakar Automasi & Robotik", "Penyelia Penyelenggaraan Loji"]
+    },
+
+    # --- MIKROELEKTRONIK ---
+    "IJTM-DIP-019": {
+        "headline": "💻 Mikroelektronik: Teknologi Cip Pintar",
+        "synopsis": "Belajar di dalam makmal 'Cleanroom' bertaraf dunia—satu-satunya di Malaysia! Anda akan memahami cara cip komputer dan semikonduktor dibuat. Industri E&E adalah eksport terbesar Malaysia, jadi pakar cip sangat diperlukan di kilang gergasi seperti Intel dan Infineon.",
+        "jobs": ["Juruteknik Semikonduktor", "Penyelia Proses Cleanroom", "Pembantu Jurutera R&D Cip"]
+    },
+
+    # --- PEMESINAN (CNC) ---
+    "IJTM-DIP-022": {
+        "headline": "⚙️ Teknologi Pembuatan: Pakar Mesin CNC",
+        "synopsis": "Kuasai mesin moden yang boleh memotong besi setepat rambut! Anda belajar mengendalikan mesin CNC (Computer Numerical Control), mesin kisar, dan larik. Anda adalah orang yang menghasilkan komponen enjin kereta dan mesin industri yang presisi.",
+        "jobs": ["Juruteknik CNC (Machinist)", "Programmer CNC", "Penyelia Pembuatan", "Pembuat Acuan (Die Maker)"]
+    },
+
+    # --- AUTOMOTIF (PENGELUARAN) ---
+    "IJTM-DIP-024": {
+        "headline": "🚗 Pengeluaran Automotif: Nadi Kilang Kereta",
+        "synopsis": "Bukan sekadar baiki kereta, tapi BINANYA. Anda belajar proses pemasangan kereta di kilang—dari kerangka hingga ke enjin. Fokus kepada pengurusan barisan pengeluaran (Assembly Line) dan robotik automotif. Sesuai untuk bekerja di Proton, Perodua, atau Honda.",
+        "jobs": ["Penyelia Pengeluaran Automotif", "Juruteknik Pemasangan (Assembly)", "Pegawai Kawalan Kualiti Kereta"]
+    },
+
+    # --- PENYELENGGARAAN PESAWAT (MRO) ---
+    "IJTM-DIP-026": {
+        "headline": "✈️ Penyelenggaraan Pesawat (MRO): Lesen Terbang Tinggi",
+        "synopsis": "Kerjaya elit dalam dunia penerbangan. Anda belajar menyelenggara keseluruhan pesawat: enjin, sayap, dan sistem avionik. Kursus ini mempersiapkan anda untuk lesen CAAM Part 66 (Kategori A)—tiket untuk bekerja di hangar syarikat penerbangan antarabangsa.",
+        "jobs": ["Juruteknik Pesawat (Aircraft Technician)", "Mekanik MRO", "Penyelia Hangar"]
+    },
+
+    # --- ELEKTRONIK (DIPLOMA) ---
+    "IJTM-DIP-032": {
+        "headline": "🔌 Diploma Elektronik: Pakar Litar & Kawalan",
+        "synopsis": "Dunia hari ini dikuasai oleh elektronik. Anda akan belajar segalanya: dari membaiki papan litar (PCB) hingga memprogram sistem automasi kompleks menggunakan PLC dan sensor. Kursus ini menjadikan anda pakar yang boleh merekabentuk, menganalisa, dan membaiki apa saja peranti elektronik.",
+        "jobs": ["Juruteknik Elektronik Kanan", "Pakar Pembaikan PCB", "Juruteknik Automasi", "Penyelia Kawalan Kualiti"]
+    },
+
+    # --- MEKATRONIK (DIPLOMA - JTM) ---
+    "IJTM-DIP-033": {
+        "headline": "🤖 Diploma Mekatronik: Jurutera Serba Boleh",
+        "synopsis": "Kenapa pilih satu bidang jika boleh kuasai tiga? Mekatronik menggabungkan Mekanikal, Elektronik, dan Komputer. Anda akan mahir membina sistem robotik, menyelenggara mesin industri berteknologi tinggi, dan merekabentuk sistem automasi pintar. Graduan bidang ini sangat laku di pasaran.",
+        "jobs": ["Juruteknik Mekatronik", "Pakar Robotik Industri", "Jurutera Automasi", "Penyelia Penyelenggaraan"]
+    },
+
+    # --- IT & KOMPUTER ---
+    "IJTM-DIP-034": {
+        "headline": "💻 Diploma Teknologi Komputer: Doktor IT",
+        "synopsis": "Bukan sekadar guna komputer, tapi membinanya. Anda belajar memasang perkakasan (hardware), membina rangkaian (network/server), dan menyelenggara sistem komputer pejabat. Anda adalah 'orang penting' yang dicari bila sistem komputer sesebuah syarikat lumpuh.",
+        "jobs": ["Juruteknik Komputer", "Pentadbir Rangkaian (Network Admin)", "Penyelia IT", "Usahawan Kedai Komputer"]
+    },
+
+    # --- PEMESINAN (DIPLOMA) ---
+    "IJTM-DIP-035": {
+        "headline": "⚙️ Diploma Pembuatan (Pemesinan): Seni Besi Presisi",
+        "synopsis": "Mesin CNC adalah jantung industri pembuatan moden. Anda belajar memprogram mesin canggih ini untuk memotong besi dengan ketepatan mikron. Dari rekaan CAD/CAM hingga produk akhir, anda akan menghasilkan komponen enjin dan mesin yang kompleks.",
+        "jobs": ["Juruteknik CNC (Machinist)", "Penyelia Pengeluaran", "Programmer CAD/CAM", "Pembuat Acuan (Tool & Die)"]
+    },
+
+    # --- AUTOMOTIF (AUTOMASI) ---
+    "IJTM-CET-001": {
+        "headline": "🏭 Automotif Industri: Robotik Kilang Kereta",
+        "synopsis": "Kilang kereta moden tidak guna tangan, ia guna robot. Anda belajar mengendalikan 'otak' di sebalik robot ini: PLC, Pneumatik, dan Hidraulik. Anda adalah pakar yang memastikan barisan pengeluaran automatik berjalan lancar tanpa henti.",
+        "jobs": ["Juruteknik Automasi Industri", "Penyelenggara Robotik", "Pakar PLC"]
+    },
+
+    # --- AUTOMOTIF (DIE MAKING) ---
+    "IJTM-CET-002": {
+        "headline": "🛠️ Pembuatan Acuan (Die): Pembentuk Logam",
+        "synopsis": "Setiap pintu kereta bermula dari satu acuan (Die). Anda belajar mencipta acuan besi ini menggunakan mesin CNC berteknologi tinggi dan perisian CAD. Ini adalah kemahiran 'niche' yang sangat mahal harganya dalam industri pembuatan komponen kereta.",
+        "jobs": ["Pembuat Acuan (Tool & Die Maker)", "Juruteknik CNC", "Perekabentuk Acuan"]
+    },
+
+    # --- AUTOMOTIF (SERVIS) ---
+    "IJTM-CET-003": {
+        "headline": "🚗 Servis Automotif: Pakar Diagnostik",
+        "synopsis": "Lengkapkan diri anda dengan ilmu automotif menyeluruh. Anda akan membedah siasat enjin, gearbox, brek, dan aircond kereta. Fokus kursus ini adalah melahirkan mekanik yang kompeten untuk bekerja di pusat servis jenama besar atau membuka bengkel sendiri.",
+        "jobs": ["Mekanik Kereta", "Penasihat Servis", "Foreman", "Usahawan Bengkel"]
+    },
+
+    "IJTM-CET-004": {
+        "headline": "🔧 Teknologi Automotif: Mekanik Bertauliah",
+        "synopsis": "Sama seperti di atas, kursus ini memantapkan kemahiran anda dalam penyelenggaraan kenderaan. Dengan Sijil Kemahiran Malaysia (SKM) Tahap 3, anda diiktiraf sebagai mekanik profesional yang layak bekerja di mana-mana pusat servis bertauliah.",
+        "jobs": ["Mekanik Bertauliah", "Juruteknik Automotif", "Penyelia Bengkel"]
+    },
+
+    # --- CIVIL (BINAAN) ---
+    "IJTM-CET-005": {
+        "headline": "🏗️ Teknologi Binaan: Jurutera Tapak Muda",
+        "synopsis": "Setiap projek mega perlukan pakar sivil. Anda belajar 'A-Z' pembinaan: dari jalan raya ke sistem saliran, dari ujian konkrit makmal ke penyeliaan tapak sebenar. Ini adalah langkah pertama anda untuk menjadi 'Site Supervisor' yang dihormati di tapak bina.",
+        "jobs": ["Penyelia Tapak Bina (Site Supervisor)", "Juruteknik Sivil", "Pembantu Jurutera"]
+    },
+
+    # --- CIVIL (PAIP) ---
+    "IJTM-CET-006": {
+        "headline": "🚿 Paip & Sanitari: Pakar Air",
+        "synopsis": "Air adalah keperluan asas. Anda akan pakar memasang dan menyelenggara sistem paip domestik dan industri yang kompleks. Bukan sekadar tukang paip biasa, anda belajar membaca pelan 'blue print' dan merekabentuk sistem air bangunan tinggi.",
+        "jobs": ["Juruteknik Perpaipan (Plumber)", "Kontraktor Paip & Sanitari", "Penyelia M&E"]
+    },
+
+    # --- CADD (MEKANIKAL) ---
+    "IJTM-CET-007": {
+        "headline": "🖥️ CADD Mekanikal: Pelukis Pelan Industri",
+        "synopsis": "Tinggalkan papan lukis lama, beralih ke komputer. Anda belajar menggunakan perisian CAD canggih untuk melukis komponen enjin dan mesin dengan ketepatan tinggi. Lukisan andalah yang akan digunakan oleh jurutera untuk membina mesin sebenar.",
+        "jobs": ["Pelukis Pelan Mekanikal (Draughtsman)", "Pembantu Teknikal CAD", "Perekabentuk Komponen"]
+    },
+
+    # --- CADD (SENIBINA) ---
+    "IJTM-CET-008": {
+        "headline": "🏠 CADD Senibina: Visual Arkitek",
+        "synopsis": "Tukarkan imaginasi menjadi visual 3D yang memukau. Anda belajar melukis pelan rumah, perspektif bangunan, dan teknik 'rendering' yang realistik. Kemahiran ini sangat diperlukan oleh firma arkitek untuk membentangkan projek kepada klien.",
+        "jobs": ["Pelukis Pelan Senibina", "Visualiser 3D", "Pembantu Arkitek"]
+    },
+
+    # --- ELEKTRIK (TIGA FASA) ---
+    "IJTM-CET-009": {
+        "headline": "⚡ Pendawai Tiga Fasa: Kuasa Industri",
+        "synopsis": "Naik taraf lesen anda! Pendawaian 'Tiga Fasa' digunakan di semua kilang dan bangunan komersial. Anda belajar memasang motor industri, janakuasa, dan sistem kawalan elektrik berkuasa tinggi. Lesen kompeten Suruhanjaya Tenaga (ST) menanti anda.",
+        "jobs": ["Pendawai Elektrik Kompeten (PW4)", "Juruteknik Elektrik Industri", "Kontraktor Elektrik"]
+    },
+
+    # --- ELEKTRONIK INDUSTRI ---
+    "IJTM-CET-010": {
+        "headline": "🤖 Elektronik Industri: Jantung Kilang Pintar",
+        "synopsis": "Kawal mesin dengan hujung jari. Anda belajar sistem PLC (Programmable Logic Controller) yang menggerakkan robot dan mesin automatik di kilang. Gabungan ilmu elektronik digital dan analog menjadikan anda pakar yang boleh menyelesaikan masalah mesin kompleks.",
+        "jobs": ["Juruteknik Automasi", "Programmer PLC", "Penyelia Elektronik Kilang"]
+    },
+
+    # --- MINYAK & GAS (FABRIKASI) ---
+    "IJTM-CET-011": {
+        "headline": "🛢️ Fabrikasi Logam (O&G): Pembina Pelantar",
+        "synopsis": "Kerjaya 'Heavy Duty' di sektor Minyak & Gas. Anda belajar memotong, melentur, dan menyambung plat besi tebal untuk membina struktur pelantar minyak. Kemahiran ini adalah tiket anda untuk bekerja di yard fabrikasi antarabangsa.",
+        "jobs": ["Fabricator Struktur O&G", "Fitter Logam", "Juruteknik Pembinaan Pelantar"]
+    },
+
+    "IJTM-CET-012": {
+        "headline": "🛢️ Fabrikasi Struktur (O&G): Pakar Besi Berat",
+        "synopsis": "Sama seperti di atas, fokus kursus ini adalah membina struktur besi gergasi. Anda akan mahir menggunakan mesin industri untuk membentuk logam mengikut spesifikasi ketat industri minyak dan gas.",
+        "jobs": ["Structural Fitter", "Penyelia Fabrikasi", "Juruteknik O&G"]
+    },
+
+    # --- INSTRUMEN ---
+    "IJTM-CET-013": {
+        "headline": "🎛️ Instrumen Perindustrian: Pengawal Proses",
+        "synopsis": "Kilang kimia dan loji penapisan perlukan ketepatan. Anda belajar menjaga 'sensor' yang mengukur suhu, tekanan, dan aliran paip. Jika sensor salah baca, kilang boleh meletup! Anda adalah pakar yang memastikan sistem kawalan sentiasa tepat dan selamat.",
+        "jobs": ["Juruteknik Instrumen (Instrumentation Tech)", "Juruteknik Kalibrasi", "Penyelia Loji"]
+    },
+
+    # --- KENDERAAN BERAT ---
+    "IJTM-CET-014": {
+        "headline": "🚛 Kenderaan Berat: Mekanik Lori & Bas",
+        "synopsis": "Enjin besar, gaji besar. Anda pakar membaiki lori kontena, bas ekspres, dan treler. Belajar sistem brek angin, hidraulik, dan enjin diesel turbo. Industri logistik yang sedang berkembang pesat sangat memerlukan mekanik mahir seperti anda.",
+        "jobs": ["Mekanik Kenderaan Perdagangan", "Juruteknik Fleet Logistik", "Foreman Lori"]
+    },
+
+    # --- KIMPALAN (SIJIL) ---
+    "IJTM-CET-015": {
+        "headline": "🔥 Teknologi Kimpalan: Pakar Sambungan Besi",
+        "synopsis": "Seni mencantum besi dengan api. Anda kuasai 4 teknik utama: SMAW, MIG, TIG, dan SAW. Dari paip minyak ke kerangka bangunan, kemahiran kimpalan anda diperlukan di mana-mana. Kerjaya lasak dengan bayaran lumayan mengikut skil anda.",
+        "jobs": ["Jurukimpal (Welder) 3G/6G", "Jurukimpal TIG/MIG", "Fitter Kimpalan"]
+    },
+
+    # --- IT (SISTEM) ---
+    "IJTM-CET-016": {
+        "headline": "💻 Sistem Komputer: Bina 'Gaming Rig' & Server",
+        "synopsis": "Pernah pasang PC sendiri? Jadikan hobi itu kerjaya. Anda belajar memasang Motherboard, RAM, dan Hard Disk dari kosong sehingga menjadi komputer yang lengkap. Anda juga akan mahir instalasi Windows, Linux, dan menyelenggara server pejabat. Sesuai untuk 'Tech Enthusiast'.",
+        "jobs": ["Juruteknik Komputer", "Sistem Administrator", "Penyelia Sokongan IT", "Usahawan Kedai Komputer"]
+    },
+
+    # --- IT (NETWORK) ---
+    "IJTM-CET-017": {
+        "headline": "🌐 Rangkaian Komputer: Arkitek Internet",
+        "synopsis": "Tanpa internet, dunia berhenti. Anda belajar membina infrastruktur ini—dari kabel LAN hingga konfigurasi Router dan Server canggih. Pakar rangkaian (Network Engineer) adalah kerjaya yang sangat stabil dan kritikal untuk bank, telco, dan syarikat multinasional.",
+        "jobs": ["Juruteknik Rangkaian (Network Tech)", "Pentadbir Sistem", "Penyelia IT", "Kontraktor Kabel Fiber"]
+    },
+
+    # --- IT (SISTEM - ALTERNATE) ---
+    "IJTM-CET-018": {
+        "headline": "🛠️ Penyelenggaraan PC: 'Doktor' Komputer",
+        "synopsis": "Komputer rosak? Andalah penyelamatnya. Fokus kursus ini adalah 'Troubleshooting'—mencari punca kerosakan hardware atau software dan membaikinya dengan pantas. Kemahiran wajib untuk bekerja di jabatan IT mana-mana syarikat.",
+        "jobs": ["Juruteknik Helpdesk", "Penyelia Penyelenggaraan IT", "Jurukomputer"]
+    },
+
+    # --- MEKATRONIK (SIJIL) ---
+    "IJTM-CET-019": {
+        "headline": "🤖 Mekatronik (Sijil): Langkah Pertama ke Robotik",
+        "synopsis": "Permulaan dunia automasi. Anda belajar asas hidraulik (kuasa cecair), pneumatik (kuasa angin), dan elektronik yang menggerakkan mesin kilang. Kursus 'hands-on' ini mempersiapkan anda untuk menjadi juruteknik mahir yang boleh menjaga mesin berteknologi tinggi.",
+        "jobs": ["Juruteknik Automasi", "Operator Mesin Robotik", "Mekanik Elektromekanikal"]
+    },
+
+    # --- O&G (LUKISAN) ---
+    "IJTM-CET-020": {
+        "headline": "🖊️ Lukisan Perpaipan O&G: Pelan Jutawan",
+        "synopsis": "Setiap paip di loji minyak bermula dengan lukisan anda. Anda belajar membaca dan melukis pelan paip (Piping Drafting) yang rumit untuk industri Minyak & Gas. Kerjaya ini membolehkan anda bekerja di pejabat syarikat O&G gergasi dengan gaji yang sangat kompetitif.",
+        "jobs": ["Pelukis Pelan Paip (Piping Drafter)", "Pembantu Jurutera O&G", "Penyelia Dokumen Teknikal"]
+    },
+
+    # --- O&G (LOJI DOWNSTREAM) ---
+    "IJTM-CET-021": {
+        "headline": "🏭 Loji Minyak (Downstream): Penjaga Kilang Emas",
+        "synopsis": "Bekerja di loji penapisan minyak (Refinery) seperti di Pengerang atau Kerteh. Anda pakar menyelenggara pam, injap, dan jentera berat yang memproses minyak mentah menjadi petrol. Kerjaya yang mementingkan keselamatan tinggi dan disiplin, dengan bayaran elaun yang lumayan.",
+        "jobs": ["Juruteknik Loji (Plant Technician)", "Penyelia Penyelenggaraan Mekanikal", "Fitter Loji"]
+    },
+
+    "IJTM-CET-022": {
+        "headline": "⚓ Mekanikal O&G: Pakar Rigging & Slinging",
+        "synopsis": "Lebih mendalam tentang operasi loji. Selain baiki mesin, anda belajar teknik 'Rigging & Slinging' (mengangkat beban berat) yang selamat. Sijil ini sangat laku keras kerana industri O&G memerlukan pekerja yang kompeten dan mematuhi standard keselamatan antarabangsa.",
+        "jobs": ["Rigger & Slinger", "Juruteknik Mekanikal O&G", "Penyelia Operasi Loji"]
+    },
+
+    # --- MULTIMEDIA (SIJIL) ---
+    "IJTM-CET-023": {
+        "headline": "🎬 Multimedia Interaktif: Kreativiti Tanpa Had",
+        "synopsis": "Dunia digital perlukan anda. Belajar sunting video, buat animasi, dan reka grafik untuk web atau aplikasi telefon pintar. Menggunakan perisian Adobe (Photoshop, Premiere, Animate), anda boleh bekerja di agensi pengiklanan atau jadi 'Freelancer' yang bebas.",
+        "jobs": ["Pereka Grafik", "Editor Video", "Pembangun Kandungan Digital", "Jurufoto Korporat"]
+    },
+
+    # --- O&G (PAIP FITTING) ---
+    "IJTM-CET-024": {
+        "headline": "🔧 Paip Minyak & Gas: Nadi Tenaga",
+        "synopsis": "Kerja lasak untuk jiwa kental. Anda belajar memotong, menyambung (fitting), dan menguji paip tekanan tinggi. Tanpa anda, minyak dan gas tidak boleh disalurkan. Kemahiran ini membuka peluang kerja di tapak pembinaan loji atau pelantar minyak (Offshore).",
+        "jobs": ["Pipe Fitter", "Juruteknik Paip Gas", "Penyelia Pembinaan Paip"]
+    },
+
+    # --- PEMBUATAN (MESIN) ---
+    "IJTM-CET-025": {
+        "headline": "⚙️ Pemesinan: Pencipta Alat Ganti",
+        "synopsis": "Mesin kilang rosak? Anda yang buat alat ganti baharu. Belajar menggunakan mesin larik (Lathe), kisar (Mill), dan canai (Grind) untuk membentuk besi menjadi komponen berguna. Kemahiran asas yang menjadi rebutan di mana-mana bengkel kejuruteraan.",
+        "jobs": ["Juruteknik Mesin (Machinist)", "Penyelia Bengkel", "Pembuat Komponen Logam"]
+    },
+
+    # --- PEMBUATAN (ACUAN & DIE) ---
+    "IJTM-CET-026": {
+        "headline": "🛠️ Pembuatan Acuan (Press Die): Pencetak Logam",
+        "synopsis": "Setiap komponen kereta yang anda lihat dibentuk oleh 'Die'. Anda belajar mencipta acuan logam yang sangat keras menggunakan mesin CNC canggih. Graduan bidang ini sering bekerja di syarikat gergasi automotif dan aeroangkasa untuk menghasilkan alat ganti kenderaan.",
+        "jobs": ["Pembuat Acuan (Tool & Die Maker)", "Juruteknik CNC", "Penyelia Pengeluaran"]
+    },
+    
+    "IJTM-CET-027": {
+        "headline": "🛠️ Teknologi Die & Metrologi: Pakar Ukur Halus",
+        "synopsis": "Bukan sekadar buat acuan, tapi memastikan ia tepat hingga ke mikron. Anda belajar menggunakan mesin pengukuran (CMM) dan rawatan haba untuk mengeraskan logam. Kemahiran ini menjadikan anda pakar yang sangat diperlukan dalam sektor pembuatan presisi.",
+        "jobs": ["Metrologist", "Juruteknik Rawatan Haba", "Pembuat Acuan"]
+    },
+
+    "IJTM-CET-028": {
+        "headline": "🧪 Acuan Plastik (Mould): Pencipta Produk Plastik",
+        "synopsis": "Botol air, bekas makanan, mainan—semuanya dari plastik. Anda belajar teknik 'Injection Moulding' untuk menghasilkan produk plastik secara besar-besaran. Dari bijih plastik hingga barang siap, andalah yang mengawal mesin pengeluaran.",
+        "jobs": ["Juruteknik Injection Moulding", "Penyelia Kilang Plastik", "Setter Mesin"]
+    },
+
+    # --- PEMESINAN (ASAS) ---
+    "IJTM-CET-029": {
+        "headline": "⚙️ Pemesinan Am: Mekanik Mesin",
+        "synopsis": "Kemahiran wajib untuk mana-mana juruteknik. Belajar mengendalikan mesin larik, kisar, dan canai untuk membaiki alat ganti mesin yang rosak. Asas yang kukuh untuk anda membuka bengkel kejuruteraan sendiri satu hari nanti.",
+        "jobs": ["Machinist", "Juruteknik Bengkel", "Kontraktor Kejuruteraan"]
+    },
+
+    "IJTM-CET-030": {
+        "headline": "🤖 Pembuatan Lanjutan (CNC): Pakar Mesin Robotik",
+        "synopsis": "Naik taraf kemahiran pemesinan anda. Fokus kursus ini adalah penggunaan mesin CNC berkomputer dan 'Wire Cut' yang canggih. Anda akan menghasilkan komponen logam yang sangat rumit yang tidak boleh dibuat oleh tangan manusia biasa.",
+        "jobs": ["Programmer CNC", "Operator Mesin EDM", "Penyelia Teknikal"]
+    },
+
+    # --- HVAC (AIRCOND) ---
+    "IJTM-CET-031": {
+        "headline": "❄️ Penyejukbekuan Komersial: Pakar Chiller",
+        "synopsis": "Upgrade dari aircond rumah ke sistem 'Chiller' bangunan besar. Anda belajar menyelenggara sistem penyejukan pusat (Centralize Aircond) di hospital, mall, dan kilang. Anda juga belajar tentang sistem aircond kenderaan. Kerjaya stabil dengan permintaan tinggi.",
+        "jobs": ["Juruteknik HVAC Komersial", "Penyelia Penyelenggaraan Bangunan", "Kontraktor Aircond"]
+    },
+
+    # --- PENYELENGGARAAN BANGUNAN ---
+    "IJTM-CET-032": {
+        "headline": "🏢 Fasiliti Bangunan: Penjaga Harta Benda",
+        "synopsis": "Menjaga bangunan bernilai jutaan ringgit. Anda belajar tentang kerja kayu, paip air, lantai jubin, dan asas binaan. Tugas anda memastikan pejabat atau fasiliti kerajaan sentiasa dalam keadaan tiptop dan selamat untuk diduduki.",
+        "jobs": ["Penyelia Fasiliti", "Handyman Bangunan", "Kontraktor Ubahsuai"]
+    },
+
+    # --- PENYELENGGARAAN MEKANIKAL ---
+    "IJTM-CET-033": {
+        "headline": "🔧 Penyelenggaraan Mekanikal: Jack of All Trades",
+        "synopsis": "Syarikat suka pekerja serba boleh. Anda belajar mengimpal, memesin, dan membaiki kerosakan mesin kilang. Kursus ini melatih anda menjadi juruteknik yang boleh 'turu padang' dan selesaikan masalah mekanikal on-the-spot.",
+        "jobs": ["Juruteknik Penyelenggaraan", "Mekanik Loji", "Penyelia Teknikal"]
+    },
+
+    # --- POLIMER ---
+    "IJTM-CET-034": {
+        "headline": "⚗️ Teknologi Polimer: Sains Plastik",
+        "synopsis": "Dunia kejuruteraan plastik. Anda belajar mengendalikan mesin suntikan plastik dan menyelesaikan masalah (troubleshoot) jika produk cacat. Kilang elektronik dan automotif sangat memerlukan pakar polimer untuk menghasilkan casing gajet dan bumper kereta.",
+        "jobs": ["Juruteknik Polimer", "Penyelia Kualiti Plastik", "Operator Mesin Injection"]
+    },
+
+    # --- PERABOT & REKABENTUK ---
+    "IJTM-CET-035": {
+        "headline": "🪑 Rekabentuk Perabot: Tukang Kayu Moden",
+        "synopsis": "Gabungan seni pertukangan dan teknologi. Anda bukan sekadar mengetam kayu, tapi merekabentuk perabot ergonomik dan moden. Sesuai untuk anda yang ingin menjadi pereka dalaman atau membuka kilang perabot sendiri.",
+        "jobs": ["Pereka Perabot", "Tukang Kayu Mahir", "Usahawan Perabot"]
+    },
+
+    "IJTM-CET-036": {
+        "headline": "🎨 Rekabentuk Grafik: Visual Artis Digital",
+        "synopsis": "Kuasai seni visual menggunakan komputer Apple Mac. Anda belajar Adobe Illustrator dan Photoshop untuk menghasilkan poster, majalah, dan iklan. Langkah pertama untuk menjadi pereka grafik profesional di agensi pengiklanan atau syarikat penerbitan.",
+        "jobs": ["Pereka Grafik", "Artis DTP (Desktop Publishing)", "Freelance Designer"]
+    },
+
+    "IJTM-CET-037": {
+        "headline": "✏️ Rekabentuk Industri: Pencipta Gajet",
+        "synopsis": "Belajar mencipta rupa bentuk produk yang kita guna setiap hari. Dari lakaran tangan hingga ke model 3D komputer, anda akan dilatih untuk menjadikan produk berfungsi dan cantik dipandang.",
+        "jobs": ["Perekabentuk Produk", "CAD Modeler", "Pembantu Pereka R&D"]
+    },
+
+    # --- TELEKOMUNIKASI ---
+    "IJTM-CET-038": {
+        "headline": "📡 Telekomunikasi: Pakar Fiber & 5G",
+        "synopsis": "Industri 5G sedang meletup! Anda belajar menyambung kabel Fiber Optik (Splicing), memasang antena pemancar, dan menguji isyarat frekuensi. Kerjaya kritikal yang menghubungkan manusia. Kerja lasak tapi gaji sangat lumayan.",
+        "jobs": ["Juruteknik Fiber Optik", "Penyelia Tapak Telekomunikasi", "Rigger Menara"]
+    },
 }
 
 # --- FALLBACK FUNCTION ---
