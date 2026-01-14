@@ -7,18 +7,19 @@
     background-color: #ffffff !important;
 }
 
-/* Force the Sidebar background to Light Grey from palette */
+/* Force the Sidebar background to Light Grey */
 section[data-testid="stSidebar"] {
     background-color: #eaeaea !important;
     border-right: 1px solid #8ba0a4;
 }
 
-/* Force Default Text Color to Dark Teal (High Contrast on White) */
+/* Force Default Text Color to Dark Teal */
+/* We use 'color' but be careful not to override high-specificity children later */
 h1, h2, h3, h4, h5, h6, p, li, span, label, div[data-testid="stMarkdownContainer"] {
     color: #183e4b !important;
 }
 
-/* Fix Input Label Colors (Radio buttons, Selectboxes) in Sidebar */
+/* Fix Input Label Colors in Sidebar */
 .stRadio label, .stSelectbox label, .stCheckbox label {
     color: #183e4b !important;
 }
@@ -30,71 +31,43 @@ h1, h2, h3, h4, h5, h6, p, li, span, label, div[data-testid="stMarkdownContainer
 /* --- METRICS --- */
 div[data-testid="stMetricValue"] {
     font-size: 28px;
-    color: #d74a49 !important; /* Terra Cotta Red for numbers */
+    color: #d74a49 !important; /* Terra Cotta Red */
     font-weight: 700;
 }
 div[data-testid="stMetricLabel"] {
     color: #1b4552 !important; /* Darker Teal */
 }
 
-/* --- RESULT BANNER (Dark Background, Light Text) --- */
+/* --- RESULT BANNER --- */
 .result-banner {
-    background-color: #183e4b; /* Deep Teal Background */
-    border-left: 6px solid #d74a49; /* Red Accent */
+    background-color: #183e4b;
+    border-left: 6px solid #d74a49;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
-/* CRITICAL: Force text inside the banner to be WHITE */
-.result-banner h2, 
-.result-banner p, 
-.result-banner div {
+/* Force White Text inside Banner */
+.result-banner h2, .result-banner p, .result-banner div {
     color: #eaeaea !important; 
 }
 
-/* --- TAB STYLING --- */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 8px;
-}
-.stTabs [data-baseweb="tab"] {
-    height: 50px;
-    white-space: pre-wrap;
-    border-radius: 4px 4px 0px 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #f0f2f6; /* Slight grey for inactive tabs */
-    color: #183e4b !important;
-}
-.stTabs [aria-selected="true"] {
-    background-color: #183e4b !important;
-    color: #ffffff !important; /* Active tab text is White */
-}
-
-/* --- INFO BOXES (Cards) --- */
+/* --- INFO BOXES --- */
 .info-box {
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    background-color: #fdfdfd !important; /* Ensure Card is White */
+    background-color: #fdfdfd !important;
     border: 1px solid #d0d7de;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-
-.info-box h4 {
-    margin-top: 0;
-    font-weight: 700;
-}
-
-/* Borders based on semantic meaning */
 .poly-box { border-left: 6px solid #183e4b; }
 .kk-box   { border-left: 6px solid #1b4552; }
 .tvet-box { border-left: 6px solid #d74a49; }
 
 /* --- LINKS --- */
 a {
-    color: #d74a49 !important; /* Red Links */
+    color: #d74a49 !important;
     text-decoration: none;
     font-weight: 600;
 }
@@ -103,8 +76,63 @@ a:hover {
     color: #1b4552 !important;
 }
 
-/* --- DATAFRAME TABLES --- */
-/* Force table text to be readable */
-div[data-testid="stDataFrame"] {
-    color: #183e4b !important;
+/* ==========================================================================
+   3. INTERACTIVE STATES (CONTRAST FIXES)
+   ========================================================================== */
+
+/* --- TABS --- */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+
+/* Inactive Tab */
+.stTabs [data-baseweb="tab"] {
+    height: 50px;
+    border-radius: 4px 4px 0px 0px;
+    background-color: #f0f2f6; 
+    color: #183e4b !important; /* Dark Text on Light BG */
+    border: 1px solid #d0d7de;
+    border-bottom: none;
+}
+
+/* Active Tab (The Problem Solver) */
+.stTabs [aria-selected="true"] {
+    background-color: #183e4b !important; /* Dark Teal BG */
+    border: 1px solid #183e4b;
+}
+
+/* FORCE WHITE TEXT on Active Tab */
+.stTabs [aria-selected="true"] p,
+.stTabs [aria-selected="true"] span {
+    color: #ffffff !important;
+}
+
+/* --- EXPANDERS (Sidebar & Main) --- */
+/* This targets the clickable Header of the expander */
+div[data-testid="stExpander"] details summary {
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+/* Hover State: Make it Dark Teal with White Text for clarity */
+div[data-testid="stExpander"] details summary:hover {
+    background-color: #183e4b !important;
+    color: #ffffff !important;
+}
+
+/* FORCE WHITE TEXT on Hovering Expander Header */
+div[data-testid="stExpander"] details summary:hover span,
+div[data-testid="stExpander"] details summary:hover p,
+div[data-testid="stExpander"] details summary:hover svg {
+    color: #ffffff !important;
+    fill: #ffffff !important; /* Fixes the arrow icon color */
+}
+
+/* Active/Open State */
+div[data-testid="stExpander"] details[open] summary {
+    color: #d74a49 !important; /* Red text to show it is "Open" */
+    background-color: #eaeaea !important; /* Light background */
+}
+div[data-testid="stExpander"] details[open] summary p {
+    color: #d74a49 !important;
 }
