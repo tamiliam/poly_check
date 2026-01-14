@@ -36,8 +36,10 @@ class TestAdmissionsEngine(unittest.TestCase):
         
         student = StudentProfile(
             grades=grades,
-            gender='Lelaki', nationality='Warganegara', 
-            colorblind='Tidak', disability='Tidak'
+            gender='Lelaki', 
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
         )
         
         # If this fails (e.g., gets 20 instead of 21), we know one subject is missing in engine.py
@@ -48,7 +50,10 @@ class TestAdmissionsEngine(unittest.TestCase):
         """Test that C counts as credit, but D does not."""
         student = StudentProfile(
             grades={'math': 'C', 'hist': 'D', 'bm': 'C'}, # Should be 2 credits
-            gender='Lelaki'
+            gender='Lelaki',
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
         )
         self.assertEqual(student.credits, 2, "C should count, D should not.")
 
@@ -57,19 +62,28 @@ class TestAdmissionsEngine(unittest.TestCase):
         """Student has 8 As but failed BM. Should be ineligible."""
         student = StudentProfile(
             grades={'bm': 'G', 'hist': 'A', 'math': 'A', 'eng': 'A', 'sci': 'A'},
-            gender='Lelaki'
+            gender='Lelaki',
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
         )
         req = self.base_req.copy()
         req['pass_bm'] = 1 # Requirement: Must Pass BM
         
         eligible, reason = check_eligibility(student, req)
         self.assertFalse(eligible)
-        self.assertIn("Bahasa Melayu", reason)
+        self.assertIn("Gagal BM", reason)
 
     # --- TEST 4: Gender Constraint (Male Only) ---
     def test_male_only_requirement(self):
         """Female student applying for Male-only course."""
-        student = StudentProfile(grades={'bm':'A', 'hist':'A'}, gender='Perempuan')
+        student = StudentProfile(
+            grades={'bm':'A', 'hist':'A'}, 
+            gender='Perempuan',
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
+        )
         req = self.base_req.copy()
         req['req_male'] = 1
         
@@ -80,13 +94,19 @@ class TestAdmissionsEngine(unittest.TestCase):
     # --- TEST 5: Gender Constraint (Female Only) ---
     def test_female_only_requirement(self):
         """Male student applying for Female-only course."""
-        student = StudentProfile(grades={'bm':'A', 'hist':'A'}, gender='Lelaki')
+        student = StudentProfile(
+            grades={'bm':'A', 'hist':'A'}, 
+            gender='Lelaki',
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
+        )
         req = self.base_req.copy()
         req['req_female'] = 1
         
         eligible, reason = check_eligibility(student, req)
         self.assertFalse(eligible)
-        self.assertIn("Perempuan", reason)
+        self.assertIn("Wanita", reason)
 
     # --- TEST 6: Colorblindness ---
     def test_colorblind_blocker(self):
@@ -94,35 +114,42 @@ class TestAdmissionsEngine(unittest.TestCase):
         student = StudentProfile(
             grades={'bm':'A', 'hist':'A'}, 
             gender='Lelaki', 
-            colorblind='Ya'
+            colorblind='Ya',
+            nationality='Warganegara',
+            disability='Tidak'
         )
         req = self.base_req.copy()
         req['no_colorblind'] = 1
         
         eligible, reason = check_eligibility(student, req)
         self.assertFalse(eligible)
-        self.assertIn("Buta Warna", reason)
+        self.assertIn("Rabun Warna", reason)
 
     # --- TEST 7: Disability Check ---
     def test_disability_blocker(self):
         student = StudentProfile(
             grades={'bm':'A', 'hist':'A'}, 
             gender='Lelaki', 
-            disability='Ya'
+            disability='Ya',
+            nationality='Warganegara',
+            colorblind='Tidak'
         )
         req = self.base_req.copy()
         req['no_disability'] = 1
         
         eligible, reason = check_eligibility(student, req)
         self.assertFalse(eligible)
-        self.assertIn("OKU", reason)
+        self.assertIn("Sihat", reason)
 
     # --- TEST 8: Specific Subject Credit (Math) ---
     def test_specific_credit_requirement(self):
         """Course requires CREDIT in Math, student only has PASS."""
         student = StudentProfile(
             grades={'bm':'A', 'hist':'A', 'math': 'D'}, # D is Pass, not Credit
-            gender='Lelaki'
+            gender='Lelaki',
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
         )
         req = self.base_req.copy()
         req['credit_math'] = 1
@@ -136,7 +163,10 @@ class TestAdmissionsEngine(unittest.TestCase):
         """Student has 2 credits, course needs 3."""
         student = StudentProfile(
             grades={'bm':'C', 'hist':'C', 'math': 'D', 'eng': 'E'}, # 2 Credits
-            gender='Lelaki'
+            gender='Lelaki',
+            nationality='Warganegara', 
+            colorblind='Tidak', 
+            disability='Tidak'
         )
         req = self.base_req.copy()
         req['min_credits'] = 3
@@ -152,7 +182,8 @@ class TestAdmissionsEngine(unittest.TestCase):
             grades={'bm':'A', 'hist':'A', 'math':'A', 'eng':'A'},
             gender='Lelaki',
             colorblind='Tidak',
-            disability='Tidak'
+            disability='Tidak',
+            nationality='Warganegara'
         )
         req = self.base_req.copy()
         
