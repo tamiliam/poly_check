@@ -3,6 +3,7 @@ import pandas as pd
 import os
 # Pastikan fail description.py berada dalam folder yang sama
 from src.description import get_course_details
+from src.engine import StudentProfile, check_eligibility
 
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Semakan TVET (Politeknik & Komuniti)", page_icon="🇲🇾", layout="wide")
@@ -44,13 +45,6 @@ st.markdown("""
 def clean_header(text):
     # Membersihkan nama lajur supaya konsisten (huruf kecil, tiada ruang kosong pelik)
     return str(text).strip().replace("\ufeff", "").lower()
-
-def is_active(value):
-    s = str(value).strip().lower()
-    return s in ['1', '1.0', 'true', 'yes', 'y']
-
-def is_pass(g): return str(g).strip() in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
-def is_credit(g): return str(g).strip() in ["A+", "A", "A-", "B+", "B", "C+", "C"]
 
 # --- LOAD DATA ---
 @st.cache_data
@@ -139,70 +133,39 @@ with st.sidebar.expander("🛠️ Elektif Teknikal"):
     other_voc = st.checkbox("Kepujian (C+) Subjek Vokasional Lain", key="voc_chk")
 
 # --- CALCULATION & LOGIC ---
-all_subs = [
-    bm_grade, eng_grade, hist_grade, math_grade, islam_moral, 
-    addmath_grade, phy_grade, chem_grade, bio_grade, 
-    sci_gen, geo_grade, acc_grade, biz_grade, econ_grade, psv_grade, 
-    lang_add, lit_grade, islam_add, 
-    rc_grade, cs_grade, agro_grade, srt_grade
-]
 
-calculated_credits = sum(1 for g in all_subs if is_credit(g))
-if other_tech: calculated_credits += 1
-if other_voc: calculated_credits += 1
+# 1. Create the Student Profile (The "Input")
+current_student = StudentProfile(
+    grades={
+        'bm': bm_grade, 'eng': eng_grade, 'hist': hist_grade, 
+        'math': math_grade, 'addmath': addmath_grade,
+        'phy': phy_grade, 'chem': chem_grade, 'bio': bio_grade,
+        'sci': sci_gen, 'geo': geo_grade, 'acc': acc_grade,
+        'biz': biz_grade, 'econ': econ_grade, 'psv': psv_grade,
+        'lang': lang_add, 'lit': lit_grade, 'rel': islam_add, 
+        'rc': rc_grade, 'cs': cs_grade, 'agro': agro_grade, 'srt': srt_grade
+    },
+    gender=gender,
+    nationality=nationality,
+    colorblind=colorblind,
+    disability=disability,
+    other_tech=other_tech,
+    other_voc=other_voc
+)
 
-st.sidebar.info(f"📊 Jumlah Kredit Dikira: {calculated_credits}")
+# 2. Display Credit Count (Calculated by the Engine)
+st.sidebar.info(f"📊 Jumlah Kredit Dikira: {current_student.credits}")
 
+# 3. Simple Gatekeeper Check (For fast UI feedback only)
 def check_gatekeepers():
     if nationality == "Bukan Warganegara": return False, "Warganegara Malaysia Diperlukan."
-    if not is_pass(bm_grade): return False, "Wajib Lulus Bahasa Melayu."
-    if not is_pass(hist_grade): return False, "Wajib Lulus Sejarah."
+    
+    # Simple check for "Lulus" (Pass) just for the UI warning
+    pass_grades = ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
+    
+    if str(bm_grade).strip() not in pass_grades: return False, "Wajib Lulus Bahasa Melayu."
+    if str(hist_grade).strip() not in pass_grades: return False, "Wajib Lulus Sejarah."
     return True, "OK"
-
-def check_row_constraints(req):
-    # Demographics
-    if is_active(req.get('req_male')) and gender == "Perempuan": return False
-    if is_active(req.get('no_colorblind')) and colorblind == "Ya": return False
-    if is_active(req.get('no_disability')) and disability == "Ya": return False
-
-    # Mandatory Passes
-    if is_active(req.get('pass_eng')) and not is_pass(eng_grade): return False
-    if is_active(req.get('pass_math')) and not is_pass(math_grade): return False
-
-    # Mandatory Credits
-    if is_active(req.get('credit_bm')) and not is_credit(bm_grade): return False
-    if is_active(req.get('credit_math')) and not is_credit(math_grade): return False
-    if is_active(req.get('credit_eng')) and not is_credit(eng_grade): return False
-    
-    if is_active(req.get('credit_bmbi')) and not (is_credit(bm_grade) or is_credit(eng_grade)): return False
-
-    # Group Logic
-    has_pure_science_pass = any(is_pass(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-    has_tech_pass = any(is_pass(g) for g in [rc_grade, cs_grade]) or other_tech
-    has_voc_pass = any(is_pass(g) for g in [agro_grade, srt_grade]) or other_voc
-    stv_pass = is_pass(sci_gen) or has_pure_science_pass or has_tech_pass or has_voc_pass
-    
-    if is_active(req.get('pass_stv')) and not stv_pass: return False
-    
-    has_pure_science_credit = any(is_credit(g) for g in [bio_grade, phy_grade, chem_grade, addmath_grade])
-    has_tech_credit = any(is_credit(g) for g in [rc_grade, cs_grade]) or other_tech
-    has_voc_credit = any(is_credit(g) for g in [agro_grade, srt_grade]) or other_voc
-    stv_credit = is_credit(sci_gen) or has_pure_science_credit or has_tech_credit or has_voc_credit
-    
-    if is_active(req.get('credit_stv')) and not stv_credit: return False
-
-    if is_active(req.get('credit_sf')):
-        if not (is_credit(sci_gen) or is_credit(phy_grade)): return False
-    
-    if is_active(req.get('credit_sfmt')):
-        if not (is_credit(sci_gen) or is_credit(phy_grade) or is_credit(addmath_grade)): return False
-
-    try: min_c = int(float(req.get('min_credits', 0)))
-    except: min_c = 0
-    
-    if calculated_credits < min_c: return False
-
-    return True
 
 # --- MAIN BUTTON ---
 if st.sidebar.button("Semak Kelayakan", type="primary"):
@@ -214,9 +177,16 @@ if st.sidebar.button("Semak Kelayakan", type="primary"):
     else:
         e_ids = []
         grouped = reqs_df.groupby('course_id')
-        for cid, group in grouped:
-            if group.apply(check_row_constraints, axis=1).all():
-                e_ids.append(cid)
+        # Convert dataframe to a dictionary list for easier processing
+        requirements_list = reqs_df.to_dict('records')
+        
+        for req in requirements_list:
+            # THE BRAIN TRANSPLANT:
+            # We ask the Engine: "Is this student eligible for this requirement?"
+            is_eligible, reason = check_eligibility(current_student, req)
+            
+            if is_eligible:
+                e_ids.append(req['course_id'])
         
         st.session_state['eligible_ids'] = e_ids
         st.session_state['fail_reason'] = None
