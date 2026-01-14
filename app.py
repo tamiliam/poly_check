@@ -293,7 +293,7 @@ if st.session_state.get('checked'):
                         st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                         
                         rows = reqs_df[reqs_df['course_id'] == cid]
-                        if rows['req_interview'].apply(is_active).any():
+                        if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
                             st.warning("🗣️ Temuduga Diperlukan.")
                     
                     pids = links_df[links_df['course_id'] == cid]['institution_id']
