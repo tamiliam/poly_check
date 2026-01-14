@@ -1,7 +1,8 @@
 # tests/test_regression.py
+import os
 import unittest
 import pandas as pd
-from engine import StudentProfile, check_eligibility
+from src.engine import StudentProfile, check_eligibility
 
 class TestGoldenScenarios(unittest.TestCase):
     
@@ -9,7 +10,7 @@ class TestGoldenScenarios(unittest.TestCase):
     def setUpClass(cls):
         # Load the source of truth ONCE
         try:
-            cls.reqs = pd.read_csv("requirements.csv", encoding="latin1")
+            cls.reqs = pd.read_csv(os.path.join("data", "requirements.csv"), encoding="latin1")
             # Index by course_id for easy lookup
             cls.reqs.set_index("course_id", inplace=True)
         except FileNotFoundError:
