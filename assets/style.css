@@ -138,7 +138,7 @@ div[data-testid="stExpander"] details[open] summary p {
 }
 
 /* ==========================================================================
-   4. DROPDOWN & MENU FIXES (The "Invisible Text" Fix)
+   4. DROPDOWN & MENU FIXES
    ========================================================================== */
 
 /* 1. Force the Popup Container (the list that appears) to be White */
@@ -153,20 +153,32 @@ ul[data-testid="stSelectboxVirtualDropdown"] {
 li[role="option"],
 div[role="option"] {
     background-color: #ffffff !important;
-    color: #183e4b !important; /* Dark Teal Text */
+    color: #183e4b !important;
 }
 
 /* 3. Fix Hover & Selected States (Red Background, White Text) */
-/* When you hover over an item, make it Red so it pops */
 li[role="option"]:hover,
 li[role="option"][aria-selected="true"],
 div[role="option"]:hover,
 div[role="option"][aria-selected="true"] {
-    background-color: #d74a49 !important; /* Red Accent */
-    color: #ffffff !important; /* White Text */
+    background-color: #d74a49 !important;
+    color: #ffffff !important;
 }
 
-/* 4. Fix the text color inside the box BEFORE clicking */
-div[data-baseweb="select"] div {
+/* 4. THE CRITICAL FIX: Force the Input Box itself to be White */
+/* This handles the "Closed" state where you see the selected value */
+div[data-baseweb="select"] > div {
+    background-color: #ffffff !important;
     color: #183e4b !important;
+    border-color: #d0d7de !important;
+}
+
+/* Ensure the text inside the input box is always Dark Teal */
+div[data-baseweb="select"] span {
+    color: #183e4b !important;
+}
+
+/* Fix the little arrow icon to be dark too */
+div[data-baseweb="select"] svg {
+    fill: #183e4b !important;
 }
