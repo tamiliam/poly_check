@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import os
-# Pastikan fail description.py berada dalam folder yang sama
 from src.description import get_course_details
 from src.engine import StudentProfile, check_eligibility
 
