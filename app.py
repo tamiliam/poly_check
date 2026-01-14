@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
+import os
 # Pastikan fail description.py berada dalam folder yang sama
-from description import get_course_details
+from src.description import get_course_details
 
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Semakan TVET (Politeknik & Komuniti)", page_icon="🇲🇾", layout="wide")
@@ -54,21 +55,28 @@ def is_credit(g): return str(g).strip() in ["A+", "A", "A-", "B+", "B", "C+", "C
 # --- LOAD DATA ---
 @st.cache_data
 def load_data_v19():
+    # Helper function to load files specifically from the 'data' folder
+    def load_csv(filename):
+        # This joins "data" + "filename" safely (e.g. data/courses.csv)
+        file_path = os.path.join("data", filename) 
+        return pd.read_csv(file_path, encoding="latin1")
+
     # Membaca fail CSV
     try:
-        courses = pd.read_csv("courses.csv", encoding="latin1")
-        institutions = pd.read_csv("institutions.csv", encoding="latin1")
-        reqs = pd.read_csv("requirements.csv", encoding="latin1")
-        links = pd.read_csv("links.csv", encoding="latin1")
+        # We use the helper function now instead of pd.read_csv directly
+        courses = load_csv("courses.csv")
+        institutions = load_csv("institutions.csv")
+        reqs = load_csv("requirements.csv")
+        links = load_csv("links.csv")
     except FileNotFoundError as e:
-        st.error(f"Fail tidak dijumpai: {e}. Sila pastikan fail csv dimuat naik.")
+        st.error(f"Fail tidak dijumpai: {e}. Sila pastikan fail csv berada dalam folder 'data/'.")
         st.stop()
 
-    # Bersihkan Header
+    # Bersihkan Header (This part remains exactly the same)
     for df in [courses, institutions, reqs, links]:
         df.columns = [clean_header(c) for c in df.columns]
 
-    # Bersihkan ID untuk matching
+    # Bersihkan ID untuk matching (This part remains exactly the same)
     for df in [courses, reqs, links]:
         df['course_id'] = df['course_id'].astype(str).str.strip()
     
