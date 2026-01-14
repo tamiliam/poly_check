@@ -7,72 +7,13 @@ from src.engine import StudentProfile, check_eligibility
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Semakan TVET (Politeknik & Komuniti)", page_icon="🇲🇾", layout="wide")
 
-# --- CUSTOM CSS FOR UX/UI ---
-st.markdown("""
-<style>
-    /* 1. Sidebar Separation */
-    section[data-testid="stSidebar"] {
-        background-color: #f7f9fc;
-        border-right: 1px solid #e0e6ef;
-    }
+# --- LOAD CSS ---
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-    /* 2. Metrics Styling */
-    div[data-testid="stMetricValue"] {
-        font-size: 28px;
-        color: #004E98;
-    }
-
-    /* 3. Result Banner */
-    .result-banner {
-        background: linear-gradient(90deg, #e3f2fd, #ffffff);
-        border-left: 6px solid #1976d2;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    /* 4. Tab Styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        white-space: pre-wrap;
-        border-radius: 4px 4px 0px 0px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    /* 5. Info Boxes (Semantic Colors) */
-    .info-box {
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-    
-    /* Politeknik - Academic Blue */
-    .poly-box {
-        background-color: #e8f0fe;
-        border-left: 6px solid #1a237e;
-        color: #1a237e;
-    }
-    
-    /* KK - Growth Green */
-    .kk-box {
-        background-color: #e6f4ea;
-        border-left: 6px solid #1b5e20;
-        color: #1b5e20;
-    }
-    
-    /* TVET - Industrial Steel */
-    .tvet-box {
-        background-color: #eceff1;
-        border-left: 6px solid #37474f;
-        color: #37474f;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Load the external CSS file
+local_css("assets/style.css")
 
 # --- HELPER FUNCTIONS ---
 def clean_header(text):
