@@ -141,8 +141,9 @@ current_student = StudentProfile(
         'phy': phy_grade, 'chem': chem_grade, 'bio': bio_grade,
         'sci': sci_gen, 'geo': geo_grade, 'acc': acc_grade,
         'biz': biz_grade, 'econ': econ_grade, 'psv': psv_grade,
-        'lang': lang_add, 'lit': lit_grade, 'rel': islam_add, 
-        'rc': rc_grade, 'cs': cs_grade, 'agro': agro_grade, 'srt': srt_grade
+        'lang': lang_add, 'lit': lit_grade, 'rel': islam_moral,
+        'rel_add': islam_add, 'rc': rc_grade, 'cs': cs_grade,
+        'agro': agro_grade, 'srt': srt_grade
     },
     gender=gender,
     nationality=nationality,
@@ -199,7 +200,7 @@ if st.session_state.get('checked'):
     if fail_reason:
         st.error(f"❌ Tidak Layak: {fail_reason}")
     elif not e_ids:
-        st.warning(f"Tiada program layak berdasarkan keputusan ini. Kredit: {calculated_credits}")
+        st.warning(f"Tiada program layak berdasarkan keputusan ini. Kredit: {current_student.credits}")
     else:
         poly_ids = [i for i in e_ids if "POLY" in i]
         kk_ids = [i for i in e_ids if "POLY" not in i] 
