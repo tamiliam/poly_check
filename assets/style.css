@@ -1,0 +1,103 @@
+/* 1. GLOBAL TEXT & HEADERS */
+h1, h2, h3, h4, h5, h6 {
+    color: #183e4b !important; /* Deep Teal */
+}
+
+/* 2. SIDEBAR STYLING */
+section[data-testid="stSidebar"] {
+    background-color: #eaeaea; /* Light Grey from Palette */
+    border-right: 1px solid #8ba0a4; /* Muted Blue Border */
+}
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 2rem;
+}
+
+/* 3. METRICS */
+div[data-testid="stMetricValue"] {
+    font-size: 28px;
+    color: #d74a49; /* Terra Cotta Red for numbers */
+    font-weight: 700;
+}
+div[data-testid="stMetricLabel"] {
+    color: #1b4552; /* Darker Teal */
+}
+
+/* 4. RESULT BANNER */
+.result-banner {
+    background-color: #183e4b; /* Deep Teal Background */
+    color: #eaeaea !important; /* Light Text */
+    border-left: 6px solid #d74a49; /* Red Accent */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.result-banner h2 {
+    color: #eaeaea !important; /* Force White/Grey on Dark Background */
+    margin-bottom: 0px;
+}
+.result-banner p {
+    color: #8ba0a4 !important; /* Muted Text */
+    font-size: 1.1em;
+}
+
+/* 5. TAB STYLING */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+.stTabs [data-baseweb="tab"] {
+    height: 50px;
+    white-space: pre-wrap;
+    border-radius: 4px 4px 0px 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #183e4b;
+}
+.stTabs [aria-selected="true"] {
+    background-color: #183e4b !important;
+    color: #ffffff !important;
+}
+
+/* 6. INFO BOXES (The Card System) */
+.info-box {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #ffffff; /* White card background */
+    border: 1px solid #d0d7de;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.info-box h4 {
+    margin-top: 0;
+    font-weight: 700;
+}
+
+/* Politeknik - Deep Teal Theme */
+.poly-box {
+    border-left: 6px solid #183e4b; /* Deep Teal */
+}
+.poly-box h4 { color: #183e4b !important; }
+
+/* KK - Muted Teal Theme */
+.kk-box {
+    border-left: 6px solid #1b4552; /* Darker Teal */
+}
+.kk-box h4 { color: #1b4552 !important; }
+
+/* TVET - Red Theme (High Energy) */
+.tvet-box {
+    border-left: 6px solid #d74a49; /* Terra Cotta Red */
+}
+.tvet-box h4 { color: #d74a49 !important; }
+
+/* Links */
+a {
+    color: #d74a49 !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+a:hover {
+    text-decoration: underline;
+    color: #1b4552 !important;
+}
