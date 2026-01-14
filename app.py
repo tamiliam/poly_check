@@ -356,24 +356,37 @@ if st.session_state.get('checked'):
     st.markdown("---")
     with st.expander("🕵️ Semak Program Yang Gagal (Analisis)"):
         all_ids = set(courses_df['course_id'].unique())
+        # Find courses that are NOT in the eligible list (e_ids)
         rej_ids = list(all_ids - set(e_ids))
+        
         if rej_ids:
+            # Get details of rejected courses for the dropdown
             rej_courses = courses_df[courses_df['course_id'].isin(rej_ids)].sort_values('course')
             rej_opts = dict(zip(rej_courses['course'], rej_courses['course_id']))
-            insp_name = st.selectbox("Pilih Program Gagal:", rej_opts.keys())
+            
+            insp_name = st.selectbox("Pilih Program Gagal:", list(rej_opts.keys()))
+            
             if insp_name:
                 insp_id = rej_opts[insp_name]
+                # Get all requirement variations (Sets) for this course
                 rows = reqs_df[reqs_df['course_id'] == insp_id]
+                
                 for idx, req in rows.iterrows():
                     st.write(f"**Kriteria Set #{idx+1}:**")
-                    reasons = []
-                    try: min_c = int(float(req.get('min_credits', 0)))
-                    except: min_c = 0
-                    if calculated_credits < min_c: reasons.append(f"Kredit tidak cukup (Perlu {min_c})")
-                    if is_active(req.get('pass_eng')) and not is_pass(eng_grade): reasons.append("Gagal Bahasa Inggeris")
-                    if is_active(req.get('pass_math')) and not is_pass(math_grade): reasons.append("Gagal Matematik")
-                    if is_active(req.get('req_male')) and gender == 'Perempuan': reasons.append("Syarat Jantina (Lelaki Sahaja)")
                     
-                    if not reasons: st.warning("Gagal memenuhi syarat subjek khusus (Sains/Teknikal) atau mata kredit lain.")
+                    # --- THE FIX: ASK THE ENGINE ---
+                    # Convert the Pandas row to a dictionary for the Engine
+                    req_dict = req.to_dict()
+                    
+                    # Ask the Engine: "Why did I fail this specific set?"
+                    is_eligible, reason = check_eligibility(current_student, req_dict)
+                    
+                    if not is_eligible:
+                        st.error(f"❌ {reason}")
                     else:
-                        for r in reasons: st.error(r)
+                        # Rare case: If you qualify for Set 2 but failed Set 1, 
+                        # the course would normally be in the 'Eligible' list.
+                        # If you see this, it means you passed this specific variation.
+                        st.success("✅ Set kriteria ini LULUS.")
+        else:
+            st.success("Tahniah! Tiada program yang gagal. Anda layak untuk semua!")
