@@ -1,81 +1,163 @@
-# tests/test_regression.py
-import os
 import unittest
+import os
 import pandas as pd
 from src.engine import StudentProfile, check_eligibility
 
-class TestGoldenScenarios(unittest.TestCase):
+class TestAdmissionsEngine(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        # Load the source of truth ONCE
-        try:
-            cls.reqs = pd.read_csv(os.path.join("data", "requirements.csv"), encoding="latin1")
-            # Index by course_id for easy lookup
-            cls.reqs.set_index("course_id", inplace=True)
-        except FileNotFoundError:
-            raise unittest.SkipTest("requirements.csv not found")
+        # Create a dummy requirements row for testing basic eligibility
+        cls.base_req = {
+            'min_credits': 3,
+            'req_malaysian': 1,
+            'pass_bm': 1,
+            'pass_history': 1,
+            'pass_eng': 0,
+            'pass_math': 0,
+            'no_colorblind': 0,
+            'no_disability': 0,
+            'req_male': 0,
+            'req_female': 0
+        }
 
-    def get_req(self, course_id):
-        # Helper to get a requirement row as a dict
-        if course_id not in self.reqs.index:
-            self.fail(f"Course ID {course_id} not found in CSV")
-        return self.reqs.loc[course_id].to_dict()
-
-    # --- SCENARIO 1: The "Perfect" Student ---
-    # Should qualify for everything basically
-    def test_golden_student_pass(self):
+    # --- TEST 1: The "Audit" (Finding the missing credit) ---
+    def test_credit_calculation_completeness(self):
+        """Test that EVERY supported subject is correctly counted as a credit."""
+        all_subjects = [
+            'bm', 'eng', 'hist', 'math', 'addmath', 
+            'phy', 'chem', 'bio', 'sci', 'geo', 
+            'acc', 'biz', 'econ', 'psv', 'lang', 
+            'lit', 'rel', 'rc', 'cs', 'agro', 'srt'
+        ]
+        
+        # Give a 'C' (Credit) for every single subject
+        grades = {subj: 'C' for subj in all_subjects}
+        
         student = StudentProfile(
-            grades={
-                'bm': 'A', 'hist': 'A', 'math': 'A', 'eng': 'A', 
-                'sci': 'A', 'phy': 'A', 'chem': 'A' 
-            },
-            gender="Lelaki",
-            nationality="Warganegara",
-            colorblind="Tidak",
-            disability="Tidak"
+            grades=grades,
+            gender='Lelaki', nationality='Warganegara', 
+            colorblind='Tidak', disability='Tidak'
         )
         
-        # Test against a known difficult course (e.g., POLY-DIP-001)
-        rule = self.get_req("POLY-DIP-001")
-        eligible, reason = check_eligibility(student, rule)
-        self.assertTrue(eligible, f"Perfect student failed logic! Reason: {reason}")
+        # If this fails (e.g., gets 20 instead of 21), we know one subject is missing in engine.py
+        self.assertEqual(student.credits, 21, f"Expected 21 credits, but counted {student.credits}. A subject is missing in the loop!")
 
-    # --- SCENARIO 2: The "Colorblind" Student ---
-    # Should fail courses with no_colorblind = 1
-    def test_colorblind_restriction(self):
+    # --- TEST 2: Credit Boundary (C vs D) ---
+    def test_credit_boundary_c_vs_d(self):
+        """Test that C counts as credit, but D does not."""
         student = StudentProfile(
-            grades={'bm': 'A', 'hist': 'A', 'math': 'A'}, # Good grades
-            gender="Lelaki",
-            nationality="Warganegara",
-            colorblind="Ya", # <--- The constraints
-            disability="Tidak"
+            grades={'math': 'C', 'hist': 'D', 'bm': 'C'}, # Should be 2 credits
+            gender='Lelaki'
         )
-        
-        # POLY-DIP-001 usually requires no colorblindness
-        rule = self.get_req("POLY-DIP-001")
-        
-        # Check if the rule actually enforces colorblindness in CSV
-        if rule.get('no_colorblind') == 1:
-            eligible, reason = check_eligibility(student, rule)
-            self.assertFalse(eligible, "Colorblind student was accidentally passed!")
-            self.assertIn("Rabun Warna", reason)
+        self.assertEqual(student.credits, 2, "C should count, D should not.")
 
-    # --- SCENARIO 3: The "Minimum Credit" Fail ---
-    def test_min_credits(self):
+    # --- TEST 3: High Credits but Failed Mandatory Subject ---
+    def test_fail_bm_gatekeeper(self):
+        """Student has 8 As but failed BM. Should be ineligible."""
         student = StudentProfile(
-            # Only 1 credit (BM), others are passes (D/E)
-            grades={'bm': 'A', 'hist': 'E', 'math': 'E', 'eng': 'E'}, 
-            gender="Lelaki",
-            nationality="Warganegara",
-            colorblind="Tidak",
-            disability="Tidak"
+            grades={'bm': 'G', 'hist': 'A', 'math': 'A', 'eng': 'A', 'sci': 'A'},
+            gender='Lelaki'
         )
+        req = self.base_req.copy()
+        req['pass_bm'] = 1 # Requirement: Must Pass BM
         
-        # Course requiring 3 credits
-        rule = self.get_req("POLY-DIP-001") 
-        eligible, reason = check_eligibility(student, rule)
-        self.assertFalse(eligible, "Student with 1 credit passed a 3-credit course!")
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("Bahasa Melayu", reason)
+
+    # --- TEST 4: Gender Constraint (Male Only) ---
+    def test_male_only_requirement(self):
+        """Female student applying for Male-only course."""
+        student = StudentProfile(grades={'bm':'A', 'hist':'A'}, gender='Perempuan')
+        req = self.base_req.copy()
+        req['req_male'] = 1
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("Lelaki", reason)
+
+    # --- TEST 5: Gender Constraint (Female Only) ---
+    def test_female_only_requirement(self):
+        """Male student applying for Female-only course."""
+        student = StudentProfile(grades={'bm':'A', 'hist':'A'}, gender='Lelaki')
+        req = self.base_req.copy()
+        req['req_female'] = 1
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("Perempuan", reason)
+
+    # --- TEST 6: Colorblindness ---
+    def test_colorblind_blocker(self):
+        """Colorblind student applying for Engineering (no colorblind allowed)."""
+        student = StudentProfile(
+            grades={'bm':'A', 'hist':'A'}, 
+            gender='Lelaki', 
+            colorblind='Ya'
+        )
+        req = self.base_req.copy()
+        req['no_colorblind'] = 1
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("Buta Warna", reason)
+
+    # --- TEST 7: Disability Check ---
+    def test_disability_blocker(self):
+        student = StudentProfile(
+            grades={'bm':'A', 'hist':'A'}, 
+            gender='Lelaki', 
+            disability='Ya'
+        )
+        req = self.base_req.copy()
+        req['no_disability'] = 1
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("OKU", reason)
+
+    # --- TEST 8: Specific Subject Credit (Math) ---
+    def test_specific_credit_requirement(self):
+        """Course requires CREDIT in Math, student only has PASS."""
+        student = StudentProfile(
+            grades={'bm':'A', 'hist':'A', 'math': 'D'}, # D is Pass, not Credit
+            gender='Lelaki'
+        )
+        req = self.base_req.copy()
+        req['credit_math'] = 1
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("Matematik", reason)
+
+    # --- TEST 9: Minimum Credits Check ---
+    def test_min_credits_fail(self):
+        """Student has 2 credits, course needs 3."""
+        student = StudentProfile(
+            grades={'bm':'C', 'hist':'C', 'math': 'D', 'eng': 'E'}, # 2 Credits
+            gender='Lelaki'
+        )
+        req = self.base_req.copy()
+        req['min_credits'] = 3
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertFalse(eligible)
+        self.assertIn("Kredit", reason)
+
+    # --- TEST 10: The "Perfect" Student (Control Group) ---
+    def test_perfect_student(self):
+        """Student matches all criteria perfectly."""
+        student = StudentProfile(
+            grades={'bm':'A', 'hist':'A', 'math':'A', 'eng':'A'},
+            gender='Lelaki',
+            colorblind='Tidak',
+            disability='Tidak'
+        )
+        req = self.base_req.copy()
+        
+        eligible, reason = check_eligibility(student, req)
+        self.assertTrue(eligible)
 
 if __name__ == '__main__':
     unittest.main()
