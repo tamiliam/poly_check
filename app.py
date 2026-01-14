@@ -248,24 +248,51 @@ if st.session_state.get('checked'):
         with tab1:
             st.markdown("""
             <div class="info-box poly-box">
-                <h4>🏛️ Politeknik Malaysia</h4>
-                <p>Institusi TVET premier yang menawarkan program Diploma & Ijazah.</p>
+                <h4>🏛️ Apa itu Politeknik?</h4>
+                <p>
+                    Politeknik adalah institusi kerajaan yang menawarkan pendidikan <b>Teknikal & Vokasional (TVET)</b> bertaraf dunia. 
+                    Fokus kepada latihan amali (hands-on) dalam bidang Kejuruteraan, Perdagangan, Teknologi Maklumat, dan Perkhidmatan.
+                </p>
+                <ul>
+                    <li><b>Sesuai untuk:</b> Pelajar yang mahu kemahiran teknikal & peluang kerja cerah.</li>
+                    <li><b>Peringkat:</b> Diploma & Ijazah Sarjana Muda.</li>
+                    <li><b>Yuran:</b> Sangat berpatutan & disokong kerajaan.</li>
+                    <li><b>Laluan:</b> Terus bekerja atau sambung Ijazah di Universiti.</li>
+                </ul>
+                <p>👉 <a href="https://ambilan.mypolycc.edu.my/portalbpp2/index.asp" target="_blank">Laman Web Rasmi Pengambilan</a></p>
             </div>
             """, unsafe_allow_html=True)
             
             if not p_poly:
                 st.info("Tiada program Politeknik yang layak.")
             else:
-                # Filter courses for Tab 1
+                # 1. Get Eligible Data
                 res_poly = courses_df[courses_df['course_id'].isin(p_poly)]
+                
                 if res_poly.empty:
                     st.warning("Data kursus tidak dijumpai.")
                 else:
+                    # 2. FILTER BY BIDANG (Cluster)
+                    # We check if 'cluster' exists, otherwise default to no filter
+                    group_col = 'cluster' if 'cluster' in res_poly.columns else None
+                    
+                    if group_col:
+                        st.write("📂 **Tapis Mengikut Bidang:**")
+                        all_clusters = ["Semua"] + sorted(res_poly[group_col].astype(str).unique().tolist())
+                        sel_cluster = st.selectbox("Pilih Bidang:", all_clusters, key="filter_poly")
+                        
+                        if sel_cluster != "Semua":
+                            res_poly = res_poly[res_poly[group_col] == sel_cluster]
+
+                    # 3. Display Table
                     disp_poly = res_poly[['course']].rename(columns={'course': 'Nama Program'})
                     st.dataframe(disp_poly, use_container_width=True, hide_index=True)
                     
+                    # 4. Drill Down Details
                     st.markdown("---")
                     st.subheader("🔍 Lihat Detail Program Politeknik")
+                    
+                    # Only show courses present in the filtered dataframe
                     sel_poly = st.selectbox("Pilih Program:", res_poly['course'].unique(), key="sel_poly")
                     
                     if sel_poly:
@@ -275,16 +302,25 @@ if st.session_state.get('checked'):
                         with st.container():
                             st.info(f"### {details['headline']}")
                             st.write(details['synopsis'])
+                            if 'pathway' in details: st.write(f"**🎓 Laluan Sambung Belajar:** {details['pathway']}")
                             st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                             
-                            # Locations for Poly
+                            # Check for Interview Requirement
+                            if 'req_interview' in reqs_df.columns:
+                                rows = reqs_df[reqs_df['course_id'] == cid]
+                                # Check if ANY requirement set for this course needs an interview
+                                if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
+                                    st.warning("🗣️ **Perhatian:** Program ini mungkin memerlukan temuduga.")
+                            
+                            # Locations (Using links.csv + institutions.csv)
                             loc_ids = links_df[links_df['course_id'] == cid]['institution_id'].unique()
                             final_locs = inst_df[inst_df['institution_id'].isin(loc_ids)]
                             
                             if not final_locs.empty:
                                 st.markdown("**📍 Lokasi Institusi:**")
                                 st.dataframe(
-                                    final_locs[['institution_name', 'state']].rename(columns={'institution_name':'Institusi', 'state':'Negeri'}),
+                                    final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
+                                    column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
                                     hide_index=True,
                                     use_container_width=True
                                 )
@@ -293,22 +329,44 @@ if st.session_state.get('checked'):
         with tab2:
             st.markdown("""
             <div class="info-box kk-box">
-                <h4>🛠️ Kolej Komuniti</h4>
-                <p>Fokus kepada kemahiran teknikal spesifik dan pembelajaran sepanjang hayat.</p>
+                <h4>🛠️ Apa itu Kolej Komuniti?</h4>
+                <p>
+                    Institusi TVET "Mesra Komuniti" yang menawarkan latihan kemahiran praktikal untuk membolehkan anda terus bekerja atau berniaga.
+                    Terdapat lebih 100 buah kolej di seluruh Malaysia!
+                </p>
+                <ul>
+                    <li><b>Sesuai untuk:</b> Anda yang minat 'buat kerja' (hands-on) berbanding teori buku.</li>
+                    <li><b>Syarat Masuk:</b> Mudah! Lulus SPM (BM & Sejarah) sahaja.</li>
+                    <li><b>Bidang Popular:</b> Automotif, Masakan (Kulinari), Elektrik, Fesyen, Kecantikan.</li>
+                    <li><b>Laluan:</b> Tamat Sijil boleh terus kerja atau sambung Diploma di Politeknik.</li>
+                </ul>
+                <p>👉 <a href="https://ambilan.mypolycc.edu.my/portalbpp2/index.asp" target="_blank">Laman Web Rasmi Pengambilan</a></p>
             </div>
             """, unsafe_allow_html=True)
 
             if not p_kk:
                 st.info("Tiada program Kolej Komuniti yang layak.")
             else:
-                # Filter courses for Tab 2
                 res_kk = courses_df[courses_df['course_id'].isin(p_kk)]
+                
                 if res_kk.empty:
                     st.warning("Data kursus tidak dijumpai.")
                 else:
+                    # Filter Logic (Same as Tab 1)
+                    group_col = 'cluster' if 'cluster' in res_kk.columns else None
+                    if group_col:
+                        st.write("📂 **Tapis Mengikut Bidang:**")
+                        all_clusters_kk = ["Semua"] + sorted(res_kk[group_col].astype(str).unique().tolist())
+                        sel_cluster_kk = st.selectbox("Pilih Bidang:", all_clusters_kk, key="filter_kk")
+                        
+                        if sel_cluster_kk != "Semua":
+                            res_kk = res_kk[res_kk[group_col] == sel_cluster_kk]
+
+                    # Display Table
                     disp_kk = res_kk[['course']].rename(columns={'course': 'Nama Program'})
                     st.dataframe(disp_kk, use_container_width=True, hide_index=True)
                     
+                    # Drill Down
                     st.markdown("---")
                     st.subheader("🔍 Lihat Detail Program Kolej Komuniti")
                     sel_kk = st.selectbox("Pilih Program:", res_kk['course'].unique(), key="sel_kk")
@@ -322,14 +380,21 @@ if st.session_state.get('checked'):
                             st.write(details['synopsis'])
                             st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                             
-                            # Locations for KK
+                            # Interview Check
+                            if 'req_interview' in reqs_df.columns:
+                                rows = reqs_df[reqs_df['course_id'] == cid]
+                                if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
+                                    st.warning("🗣️ **Perhatian:** Program ini mungkin memerlukan temuduga.")
+
+                            # Locations
                             loc_ids = links_df[links_df['course_id'] == cid]['institution_id'].unique()
                             final_locs = inst_df[inst_df['institution_id'].isin(loc_ids)]
                             
                             if not final_locs.empty:
                                 st.markdown("**📍 Lokasi Institusi:**")
                                 st.dataframe(
-                                    final_locs[['institution_name', 'state']].rename(columns={'institution_name':'Institusi', 'state':'Negeri'}),
+                                    final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
+                                    column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
                                     hide_index=True,
                                     use_container_width=True
                                 )
@@ -337,7 +402,7 @@ if st.session_state.get('checked'):
         # === TAB 3: TVET (New) ===
         with tab3:
             st.markdown("""
-            <div class="info-box" style="background-color: #e3f2fd; border-left: 5px solid #2196f3;">
+            <div class="info-box" style="background-color: #660e60; border-left: 5px solid #2196f3;">
                 <h4>⚙️ Institut Latihan Kemahiran (ILKBS & ILJTM)</h4>
                 <p>Termasuk IKBN, IKTBN, ADTEC, dan JMTI. Fokus kepada kemahiran industri berat, minyak & gas, dan automotif.</p>
                 <ul>
