@@ -7,13 +7,32 @@ from src.engine import StudentProfile, check_eligibility
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Semakan TVET (Politeknik & Komuniti)", page_icon="🇲🇾", layout="wide")
 
-# --- CUSTOM CSS FOR METRICS & TABS ---
+# --- CUSTOM CSS FOR UX/UI ---
 st.markdown("""
 <style>
+    /* 1. Sidebar Separation */
+    section[data-testid="stSidebar"] {
+        background-color: #f7f9fc;
+        border-right: 1px solid #e0e6ef;
+    }
+
+    /* 2. Metrics Styling */
     div[data-testid="stMetricValue"] {
         font-size: 28px;
         color: #004E98;
     }
+
+    /* 3. Result Banner */
+    .result-banner {
+        background: linear-gradient(90deg, #e3f2fd, #ffffff);
+        border-left: 6px solid #1976d2;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* 4. Tab Styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 10px;
     }
@@ -24,33 +43,44 @@ st.markdown("""
         padding-top: 10px;
         padding-bottom: 10px;
     }
+
+    /* 5. Info Boxes (Semantic Colors) */
     .info-box {
         padding: 15px;
         border-radius: 10px;
         margin-bottom: 20px;
     }
+    
+    /* Politeknik - Academic Blue */
     .poly-box {
-        background-color: #e3f2fd;
-        border-left: 5px solid #0d47a1;
-        color: #0d47a1;
+        background-color: #e8f0fe;
+        border-left: 6px solid #1a237e;
+        color: #1a237e;
     }
+    
+    /* KK - Growth Green */
     .kk-box {
-        background-color: #e8f5e9;
-        border-left: 5px solid #2e7d32;
-        color: #2e7d32;
+        background-color: #e6f4ea;
+        border-left: 6px solid #1b5e20;
+        color: #1b5e20;
+    }
+    
+    /* TVET - Industrial Steel */
+    .tvet-box {
+        background-color: #eceff1;
+        border-left: 6px solid #37474f;
+        color: #37474f;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- HELPER FUNCTIONS ---
 def clean_header(text):
-    # Membersihkan nama lajur supaya konsisten (huruf kecil, tiada ruang kosong pelik)
     return str(text).strip().replace("\ufeff", "").lower()
 
 # --- LOAD DATA ---
 @st.cache_data
 def load_data_v20():
-    # Helper: Safe Loading (Fixes Risk 1)
     def load_csv(filename):
         file_path = os.path.join("data", filename) 
         try:
@@ -61,22 +91,18 @@ def load_data_v20():
             st.error(f"❌ Fail hilang: {filename}. Pastikan fail wujud dalam folder 'data/'.")
             st.stop()
 
-    # Load Files
     courses = load_csv("courses.csv")
     institutions = load_csv("institutions.csv")
     reqs = load_csv("requirements.csv")
     links = load_csv("links.csv")
-    
     tvet_courses = load_csv("tvet_courses.csv")
     tvet_inst = load_csv("tvet_institutions.csv")
     tvet_reqs = load_csv("tvet_requirements.csv")
 
-    # 1. Clean Headers
     all_dfs = [courses, institutions, reqs, links, tvet_courses, tvet_inst, tvet_reqs]
     for df in all_dfs:
         df.columns = [clean_header(c) for c in df.columns]
 
-    # 2. SCHEMA CHECK (Fixes Risk 2)
     schema_checks = {
         "courses.csv": (courses, ['course_id', 'course']),
         "reqs.csv": (reqs, ['course_id']),
@@ -93,7 +119,6 @@ def load_data_v20():
             st.error(f"🛑 Struktur fail '{filename}' salah. Lajur hilang: {missing}")
             st.stop()
 
-    # 3. Clean IDs
     for df in [courses, reqs, links, tvet_courses, tvet_reqs]:
         df['course_id'] = df['course_id'].astype(str).str.strip()
         
@@ -102,13 +127,11 @@ def load_data_v20():
     tvet_inst['institution_id'] = tvet_inst['institution_id'].astype(str).str.strip()
     tvet_reqs['institution_id'] = tvet_reqs['institution_id'].astype(str).str.strip()
 
-    # 4. PRE-CONVERT TO DICTIONARIES (Fixes Risk 3)
     poly_dicts = reqs.to_dict('records')
     tvet_dicts = tvet_reqs.to_dict('records')
 
     return courses, institutions, reqs, links, tvet_courses, tvet_inst, tvet_reqs, poly_dicts, tvet_dicts
 
-# Unpack all 9 return values
 courses_df, inst_df, reqs_df, links_df, t_courses, t_inst, t_reqs, poly_req_list, tvet_req_list = load_data_v20()
 
 # --- SIDEBAR INPUTS ---
@@ -118,7 +141,6 @@ st.sidebar.caption("Politeknik & Kolej Komuniti")
 with st.sidebar.expander("👤 Maklumat Peribadi", expanded=True):
     nationality = st.radio("Warganegara", ["Warganegara", "Bukan Warganegara"], key="nat")
     gender = st.radio("Jantina", ["Lelaki", "Perempuan"], key="gen")
-    
     st.write("**Status Kesihatan**")
     colorblind = st.radio("Buta Warna?", ["Tidak", "Ya"], key="cb")
     st.caption("Tidak pasti? [Uji di sini (Percuma)](https://enchroma.com/pages/color-blind-test)")
@@ -161,8 +183,6 @@ with st.sidebar.expander("🛠️ Elektif Teknikal"):
     other_voc = st.checkbox("Kepujian (C+) Subjek Vokasional Lain", key="voc_chk")
 
 # --- CALCULATION & LOGIC ---
-
-# 1. Create Student Profile
 current_student = StudentProfile(
     grades={
         'bm': bm_grade, 'eng': eng_grade, 'hist': hist_grade, 
@@ -174,17 +194,12 @@ current_student = StudentProfile(
         'rel_add': islam_add, 'rc': rc_grade, 'cs': cs_grade,
         'agro': agro_grade, 'srt': srt_grade
     },
-    gender=gender,
-    nationality=nationality,
-    colorblind=colorblind,
-    disability=disability,
-    other_tech=other_tech,
-    other_voc=other_voc
+    gender=gender, nationality=nationality, colorblind=colorblind,
+    disability=disability, other_tech=other_tech, other_voc=other_voc
 )
 
 st.sidebar.info(f"📊 Jumlah Kredit Dikira: {current_student.credits}")
 
-# 2. Gatekeeper Check
 def check_gatekeepers():
     if nationality == "Bukan Warganegara": 
         return False, "Maaf, permohonan hanya terbuka kepada Warganegara Malaysia."
@@ -199,14 +214,14 @@ if st.sidebar.button("Semak Kelayakan", type="primary"):
         st.session_state['fail_reason'] = msg
         st.session_state['checked'] = True
     else:
-        # 1. Check Polytechnic
+        # Check Poly
         poly_ids = []
         for req in poly_req_list:
             is_eligible, reason = check_eligibility(current_student, req)
             if is_eligible:
                 poly_ids.append(req['course_id'])
         
-        # 2. Check TVET
+        # Check TVET
         tvet_ids = []
         for req in tvet_req_list:
             is_eligible, reason = check_eligibility(current_student, req)
@@ -229,237 +244,191 @@ if st.session_state.get('checked'):
     elif not poly_ids and not tvet_ids:
         st.warning(f"Tiada program layak. Kredit: {current_student.credits}")
     else:
-        # Categorize Poly IDs
         p_poly = [i for i in poly_ids if "POLY" in i]
         p_kk = [i for i in poly_ids if "POLY" not in i] 
         
-        # Display Metrics
-        st.markdown("### 🎉 Tahniah! Anda Layak.")
+        # --- NEW RESULT BANNER ---
+        st.markdown("""
+        <div class="result-banner">
+            <h2>🎉 Tahniah! Anda Layak</h2>
+            <p>Sila semak program yang sesuai di bawah mengikut kategori.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
         m1, m2, m3, m4 = st.columns(4)
-        m1.metric("Politeknik", f"{len(p_poly)}")
-        m2.metric("Kolej Komuniti", f"{len(p_kk)}")
-        m3.metric("ILKBS / ILJTM", f"{len(set(tvet_ids))}") 
+        m1.metric("Diploma Politeknik", f"{len(p_poly)}")
+        m2.metric("Sijil Kolej Komuniti", f"{len(p_kk)}")
+        m3.metric("Sijil/Diploma TVET", f"{len(set(tvet_ids))}") 
         m4.metric("Jumlah Kredit", f"{current_student.credits}")
 
-        # --- TABS ---
-        tab1, tab2, tab3 = st.tabs(["🏛️ POLITEKNIK", "🛠️ KOLEJ KOMUNITI", "⚙️ ILKBS & ADTEC"])
+        # --- TABS (RENAMED) ---
+        tab1, tab2, tab3 = st.tabs(["🏛️ Diploma Politeknik (Akademik)", "🛠️ Sijil Komuniti (Praktikal)", "⚙️ Latihan Industri (TVET)"])
 
         # === TAB 1: POLITEKNIK ===
         with tab1:
+            st.caption("Sesuai untuk pelajar yang berminat pembelajaran akademik & laluan ke Ijazah.")
             st.markdown("""
             <div class="info-box poly-box">
-                <h4>🏛️ Apa itu Politeknik?</h4>
+                <h4>🏛️ Politeknik Malaysia</h4>
                 <p>
-                    Politeknik adalah institusi kerajaan yang menawarkan pendidikan <b>Teknikal & Vokasional (TVET)</b> bertaraf dunia. 
-                    Fokus kepada latihan amali (hands-on) dalam bidang Kejuruteraan, Perdagangan, Teknologi Maklumat, dan Perkhidmatan.
+                    Politeknik menawarkan pendidikan TVET bertaraf Diploma & Ijazah. 
+                    Fokus kepada Kejuruteraan, Perdagangan, dan Teknologi Maklumat.
                 </p>
-                <ul>
-                    <li><b>Sesuai untuk:</b> Pelajar yang mahu kemahiran teknikal & peluang kerja cerah.</li>
-                    <li><b>Peringkat:</b> Diploma & Ijazah Sarjana Muda.</li>
-                    <li><b>Yuran:</b> Sangat berpatutan & disokong kerajaan.</li>
-                    <li><b>Laluan:</b> Terus bekerja atau sambung Ijazah di Universiti.</li>
-                </ul>
                 <p>👉 <a href="https://ambilan.mypolycc.edu.my/portalbpp2/index.asp" target="_blank">Laman Web Rasmi Pengambilan</a></p>
             </div>
             """, unsafe_allow_html=True)
             
             if not p_poly:
-                st.info("Tiada program Politeknik yang layak.")
+                st.info("Buat masa ini, tiada program Diploma Politeknik yang sepadan. Sila semak tab Kolej Komuniti atau TVET.")
             else:
-                # 1. Get Eligible Data
                 res_poly = courses_df[courses_df['course_id'].isin(p_poly)]
+                group_col = 'cluster' if 'cluster' in res_poly.columns else None
                 
-                if res_poly.empty:
-                    st.warning("Data kursus tidak dijumpai.")
-                else:
-                    # 2. FILTER BY BIDANG (Cluster)
-                    # Check for 'cluster' column (Jabatan/Bidang)
-                    group_col = 'cluster' if 'cluster' in res_poly.columns else None
-                    
-                    if group_col:
-                        st.write("📂 **Tapis Mengikut Bidang:**")
-                        all_clusters = ["Semua"] + sorted(res_poly[group_col].astype(str).unique().tolist())
-                        sel_cluster = st.selectbox("Pilih Bidang:", all_clusters, key="filter_poly")
-                        
-                        if sel_cluster != "Semua":
-                            res_poly = res_poly[res_poly[group_col] == sel_cluster]
+                if group_col:
+                    st.write("📂 **Tapis Mengikut Bidang:**")
+                    all_clusters = ["Semua"] + sorted(res_poly[group_col].astype(str).unique().tolist())
+                    sel_cluster = st.selectbox("Pilih Bidang:", all_clusters, key="filter_poly")
+                    if sel_cluster != "Semua":
+                        res_poly = res_poly[res_poly[group_col] == sel_cluster]
 
-                    # 3. DISPLAY TABLE WITH EXTRA COLUMNS
-                    # Select available columns only (Defensive coding)
-                    cols_to_show = ['course']
-                    rename_map = {'course': 'Nama Program'}
-                    col_config = {}
+                # Main Table
+                cols_to_show = ['course']
+                rename_map = {'course': 'Nama Program'}
+                col_config = {}
 
-                    if 'cluster' in res_poly.columns:
-                        cols_to_show.append('cluster')
-                        rename_map['cluster'] = 'Jabatan/Bidang'
-                    
-                    if 'duration' in res_poly.columns:
-                        cols_to_show.append('duration')
-                        rename_map['duration'] = 'Semester'
+                if 'cluster' in res_poly.columns:
+                    cols_to_show.append('cluster')
+                    rename_map['cluster'] = 'Jabatan/Bidang'
+                if 'duration' in res_poly.columns:
+                    cols_to_show.append('duration')
+                    rename_map['duration'] = 'Semester'
+                if 'hyperlink' in res_poly.columns:
+                    cols_to_show.append('hyperlink')
+                    rename_map['hyperlink'] = 'Info'
+                    col_config["Info"] = st.column_config.LinkColumn("Info", display_text="Layari")
 
-                    if 'hyperlink' in res_poly.columns:
-                        cols_to_show.append('hyperlink')
-                        rename_map['hyperlink'] = 'Info'
-                        # Configure 'Info' to be a Link Column
-                        col_config["Info"] = st.column_config.LinkColumn("Info", display_text="Layari")
-
-                    disp_poly = res_poly[cols_to_show].rename(columns=rename_map)
-                    
-                    st.dataframe(
-                        disp_poly, 
-                        column_config=col_config, 
-                        use_container_width=True, 
-                        hide_index=True
-                    )
-                    
-                    # 4. Drill Down Details
-                    st.markdown("---")
-                    st.subheader("🔍 Lihat Detail Program Politeknik")
-                    
-                    sel_poly = st.selectbox("Pilih Program:", res_poly['course'].unique(), key="sel_poly")
+                disp_poly = res_poly[cols_to_show].rename(columns=rename_map)
+                st.dataframe(disp_poly, column_config=col_config, use_container_width=True, hide_index=True)
+                
+                # Progressive Disclosure
+                st.markdown("---")
+                with st.expander("🔍 Lihat Detail Program & Kerjaya", expanded=False):
+                    sel_poly = st.selectbox("Pilih Program untuk Detail:", res_poly['course'].unique(), key="sel_poly")
                     
                     if sel_poly:
                         cid = res_poly[res_poly['course'] == sel_poly].iloc[0]['course_id']
                         details = get_course_details(cid, sel_poly)
                         
-                        with st.container():
-                            st.info(f"### {details['headline']}")
-                            st.write(details['synopsis'])
-                            if 'pathway' in details: st.write(f"**🎓 Laluan Sambung Belajar:** {details['pathway']}")
-                            st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
-                            
-                            # Check for Interview Requirement
-                            if 'req_interview' in reqs_df.columns:
-                                rows = reqs_df[reqs_df['course_id'] == cid]
-                                if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
-                                    st.warning("🗣️ **Perhatian:** Program ini mungkin memerlukan temuduga.")
-                            
-                            # Locations
-                            loc_ids = links_df[links_df['course_id'] == cid]['institution_id'].unique()
-                            final_locs = inst_df[inst_df['institution_id'].isin(loc_ids)]
-                            
-                            if not final_locs.empty:
-                                st.markdown("**📍 Lokasi Institusi:**")
-                                st.dataframe(
-                                    final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
-                                    column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
-                                    hide_index=True,
-                                    use_container_width=True
-                                )
+                        st.info(f"### {details['headline']}")
+                        st.write(details['synopsis'])
+                        if 'pathway' in details: st.write(f"**🎓 Laluan Sambung Belajar:** {details['pathway']}")
+                        st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
+                        
+                        if 'req_interview' in reqs_df.columns:
+                            rows = reqs_df[reqs_df['course_id'] == cid]
+                            if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
+                                st.warning("🗣️ **Perhatian:** Program ini mungkin memerlukan temuduga.")
+                        
+                        loc_ids = links_df[links_df['course_id'] == cid]['institution_id'].unique()
+                        final_locs = inst_df[inst_df['institution_id'].isin(loc_ids)]
+                        
+                        if not final_locs.empty:
+                            st.markdown("**📍 Lokasi Institusi:**")
+                            st.dataframe(
+                                final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
+                                column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
+                                hide_index=True, use_container_width=True
+                            )
 
         # === TAB 2: KOLEJ KOMUNITI ===
         with tab2:
+            st.caption("Sesuai untuk pelajar yang mahu kemahiran spesifik & pantas bekerja.")
             st.markdown("""
             <div class="info-box kk-box">
-                <h4>🛠️ Apa itu Kolej Komuniti?</h4>
+                <h4>🛠️ Kolej Komuniti</h4>
                 <p>
-                    Institusi TVET "Mesra Komuniti" yang menawarkan latihan kemahiran praktikal untuk membolehkan anda terus bekerja atau berniaga.
-                    Terdapat lebih 100 buah kolej di seluruh Malaysia!
+                    Latihan kemahiran praktikal (Sijil) untuk terus bekerja atau berniaga. 
+                    Syarat masuk mudah (Lulus SPM BM & Sejarah).
                 </p>
-                <ul>
-                    <li><b>Sesuai untuk:</b> Anda yang minat 'buat kerja' (hands-on) berbanding teori buku.</li>
-                    <li><b>Syarat Masuk:</b> Mudah! Lulus SPM (BM & Sejarah) sahaja.</li>
-                    <li><b>Bidang Popular:</b> Automotif, Masakan (Kulinari), Elektrik, Fesyen, Kecantikan.</li>
-                </ul>
                 <p>👉 <a href="https://ambilan.mypolycc.edu.my/portalbpp2/index.asp" target="_blank">Laman Web Rasmi Pengambilan</a></p>
             </div>
             """, unsafe_allow_html=True)
 
             if not p_kk:
-                st.info("Tiada program Kolej Komuniti yang layak.")
+                st.info("Buat masa ini, tiada program Kolej Komuniti yang sepadan.")
             else:
                 res_kk = courses_df[courses_df['course_id'].isin(p_kk)]
+                group_col = 'cluster' if 'cluster' in res_kk.columns else None
+                if group_col:
+                    st.write("📂 **Tapis Mengikut Bidang:**")
+                    all_clusters_kk = ["Semua"] + sorted(res_kk[group_col].astype(str).unique().tolist())
+                    sel_cluster_kk = st.selectbox("Pilih Bidang:", all_clusters_kk, key="filter_kk")
+                    if sel_cluster_kk != "Semua":
+                        res_kk = res_kk[res_kk[group_col] == sel_cluster_kk]
+
+                cols_to_show = ['course']
+                rename_map = {'course': 'Nama Program'}
+                col_config = {}
+
+                if 'cluster' in res_kk.columns:
+                    cols_to_show.append('cluster')
+                    rename_map['cluster'] = 'Jabatan/Bidang'
+                if 'duration' in res_kk.columns:
+                    cols_to_show.append('duration')
+                    rename_map['duration'] = 'Semester'
+                if 'hyperlink' in res_kk.columns:
+                    cols_to_show.append('hyperlink')
+                    rename_map['hyperlink'] = 'Info'
+                    col_config["Info"] = st.column_config.LinkColumn("Info", display_text="Layari")
+
+                disp_kk = res_kk[cols_to_show].rename(columns=rename_map)
+                st.dataframe(disp_kk, column_config=col_config, use_container_width=True, hide_index=True)
                 
-                if res_kk.empty:
-                    st.warning("Data kursus tidak dijumpai.")
-                else:
-                    # Filter Logic
-                    group_col = 'cluster' if 'cluster' in res_kk.columns else None
-                    if group_col:
-                        st.write("📂 **Tapis Mengikut Bidang:**")
-                        all_clusters_kk = ["Semua"] + sorted(res_kk[group_col].astype(str).unique().tolist())
-                        sel_cluster_kk = st.selectbox("Pilih Bidang:", all_clusters_kk, key="filter_kk")
-                        
-                        if sel_cluster_kk != "Semua":
-                            res_kk = res_kk[res_kk[group_col] == sel_cluster_kk]
-
-                    # Display Table (Updated Columns)
-                    cols_to_show = ['course']
-                    rename_map = {'course': 'Nama Program'}
-                    col_config = {}
-
-                    if 'cluster' in res_kk.columns:
-                        cols_to_show.append('cluster')
-                        rename_map['cluster'] = 'Jabatan/Bidang'
-                    
-                    if 'duration' in res_kk.columns:
-                        cols_to_show.append('duration')
-                        rename_map['duration'] = 'Semester'
-
-                    if 'hyperlink' in res_kk.columns:
-                        cols_to_show.append('hyperlink')
-                        rename_map['hyperlink'] = 'Info'
-                        col_config["Info"] = st.column_config.LinkColumn("Info", display_text="Layari")
-
-                    disp_kk = res_kk[cols_to_show].rename(columns=rename_map)
-
-                    st.dataframe(
-                        disp_kk, 
-                        column_config=col_config, 
-                        use_container_width=True, 
-                        hide_index=True
-                    )
-                    
-                    # Drill Down
-                    st.markdown("---")
-                    st.subheader("🔍 Lihat Detail Program Kolej Komuniti")
-                    sel_kk = st.selectbox("Pilih Program:", res_kk['course'].unique(), key="sel_kk")
-                    
+                # Progressive Disclosure
+                st.markdown("---")
+                with st.expander("🔍 Lihat Detail Program & Kerjaya", expanded=False):
+                    sel_kk = st.selectbox("Pilih Program untuk Detail:", res_kk['course'].unique(), key="sel_kk")
                     if sel_kk:
                         cid = res_kk[res_kk['course'] == sel_kk].iloc[0]['course_id']
                         details = get_course_details(cid, sel_kk)
                         
-                        with st.container():
-                            st.info(f"### {details['headline']}")
-                            st.write(details['synopsis'])
-                            st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
-                            
-                            # Interview Check
-                            if 'req_interview' in reqs_df.columns:
-                                rows = reqs_df[reqs_df['course_id'] == cid]
-                                if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
-                                    st.warning("🗣️ **Perhatian:** Program ini mungkin memerlukan temuduga.")
+                        st.info(f"### {details['headline']}")
+                        st.write(details['synopsis'])
+                        st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
+                        
+                        if 'req_interview' in reqs_df.columns:
+                            rows = reqs_df[reqs_df['course_id'] == cid]
+                            if rows['req_interview'].apply(lambda x: str(x).strip().lower() in ['1', 'yes', 'true']).any():
+                                st.warning("🗣️ **Perhatian:** Program ini mungkin memerlukan temuduga.")
 
-                            # Locations
-                            loc_ids = links_df[links_df['course_id'] == cid]['institution_id'].unique()
-                            final_locs = inst_df[inst_df['institution_id'].isin(loc_ids)]
-                            
-                            if not final_locs.empty:
-                                st.markdown("**📍 Lokasi Institusi:**")
-                                st.dataframe(
-                                    final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
-                                    column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
-                                    hide_index=True,
-                                    use_container_width=True
-                                )
+                        loc_ids = links_df[links_df['course_id'] == cid]['institution_id'].unique()
+                        final_locs = inst_df[inst_df['institution_id'].isin(loc_ids)]
+                        
+                        if not final_locs.empty:
+                            st.markdown("**📍 Lokasi Institusi:**")
+                            st.dataframe(
+                                final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
+                                column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
+                                hide_index=True, use_container_width=True
+                            )
 
         # === TAB 3: TVET (Updated) ===
         with tab3:
+            st.caption("Sesuai untuk pelajar yang meminati industri berat, minyak & gas, dan automotif.")
             st.markdown("""
-            <div class="info-box" style="background-color: #e3f2fd; border-left: 5px solid #2196f3;">
+            <div class="info-box tvet-box">
                 <h4>⚙️ Institut Latihan Kemahiran (ILKBS & ILJTM)</h4>
-                <p>Termasuk IKBN, IKTBN, ADTEC, dan JMTI. Fokus kepada kemahiran industri berat, minyak & gas, dan automotif.</p>
+                <p>Termasuk IKBN, IKTBN, ADTEC, dan JMTI. Latihan berfokuskan industri.</p>
                 <ul>
-                    <li><b>Elaun Bulanan:</b> Disediakan (RM100 - RM300 bergantung kursus).</li>
-                    <li><b>Kemudahan:</b> Asrama & Makan Minum percuma (untuk kebanyakan institut).</li>
+                    <li><b>Elaun Bulanan:</b> Disediakan (RM100 - RM300).</li>
+                    <li><b>Kemudahan:</b> Asrama & Makan percuma (kebanyakan institut).</li>
                 </ul>
                 <p>👉 <a href="https://mohon.tvet.gov.my/" target="_blank">Portal Permohonan TVET</a></p>
             </div>
             """, unsafe_allow_html=True)
 
             if not tvet_ids:
-                st.info("Tiada program TVET yang layak.")
+                st.info("Buat masa ini, tiada program TVET yang sepadan.")
             else:
                 unique_tvet_ids = list(set(tvet_ids))
                 res_tvet = t_courses[t_courses['course_id'].isin(unique_tvet_ids)]
@@ -467,32 +436,25 @@ if st.session_state.get('checked'):
                 if res_tvet.empty:
                     st.warning("Data kursus tidak dijumpai.")
                 else:
-                    # Main TVET Table
                     disp_tvet = res_tvet[['course', 'department', 'level']].rename(columns={
-                        'course': 'Nama Program', 
-                        'department': 'Bidang',
-                        'level': 'Tahap'
+                        'course': 'Nama Program', 'department': 'Bidang', 'level': 'Tahap'
                     })
-                    
                     st.dataframe(disp_tvet, use_container_width=True, hide_index=True)
                     
+                    # Progressive Disclosure
                     st.markdown("---")
-                    st.subheader("🔍 Lihat Detail Program TVET")
-                    sel_tvet = st.selectbox("Pilih Program:", res_tvet['course'].unique(), key="sel_tvet")
-                    
-                    if sel_tvet:
-                        cid = res_tvet[res_tvet['course'] == sel_tvet].iloc[0]['course_id']
-                        details = get_course_details(cid, sel_tvet) 
-                        
-                        with st.container():
+                    with st.expander("🔍 Lihat Detail Program & Kerjaya", expanded=False):
+                        sel_tvet = st.selectbox("Pilih Program untuk Detail:", res_tvet['course'].unique(), key="sel_tvet")
+                        if sel_tvet:
+                            cid = res_tvet[res_tvet['course'] == sel_tvet].iloc[0]['course_id']
+                            details = get_course_details(cid, sel_tvet) 
+                            
                             st.info(f"### {details['headline']}")
                             st.write(details['synopsis'])
                             st.write(f"**💼 Prospek Kerjaya:** {', '.join(details['jobs'])}")
                             
                             loc_rows = t_reqs[t_reqs['course_id'] == cid]
                             loc_ids = loc_rows['institution_id'].unique()
-                            
-                            # TVET Locations with Links
                             final_locs = t_inst[t_inst['institution_id'].isin(loc_ids)]
                             
                             if not final_locs.empty:
@@ -500,10 +462,8 @@ if st.session_state.get('checked'):
                                 st.dataframe(
                                     final_locs[['institution_name', 'state', 'url']].rename(columns={'institution_name':'Institusi', 'state':'Negeri', 'url':'Web'}),
                                     column_config={"Web": st.column_config.LinkColumn("Web", display_text="Layari")},
-                                    hide_index=True,
-                                    use_container_width=True
+                                    hide_index=True, use_container_width=True
                                 )
-                                
                                 row1 = loc_rows.iloc[0]
                                 m_allow = row1.get('monthly_allowance', 'Tiada')
                                 hostel = "Disediakan" if str(row1.get('free_hostel')).strip() == '1' else "Tiada"
@@ -514,7 +474,6 @@ if st.session_state.get('checked'):
     with st.expander("🕵️ Semak Program Yang Gagal (Analisis)"):
         eligible_poly = set(st.session_state.get('eligible_ids', []))
         eligible_tvet = set(st.session_state.get('tvet_eligible_ids', []))
-        
         all_eligible = eligible_poly.union(eligible_tvet)
 
         all_poly_courses = set(courses_df['course_id'].unique())
@@ -526,21 +485,28 @@ if st.session_state.get('checked'):
         if rej_ids:
             rej_courses = courses_df[courses_df['course_id'].isin(rej_ids)].sort_values('course')
             rej_opts = dict(zip(rej_courses['course'], rej_courses['course_id']))
-            
             insp_name = st.selectbox("Pilih Program Gagal:", list(rej_opts.keys()))
             
             if insp_name:
                 insp_id = rej_opts[insp_name]
                 rows = reqs_df[reqs_df['course_id'] == insp_id]
-                
                 for idx, req in rows.iterrows():
                     st.write(f"**Kriteria Set #{idx+1}:**")
                     req_dict = req.to_dict()
                     is_eligible, reason = check_eligibility(current_student, req_dict)
-                    
                     if not is_eligible:
                         st.error(f"❌ {reason}")
                     else:
                         st.success("✅ Set kriteria ini LULUS.")
         else:
             st.success("Tahniah! Tiada program yang gagal. Anda layak untuk semua!")
+
+    # 5. CALL TO ACTION (FOOTER)
+    st.markdown("---")
+    st.markdown("""
+    ### 👉 Langkah Seterusnya
+    1. **Bandingkan** program yang disenaraikan di atas.
+    2. Klik butang **Layari** untuk melihat laman web rasmi institusi.
+    3. Sediakan dokumen penting (Salinan SPM & MyKad).
+    4. **Mohon** melalui portal rasmi (UPU / MyPolyCC / TVET).
+    """)
