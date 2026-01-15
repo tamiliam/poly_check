@@ -6,29 +6,28 @@ import os
 # Add parent directory to path to import src
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.engine import StudentProfile, check_eligibility
+from src.engine import StudentProfile, check_eligibility, load_and_clean_data
 
 class TestGoldenMaster(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # 1. Determine Project Root (One level up from 'tests/' folder)
+        # 1. Determine Project Root
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        
-        # 2. Point to the 'data' folder
         data_folder = os.path.join(project_root, 'data')
         
         files_to_load = ['requirements.csv', 'tvet_requirements.csv']
         dfs = []
         
-        print(f"\n🔹 Loading Data from: {data_folder}")
+        print(f"\n🔹 Loading and Cleaning Data from: {data_folder}")
         for filename in files_to_load:
-            # Construct the full absolute path
             full_path = os.path.join(data_folder, filename)
             
             if os.path.exists(full_path):
                 try:
-                    df = pd.read_csv(full_path)
+                    # USE THE SANITIZER!
+                    df = load_and_clean_data(full_path)
+                    
                     dfs.append(df)
                     print(f"   Found {filename}: {len(df)} rows")
                 except Exception as e:
@@ -37,10 +36,8 @@ class TestGoldenMaster(unittest.TestCase):
                 print(f"   ⚠️  Warning: {filename} not found in {data_folder}")
         
         if not dfs:
-            print("\n❌ CRITICAL: No CSV files found.")
             raise unittest.SkipTest("No requirements files found! Cannot run Golden Master.")
             
-        # Combine them into one big list of courses
         cls.df_courses = pd.concat(dfs, ignore_index=True)
         print(f"   ✅ Total Combined Courses: {len(cls.df_courses)}")
 
