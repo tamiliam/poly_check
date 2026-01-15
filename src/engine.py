@@ -118,10 +118,16 @@ def check_eligibility(student, req):
         if not check("Lulus BI", is_pass(g.get('eng')), "Gagal Bahasa Inggeris"): passed_academics = False
     if req.get('credit_english') == 1:
         if not check("Kredit BI", is_credit(g.get('eng')), "Tiada Kredit Bahasa Inggeris"): passed_academics = False
+
+    # Logic: Passing Add Math satisfies the "Math" requirement.
     if req.get('pass_math') == 1:
-        if not check("Lulus Matematik", is_pass(g.get('math')), "Gagal Matematik"): passed_academics = False
+        # Check Modern Math OR Add Math
+        cond = is_pass(g.get('math')) or is_pass(g.get('addmath'))
+        if not check("Lulus Matematik", cond, "Gagal Matematik & Add Math"): passed_academics = False
     if req.get('credit_math') == 1:
-        if not check("Kredit Matematik", is_credit(g.get('math')), "Tiada Kredit Matematik"): passed_academics = False
+        # Check Credit in Modern Math OR Add Math
+        cond = is_credit(g.get('math')) or is_credit(g.get('addmath'))
+        if not check("Kredit Matematik", cond, "Tiada Kredit Matematik atau Add Math"): passed_academics = False
 
     # Group Logic
     pure_sci = [g.get('phy'), g.get('chem'), g.get('bio')]
