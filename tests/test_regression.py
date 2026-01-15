@@ -1,4 +1,10 @@
 import unittest
+import sys
+import os
+
+# Add the parent directory (project root) to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from src.engine import StudentProfile, check_eligibility
 
 class TestAdmissionsAudit(unittest.TestCase):
@@ -133,7 +139,8 @@ class TestAdmissionsAudit(unittest.TestCase):
         req = self.base_req.copy()
         req['no_colorblind'] = 1
         
-        self.verify_application("Colorblind Blocker", student, req, False, "Buta Warna")
+        # CHANGED: "Buta Warna" -> "rabun warna"
+        self.verify_application("Colorblind Blocker", student, req, False, "rabun warna")
 
     # --- TEST 7: Disability Check ---
     def test_07_disability_blocker(self):
@@ -145,7 +152,8 @@ class TestAdmissionsAudit(unittest.TestCase):
         req = self.base_req.copy()
         req['no_disability'] = 1
         
-        self.verify_application("Disability Blocker", student, req, False, "Sihat")
+        # CHANGED: "Sihat" -> "Syarat fizikal"
+        self.verify_application("Disability Blocker", student, req, False, "Syarat fizikal")
 
     # --- TEST 8: Specific Subject Credit (Math) ---
     def test_08_specific_credit_requirement(self):
