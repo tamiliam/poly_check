@@ -9,6 +9,11 @@ def is_credit(grade):
     """Returns True if grade is A+ through C (Credit)."""
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C"]
 
+def is_attempted(grade):
+    """Returns True if grade is A+ through G (Attempted). Excludes TH/None."""
+    # We assume 'G' is the lowest valid grade that proves they 'did' the subject.
+    return grade in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G"]
+
 class StudentProfile:
     def __init__(self, grades, gender, nationality, colorblind, disability, other_tech=False, other_voc=False):
         self.grades = grades
@@ -33,11 +38,6 @@ def check_eligibility(student, req):
     """
     Checks if a student meets the requirements.
     Returns: (bool_status, list_of_audit_logs)
-    
-    audit_log structure:
-    [
-        {"label": "Check Name", "passed": True/False, "reason": "Error Msg"}
-    ]
     """
     audit = []
     
@@ -51,8 +51,6 @@ def check_eligibility(student, req):
             return False
 
     # --- 1. GATEKEEPERS (Fail Fast) ---
-    # We stop immediately if these fail because other checks become irrelevant.
-    
     if req.get('req_malaysian') == 1:
         if not check("Warganegara", student.nationality == 'Warganegara', "Hanya untuk Warganegara"):
             return False, audit
@@ -68,36 +66,37 @@ def check_eligibility(student, req):
     if req.get('no_disability') == 1:
         if not check("Sihat Tubuh Badan", student.disability == 'Tidak', "Syarat fizikal tidak dipenuhi"): return False, audit
 
+    g = student.grades # Short alias
+
     # --- 2. TVET SPECIAL (3M) ---
     is_3m = str(req.get('3m_only', '0')).strip() == '1'
     if is_3m:
-        check("Program Khas 3M", True)
-        return True, audit
+        # FIX: Check if they actually attempted BM and Math (At least Grade G)
+        has_bm = is_attempted(g.get('bm'))
+        has_math = is_attempted(g.get('math'))
+        
+        if check("Syarat 3M (BM & Math)", has_bm and has_math, "Perlu sekurang-kurangnya Gred G dalam BM dan Matematik"):
+            return True, audit
+        else:
+            return False, audit
 
-    # --- 3. ACADEMIC CHECKS (Accumulate Failures) ---
-    # We use a flag 'passed_academics' so we can run ALL checks and show multiple failures.
+    # --- 3. ACADEMIC CHECKS ---
     passed_academics = True
 
-    g = student.grades # Short alias
-
     # -- Specific Subjects --
-    # Bahasa Melayu
     if req.get('pass_bm') == 1:
         if not check("Lulus BM", is_pass(g.get('bm')), "Gagal Bahasa Melayu"): passed_academics = False
     if req.get('credit_bm') == 1:
         if not check("Kredit BM", is_credit(g.get('bm')), "Tiada Kredit Bahasa Melayu"): passed_academics = False
 
-    # Sejarah
     if req.get('pass_history') == 1:
         if not check("Lulus Sejarah", is_pass(g.get('hist')), "Gagal Sejarah"): passed_academics = False
 
-    # English
     if req.get('pass_eng') == 1:
         if not check("Lulus BI", is_pass(g.get('eng')), "Gagal Bahasa Inggeris"): passed_academics = False
     if req.get('credit_english') == 1:
         if not check("Kredit BI", is_credit(g.get('eng')), "Tiada Kredit Bahasa Inggeris"): passed_academics = False
 
-    # Math
     if req.get('pass_math') == 1:
         if not check("Lulus Matematik", is_pass(g.get('math')), "Gagal Matematik"): passed_academics = False
     if req.get('credit_math') == 1:
@@ -107,7 +106,7 @@ def check_eligibility(student, req):
     pure_sci = [g.get('phy'), g.get('chem'), g.get('bio')]
     all_sci = pure_sci + [g.get('sci')]
     tech_subjs = [g.get('rc'), g.get('cs'), g.get('agro'), g.get('srt')]
-    if student.other_tech: tech_subjs.append('C') # Proxy grade for 'Other'
+    if student.other_tech: tech_subjs.append('C')
 
     def has_pass(grade_list): return any(is_pass(x) for x in grade_list)
     def has_credit(grade_list): return any(is_credit(x) for x in grade_list)
