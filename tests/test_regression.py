@@ -187,5 +187,38 @@ class TestAdmissionsAudit(unittest.TestCase):
         
         self.verify_application("Perfect Student", student, req, True)
 
+    # --- TEST 11: Dirty Data Robustness (Poly + TVET) ---
+    def test_11_dirty_data_handling(self):
+        """Ensure the engine handles strings, floats, and NaNs across ALL categories"""
+        
+        # 1. Create a local student who definitely qualifies
+        student = StudentProfile(
+            grades={'bm': 'A', 'math': 'A', 'sci': 'A', 'hist': 'A'},
+            gender='Lelaki', nationality='Warganegara', colorblind='Tidak', disability='Tidak'
+        )
+        
+        # 2. Create a requirement set with "Messy" data types for BOTH Poly and TVET
+        req = {
+            # --- General/Poly Fields ---
+            'min_credits': '3.0',         # String representation of float
+            'req_malaysian': '1',         # String integer
+            'no_colorblind': float('nan'), # NaN (Should default to 0/False)
+            
+            # --- TVET Specific Fields (The ones we just fixed) ---
+            '3m_only': '1.0',             # <--- The Critical Fix Check
+            'pass_stv': 1.0,              # Actual Float
+            'pass_science_tech': '1'      # String integer
+        }
+        
+        # 3. Run the Engine
+        is_eligible, audit = check_eligibility(student, req)
+        
+        # 4. Verdict
+        self.assertTrue(is_eligible, "Engine failed to handle dirty data in TVET/Poly fields")
+        
+        print("\n🔹 TEST: Dirty Data Robustness (Universal)")
+        print("   Input: {'3m_only': '1.0', 'min_credits': '3.0', ...}")
+        print("   Result: ✅ Handled gracefully")
+
 if __name__ == '__main__':
     unittest.main()

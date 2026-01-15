@@ -10,7 +10,7 @@ def is_credit(grade):
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C"]
 
 def is_attempted(grade):
-    """Returns True if grade is A+ through G (Attempted). Excludes TH/None."""
+    """Returns True if grade is A+ through G (Attempted/Taking). Excludes TH/None."""
     # We assume 'G' is the lowest valid grade that proves they 'did' the subject.
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G"]
 
@@ -83,7 +83,9 @@ def check_eligibility(student, req):
     g = student.grades # Short alias
 
     # --- 2. TVET SPECIAL (3M) ---
+    # FIX: Use safe_int to handle cases where 3m_only is loaded as float 1.0
     is_3m = safe_int(req.get('3m_only')) == 1
+    
     if is_3m:
         # Check if they actually attempted BM and Math (At least Grade G)
         has_bm = is_attempted(g.get('bm'))
