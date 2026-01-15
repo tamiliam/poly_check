@@ -3,27 +3,29 @@ import pandas as pd
 # --- HELPER FUNCTIONS ---
 def is_pass(grade):
     """Returns True if grade is A+ through E (Pass)."""
+    # Explicitly return False for "Tidak Ambil" or None
+    if grade in ["Tidak Ambil", None, ""]:
+        return False
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E"]
 
 def is_credit(grade):
     """Returns True if grade is A+ through C (Credit)."""
+    if grade in ["Tidak Ambil", None, ""]:
+        return False
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C"]
 
 def is_attempted(grade):
-    """Returns True if grade is A+ through G (Attempted/Taking). Excludes TH/None."""
-    # We assume 'G' is the lowest valid grade that proves they 'did' the subject.
+    """Returns True if grade is A+ through G (Attempted)."""
+    # Critical: 'Tidak Ambil' means they did NOT attempt it.
+    if grade in ["Tidak Ambil", None, ""]:
+        return False
+    # Only these grades count as a valid attempt for 3M requirements
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G"]
 
 def safe_int(val, default=0):
-    """
-    Robustly converts inputs to int. 
-    Handles 'NaN', floats, strings like '1.0', and empty strings.
-    """
+    """Robustly converts inputs to int."""
     try:
-        # Check for pandas NaN (which is a float)
-        if pd.isna(val):
-            return default
-        # Convert float '1.0' to int 1
+        if pd.isna(val): return default
         return int(float(val))
     except (ValueError, TypeError):
         return default
@@ -83,11 +85,12 @@ def check_eligibility(student, req):
     g = student.grades # Short alias
 
     # --- 2. TVET SPECIAL (3M) ---
-    # FIX: Use safe_int to handle cases where 3m_only is loaded as float 1.0
-    is_3m = safe_int(req.get('3m_only')) == 1
-    
+    # NUCLEAR FIX: Handle "1.0", "1", "True" explicitly to catch 3M courses
+    raw_3m = str(req.get('3m_only', '0')).lower().strip()
+    is_3m = raw_3m in ['1', '1.0', 'true', 'yes']
+
     if is_3m:
-        # Check if they actually attempted BM and Math (At least Grade G)
+        # Now we check 'is_attempted' which properly handles "Tidak Ambil" -> False
         has_bm = is_attempted(g.get('bm'))
         has_math = is_attempted(g.get('math'))
         
