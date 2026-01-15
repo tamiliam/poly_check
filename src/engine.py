@@ -14,6 +14,20 @@ def is_attempted(grade):
     # We assume 'G' is the lowest valid grade that proves they 'did' the subject.
     return grade in ["A+", "A", "A-", "B+", "B", "C+", "C", "D", "E", "G"]
 
+def safe_int(val, default=0):
+    """
+    Robustly converts inputs to int. 
+    Handles 'NaN', floats, strings like '1.0', and empty strings.
+    """
+    try:
+        # Check for pandas NaN (which is a float)
+        if pd.isna(val):
+            return default
+        # Convert float '1.0' to int 1
+        return int(float(val))
+    except (ValueError, TypeError):
+        return default
+
 class StudentProfile:
     def __init__(self, grades, gender, nationality, colorblind, disability, other_tech=False, other_voc=False):
         self.grades = grades
@@ -51,27 +65,27 @@ def check_eligibility(student, req):
             return False
 
     # --- 1. GATEKEEPERS (Fail Fast) ---
-    if req.get('req_malaysian') == 1:
+    if safe_int(req.get('req_malaysian')) == 1:
         if not check("Warganegara", student.nationality == 'Warganegara', "Hanya untuk Warganegara"):
             return False, audit
 
-    if req.get('req_male') == 1:
+    if safe_int(req.get('req_male')) == 1:
         if not check("Jantina (Lelaki)", student.gender == 'Lelaki', "Lelaki Sahaja"): return False, audit
-    if req.get('req_female') == 1:
+    if safe_int(req.get('req_female')) == 1:
         if not check("Jantina (Wanita)", student.gender == 'Perempuan', "Wanita Sahaja"): return False, audit
 
-    if req.get('no_colorblind') == 1:
+    if safe_int(req.get('no_colorblind')) == 1:
         if not check("Bebas Buta Warna", student.colorblind == 'Tidak', "Tidak boleh rabun warna"): return False, audit
     
-    if req.get('no_disability') == 1:
+    if safe_int(req.get('no_disability')) == 1:
         if not check("Sihat Tubuh Badan", student.disability == 'Tidak', "Syarat fizikal tidak dipenuhi"): return False, audit
 
     g = student.grades # Short alias
 
     # --- 2. TVET SPECIAL (3M) ---
-    is_3m = str(req.get('3m_only', '0')).strip() == '1'
+    is_3m = safe_int(req.get('3m_only')) == 1
     if is_3m:
-        # FIX: Check if they actually attempted BM and Math (At least Grade G)
+        # Check if they actually attempted BM and Math (At least Grade G)
         has_bm = is_attempted(g.get('bm'))
         has_math = is_attempted(g.get('math'))
         
@@ -84,22 +98,22 @@ def check_eligibility(student, req):
     passed_academics = True
 
     # -- Specific Subjects --
-    if req.get('pass_bm') == 1:
+    if safe_int(req.get('pass_bm')) == 1:
         if not check("Lulus BM", is_pass(g.get('bm')), "Gagal Bahasa Melayu"): passed_academics = False
-    if req.get('credit_bm') == 1:
+    if safe_int(req.get('credit_bm')) == 1:
         if not check("Kredit BM", is_credit(g.get('bm')), "Tiada Kredit Bahasa Melayu"): passed_academics = False
 
-    if req.get('pass_history') == 1:
+    if safe_int(req.get('pass_history')) == 1:
         if not check("Lulus Sejarah", is_pass(g.get('hist')), "Gagal Sejarah"): passed_academics = False
 
-    if req.get('pass_eng') == 1:
+    if safe_int(req.get('pass_eng')) == 1:
         if not check("Lulus BI", is_pass(g.get('eng')), "Gagal Bahasa Inggeris"): passed_academics = False
-    if req.get('credit_english') == 1:
+    if safe_int(req.get('credit_english')) == 1:
         if not check("Kredit BI", is_credit(g.get('eng')), "Tiada Kredit Bahasa Inggeris"): passed_academics = False
 
-    if req.get('pass_math') == 1:
+    if safe_int(req.get('pass_math')) == 1:
         if not check("Lulus Matematik", is_pass(g.get('math')), "Gagal Matematik"): passed_academics = False
-    if req.get('credit_math') == 1:
+    if safe_int(req.get('credit_math')) == 1:
         if not check("Kredit Matematik", is_credit(g.get('math')), "Tiada Kredit Matematik"): passed_academics = False
 
     # -- Group Logic (Science/Tech) --
@@ -111,32 +125,32 @@ def check_eligibility(student, req):
     def has_pass(grade_list): return any(is_pass(x) for x in grade_list)
     def has_credit(grade_list): return any(is_credit(x) for x in grade_list)
 
-    if req.get('pass_math_sci') == 1:
+    if safe_int(req.get('pass_math_sci')) == 1:
         cond = is_pass(g.get('math')) or has_pass(pure_sci)
         if not check("Lulus Matemaik ATAU Sains Tulen", cond, "Perlu Lulus Math/Sains Tulen"): passed_academics = False
 
-    if req.get('pass_science_tech') == 1:
+    if safe_int(req.get('pass_science_tech')) == 1:
         cond = has_pass(all_sci) or has_pass(tech_subjs)
         if not check("Lulus Sains ATAU Teknikal", cond, "Perlu Lulus Sains/Teknikal"): passed_academics = False
 
-    if req.get('credit_math_sci') == 1:
+    if safe_int(req.get('credit_math_sci')) == 1:
         cond = is_credit(g.get('math')) or has_credit(pure_sci)
         if not check("Kredit Matematik ATAU Sains Tulen", cond, "Perlu Kredit Math/Sains Tulen"): passed_academics = False
 
-    if req.get('credit_math_sci_tech') == 1:
+    if safe_int(req.get('credit_math_sci_tech')) == 1:
         cond = is_credit(g.get('math')) or has_credit(all_sci) or has_credit(tech_subjs)
         if not check("Kredit Math/Sains/Teknikal", cond, "Perlu Kredit Math/Sains/Teknikal"): passed_academics = False
 
-    if req.get('pass_stv') == 1:
+    if safe_int(req.get('pass_stv')) == 1:
         cond = has_pass(all_sci) or has_pass(tech_subjs) or student.other_voc
         if not check("Aliran Sains/Vokasional", cond, "Perlu Lulus Sains/Vokasional"): passed_academics = False
 
     # -- General Counters --
-    min_c = int(req.get('min_credits', 0))
+    min_c = safe_int(req.get('min_credits'), 0)
     if min_c > 0:
         if not check(f"Minimum {min_c} Kredit", student.credits >= min_c, f"Hanya {student.credits} Kredit (Perlu {min_c})"): passed_academics = False
 
-    min_p = int(req.get('min_pass', 0))
+    min_p = safe_int(req.get('min_pass'), 0)
     if min_p > 0:
         if not check(f"Minimum {min_p} Lulus", student.passes >= min_p, f"Hanya {student.passes} Lulus"): passed_academics = False
 
